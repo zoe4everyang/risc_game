@@ -1,0 +1,49 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-clover-plugin:2.2.3'
+    }
+
+  
+}
+
+allprojects{
+    apply plugin: 'java'
+    repositories {
+        mavenCentral()
+    }
+    apply plugin: 'com.bmuschko.clover'
+    dependencies {
+        clover 'org.openclover:clover:4.3.1'
+    }
+}
+
+clover{
+    compiler {
+        additionalArgs = "-g:lines,source,vars"
+    }
+}
+
+subprojects { 
+   
+    version = '1.0'  
+
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7  
+
+    [compileJava,compileTestJava,javadoc]*.options*.encoding = 'UTF-8'
+    
+    //定义版本号
+    ext {  
+        junitVersion = '4.12'
+    } 
+
+    dependencies {
+       
+       implementation "org.springframework.boot:spring-boot-starter-web"
+        
+    }
+}

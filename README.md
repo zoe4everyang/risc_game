@@ -158,23 +158,23 @@ POST /Movecommit/
 
 ```json
 {
-    PlayerId: 1,
-    Operation : [
+    "PlayerId": 1,
+    "Operation" : [
         1, 
         2, 
         1
     ],
-    From : [
+    "From" : [
         0, 
         0, 
         1, 
     ],
-    To : [
+    "To" : [
         1, 
         2,
         3
     ],
-    Nums: [
+    "Nums": [
         10,
         20,
         30
@@ -298,7 +298,7 @@ POST /start/
             "Distance" : [2, 1, 0]
         }
     ],
-    UnitAvailable: 50
+    "UnitAvailable": 50
 }
 ```
 
@@ -317,8 +317,8 @@ POST /place/
 
 ```json
 {
-    PlayerId: 0,
-    Placement: [
+    "PlayerId": 0,
+    "Placement": [
         -1, 
         20,
         30,

@@ -140,9 +140,53 @@ When a player has lost, the server should automatically consider his moves to be
 
 We plan to use Restful API to build HTTP connection between client and server.
 
-### Response Parameter
+### MoveCommit
 
-### Full Response
+#### Request
+
+```http
+POST /Movecommit/
+```
+
+| Parameter name | type  | comments                                                   |
+| -------------- | ----- | ---------------------------------------------------------- |
+| Player ID      | int   | Player's Identity                                          |
+| Operation      | int[] | Player's Opeation ID, 1 represent move, 2 represent attack |
+| From           | int[] | src territories ids                                        |
+| To             | int[] | des territories ids                                        |
+| Nums           | int[] | num of units                                               |
+
+```json
+{
+    PlayerId: 1,
+    Operation : [
+        1, 
+        2, 
+        1
+    ],
+    From : [
+        0, 
+        0, 
+        1, 
+    ],
+    To : [
+        1, 
+        2,
+        3
+    ],
+    Nums: [
+        10,
+        20,
+        30
+    ]
+}
+```
+
+
+
+#### Response
+
+#### Full Response
 
 | Parameter Name | Type        | comments            |
 | -------------- | ----------- | ------------------- |
@@ -150,7 +194,7 @@ We plan to use Restful API to build HTTP connection between client and server.
 | Territories    | []Territory | List of Territories |
 | playerName     | string      | the name of player  |
 
-### Territory
+#### Territory
 
 | parameter name | Type   | comments                                                     |
 | -------------- | ------ | ------------------------------------------------------------ |
@@ -160,7 +204,7 @@ We plan to use Restful API to build HTTP connection between client and server.
 | UnitNum        | int    | Number of Units in this Territory                            |
 | Distance       | []int  | Distance to other territories. Distance[i] indicate the distance toward territory with id i. |
 
-### Response Sample
+#### Response Sample
 
 ```json
 {
@@ -192,3 +236,148 @@ We plan to use Restful API to build HTTP connection between client and server.
 }
 ```
 
+### Start Game
+
+```http
+POST /start/
+```
+
+#### Request
+
+| Parameter name | type   | comments                              |
+| -------------- | ------ | ------------------------------------- |
+| Player Name    | string | Player can make a name for themselves |
+
+#### Response
+
+#### Full Response
+
+| Parameter Name | Type        | comments                             |
+| -------------- | ----------- | ------------------------------------ |
+| Player ID      | int         | Player's Identity                    |
+| Territories    | []Territory | List of Territories                  |
+| playerName     | string      | the name of player                   |
+| UnitAvailable  | int         | Number of units the player can place |
+
+#### Territory
+
+| parameter name | Type   | comments                                                     |
+| -------------- | ------ | ------------------------------------------------------------ |
+| Name           | string | Name of the territory                                        |
+| TerritoryId    | int    | Unique Identity of the territory                             |
+| Owner          | int    | The player id which this territory belongs to                |
+| UnitNum        | int    | Number of Units in this Territory (all zero for this response) |
+| Distance       | []int  | Distance to other territories. Distance[i] indicate the distance toward territory with id i. |
+
+#### Response Sample
+
+```json
+{
+    "playerId": 1,
+    "playerName": "Tenki",
+    "Territories" : [
+        {
+            "Name": "A",
+            "TerritoryId" : 0,
+            "Owner" : 1,
+            "UnitNum" : 0,
+            "Distance" : [0, 1, 2],
+        }, 
+        {
+           	"Name" : "B",
+            "TerritoryId" : 1,
+            "Owner" : 2,
+            "UnitNum" : 0,
+            "Distance" : [1, 0, 1],
+        },
+        {
+            "Name" : "C",
+             "TerritoryId" : 2,
+            "Owner" : 0,
+            "UnitNum" : 20086,
+            "Distance" : [2, 1, 0]
+        }
+    ],
+    UnitAvailable: 50
+}
+```
+
+### Place Unit
+
+```http
+POST /place/
+```
+
+#### Request
+
+| parameter name | type  | comments                                                     |
+| -------------- | ----- | ------------------------------------------------------------ |
+| PlayerId       | int   | Player's identity                                            |
+| Placement      | int[] | Placement[i] denotes the number of units the plaer deployed on territory with id i. The territory not belongs to the player will be set to -1. |
+
+```json
+{
+    PlayerId: 0,
+    Placement: [
+        -1, 
+        20,
+        30,
+        50,
+        -1,
+        -1
+    ]
+    
+}
+```
+
+#### Response
+
+#### Full Response
+
+| Parameter Name | Type        | comments            |
+| -------------- | ----------- | ------------------- |
+| Player ID      | int         | Player's Identity   |
+| Territories    | []Territory | List of Territories |
+| playerName     | string      | the name of player  |
+
+#### Territory
+
+| parameter name | Type   | comments                                                     |
+| -------------- | ------ | ------------------------------------------------------------ |
+| Name           | string | Name of the territory                                        |
+| TerritoryId    | int    | Unique Identity of the territory                             |
+| Owner          | int    | The player id which this territory belongs to                |
+| UnitNum        | int    | Number of Units in this Territory                            |
+| Distance       | []int  | Distance to other territories. Distance[i] indicate the distance toward territory with id i. |
+
+#### Response Sample
+
+```json
+{
+    "playerId": 1,
+    "playerName": "Tenki",
+    "Territories" : [
+        {
+            "Name": "A",
+            "TerritoryId" : 0,
+            "Owner" : 1,
+            "UnitNum" : 10086,
+            "Distance" : [0, 1, 2],
+        }, 
+        {
+           	"Name" : "B",
+            "TerritoryId" : 1,
+            "Owner" : 2,
+            "UnitNum" : 40086,
+            "Distance" : [1, 0, 1],
+        },
+        {
+            "Name" : "C",
+             "TerritoryId" : 2,
+            "Owner" : 1,
+            "UnitNum" : 20086,
+            "Distance" : [2, 1, 0]
+        }
+    ],
+}
+```

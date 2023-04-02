@@ -20,9 +20,6 @@ dependencies {
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:30.1.1-jre'
 
-    // apache http client
-    implementation 'org.apache.httpcomponents:httpclient:4.5.13'
-
     // spring boot
     implementation 'org.springframework.boot:spring-boot-starter-web'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'

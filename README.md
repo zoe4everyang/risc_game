@@ -244,12 +244,6 @@ POST /Movecommit/
 POST /start/
 ```
 
-#### Request
-
-| Parameter name | type   | comments                              |
-| -------------- | ------ | ------------------------------------- |
-| Player Name    | string | Player can make a name for themselves |
-
 #### Response
 
 #### Full Response

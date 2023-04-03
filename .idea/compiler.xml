@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="client" target="11" />
+      <module name="client.main" target="11" />
+      <module name="client.risk_game" target="11" />
+      <module name="client.risk_game.main" target="11" />
+      <module name="client.risk_game.test" target="11" />
+      <module name="client.test" target="11" />
+      <module name="risk_game.main" target="11" />
+      <module name="risk_game.test" target="11" />
+      <module name="server" target="11" />
+      <module name="server.main" target="11" />
+      <module name="server.test" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

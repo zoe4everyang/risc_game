@@ -6,4 +6,8 @@ public abstract class Message {
     public Message(Integer playerID) {
         this.playerID = playerID;
     }
+
+    public Integer getPlayerID() {
+        return playerID;
+    }
 }

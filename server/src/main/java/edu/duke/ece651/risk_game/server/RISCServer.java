@@ -21,7 +21,8 @@ public class RISCServer {
     }
 
     @PostMapping("/start")
-    public String GameStartListen(@RequestBody Message requestBody) {
+    public String GameStartListen(@RequestBody String requestBody) {
+
         return requestHandler.GameStartHandler(requestBody);
     }
     @PostMapping("/place")

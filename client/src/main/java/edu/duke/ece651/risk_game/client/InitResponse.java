@@ -1,12 +1,12 @@
 package edu.duke.ece651.risk_game.client;
-import edu.duke.ece651.risk_game.server.v1Territory;
+import edu.duke.ece651.risk_game.server.Territory;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class InitResponse extends Response{
     private final Integer unitAvailable;
 
-    public InitResponse(Integer playerID, String playerName, ArrayList<v1Territory> territories, Integer unitAvailable) {
+    public InitResponse(Integer playerID, String playerName, List<Territory> territories, Integer unitAvailable) {
         super(playerID, playerName, territories);
         this.unitAvailable = unitAvailable;
     }

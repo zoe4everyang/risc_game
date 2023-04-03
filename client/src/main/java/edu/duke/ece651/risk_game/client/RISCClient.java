@@ -59,8 +59,8 @@ public class RISCClient {
         return sendCommand(request, requestBody);
     }
 
-    public Response sendMoveCommit(MoveCommitRequest requestBody) throws IOException {
-        HttpPost request = new HttpPost("http://localhost:8080" + "/Movecommit");
+    public Response sendAction(MoveCommitRequest requestBody) throws IOException {
+        HttpPost request = new HttpPost("serverURL" + "/act");
 
         return sendCommand(request, requestBody);
     }

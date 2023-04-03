@@ -1,4 +1,4 @@
-# RISK Game
+# RISC Game
 
 **Quanzhi Fu, Yiheng Liu, Tianji Qiang, Ziyi Yang, Guowang Zeng**
 

@@ -31,7 +31,6 @@ public class v1CombatResolver implements CombatResolver {
         this.seed = seed;
         // set seed for Math.random
         generator = new Random(seed);
-
     }
     
 }

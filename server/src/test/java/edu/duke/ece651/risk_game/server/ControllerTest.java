@@ -39,5 +39,50 @@ public class ControllerTest {
         assertEquals(controller.getTerritories().get(1).getOwner(), 1);
         assertEquals(controller.getTerritories().get(2).getOwner(), 1);
         assertEquals(controller.getTerritories().get(0).getOwner(), 1);
+
+
+        // second test case
+        Controller controller2 = new Controller(3, new v1MapFactory());
+        assertTrue(!controller2.checkEnd());
+        assertTrue(controller2.getLosers().size() == 0);
+        assertEquals(controller2.getWinner(), -1);
+        controller2.initGame(List.of(10, 20, 500, 3000, 500, 3000));
+        assertEquals(controller2.getTerritories().get(0).getUnits(), 10);
+        assertEquals(controller2.getTerritories().get(1).getUnits(), 20);
+        assertEquals(controller2.getTerritories().get(2).getUnits(), 500);
+        assertEquals(controller2.getTerritories().get(3).getUnits(), 3000);
+        assertEquals(controller2.getTerritories().get(4).getUnits(), 500);
+        assertEquals(controller2.getTerritories().get(5).getUnits(), 3000);
+        assertEquals(controller2.getTerritories().get(1).getOwner(), 0);
+        assertEquals(controller2.getTerritories().get(3).getOwner(), 2);
+        assertEquals(controller2.getTerritories().get(4).getOwner(), 1);
+        end = controller2.step(List.of(2, 1), List.of(3, 2), List.of(1, 0), List.of(1500, 300), List.of(), List.of(), List.of(), List.of());
+        assertFalse(end);
+        assertEquals(controller2.getTerritories().get(1).getOwner(), 2);
+        assertEquals(controller2.getTerritories().get(3).getOwner(), 2);
+        assertEquals(controller2.getTerritories().get(0).getOwner(), 1);
+        assertEquals(controller2.getTerritories().get(4).getOwner(), 1);
+        assertEquals(controller2.getLosers().size(), 1);
+        assertEquals(controller2.getLosers().get(0), 0);
+        assertEquals(controller2.getWinner(), -1);
+        assertFalse(controller2.checkEnd());
+        end = controller2.step(List.of(2, 2), List.of(1, 5), List.of(0, 4), List.of(1200, 1200), List.of(), List.of(), List.of(), List.of()); 
+        assertFalse(end);
+        assertEquals(controller2.getTerritories().get(1).getOwner(), 2);
+        assertEquals(controller2.getTerritories().get(3).getOwner(), 2);
+        assertEquals(controller2.getTerritories().get(0).getOwner(), 2);
+        assertEquals(controller2.getTerritories().get(4).getOwner(), 2);
+        assertEquals(controller2.getLosers().size(), 1);
+        assertEquals(controller2.getLosers().get(0), 0);
+        assertEquals(controller2.getWinner(), -1);
+        assertFalse(controller2.checkEnd());
+
+        end = controller2.step(List.of(2), List.of(0), List.of(2), List.of(900), List.of(), List.of(), List.of(), List.of()); 
+        assertTrue(end);
+        assertEquals(controller2.getLosers().size(), 2);
+        assertEquals(controller2.getLosers().get(0), 0);
+        assertEquals(controller2.getLosers().get(1), 1);
+        assertEquals(controller2.getWinner(), 2);
+        assertTrue(controller2.checkEnd());
     }
 }

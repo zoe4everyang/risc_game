@@ -7,10 +7,12 @@ import java.util.List;
 public class v1WorldMap implements WorldMap{
     private List<Territory> map;
     private int numPlayers;
+    private Checker checker;
     
     public v1WorldMap(int numPlayers, List<Territory> map) {
         this.map = map;
         this.numPlayers = numPlayers;
+        this.checker = new Checker();
     }
 
     @Override
@@ -121,14 +123,22 @@ public class v1WorldMap implements WorldMap{
 
     @Override
     public void makeAttack(int playerId, int from, int to, int num) {
-        // TODO: check if the attack is valid
+        if (!checker.checkAttackTarget(playerId, from, to, num, this)) {
+            makeMove(playerId, from, to, num);
+            return;
+        }
+        if (!checker.checkAttack(playerId, from, to, num, this)) {
+            return;
+        }
         map.get(from).removeUnit(num);
         map.get(to).defence(playerId, num);
     }
 
     @Override
     public void makeMove(int playerId, int from, int to, int num) {
-        // TODO: check if the move is valid
+        if (!checker.checkMove(playerId, from, to, num, this)) {
+            return;
+        }
         map.get(from).removeUnit(num);
         map.get(to).addUnit(num);
     }

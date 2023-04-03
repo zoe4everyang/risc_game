@@ -66,7 +66,7 @@ public class ControllerTest {
         assertEquals(controller2.getLosers().get(0), 0);
         assertEquals(controller2.getWinner(), -1);
         assertFalse(controller2.checkEnd());
-        end = controller2.step(List.of(2, 2), List.of(1, 5), List.of(0, 4), List.of(1200, 1200), List.of(), List.of(), List.of(), List.of()); 
+        end = controller2.step(List.of(2, 2), List.of(1, 5), List.of(0, 4), List.of(1400, 2990), List.of(), List.of(), List.of(), List.of()); 
         assertFalse(end);
         assertEquals(controller2.getTerritories().get(1).getOwner(), 2);
         assertEquals(controller2.getTerritories().get(3).getOwner(), 2);
@@ -77,7 +77,7 @@ public class ControllerTest {
         assertEquals(controller2.getWinner(), -1);
         assertFalse(controller2.checkEnd());
 
-        end = controller2.step(List.of(2), List.of(0), List.of(2), List.of(900), List.of(), List.of(), List.of(), List.of()); 
+        end = controller2.step(List.of(2), List.of(4), List.of(2), List.of(2000), List.of(), List.of(), List.of(), List.of()); 
         assertTrue(end);
         assertEquals(controller2.getLosers().size(), 2);
         assertEquals(controller2.getLosers().get(0), 0);

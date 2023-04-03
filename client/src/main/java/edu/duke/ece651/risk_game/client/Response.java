@@ -1,12 +1,12 @@
 package edu.duke.ece651.risk_game.client;
-import edu.duke.ece651.risk_game.server.Territory;
+import edu.duke.ece651.risk_game.server.v1Territory;
 import java.util.ArrayList;
 
 public class Response extends Message{
     private final String playerName;
-    private final ArrayList<Territory> territories;
+    private final ArrayList<v1Territory> territories;
 
-    public Response(Integer playerID, String playerName, ArrayList<Territory> territories) {
+    public Response(Integer playerID, String playerName, ArrayList<v1Territory> territories) {
         super(playerID);
         this.playerName = playerName;
         this.territories = territories;
@@ -16,7 +16,7 @@ public class Response extends Message{
         return playerName;
     }
 
-    public ArrayList<Territory> getTerritories() {
+    public ArrayList<v1Territory> getTerritories() {
         return territories;
     }
 

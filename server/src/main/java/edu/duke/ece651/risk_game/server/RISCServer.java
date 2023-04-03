@@ -27,10 +27,10 @@ public class RISCServer {
     }
     @PostMapping("/place")
     public String PlaceUnitListen(@RequestBody String requestBody) {
-        return requestHandler.PlaceUnitHandler();
+        return requestHandler.PlaceUnitHandler(requestBody);
     }
     @PostMapping("/Movecommit")
     public String OperationListen(@RequestBody String requestBody) {
-        return requestHandler.OperationHandler();
+        return requestHandler.OperationHandler(requestBody);
     }
 }

@@ -1,2 +1,3 @@
 rootProject.name = 'risk_game'
 include ':server'
+project(':server').projectDir = new File(settingsDir, 'server')

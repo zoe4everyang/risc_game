@@ -10,11 +10,4 @@ public class PlacementRequest extends Message{
         this.placement = placement;
     }
 
-    public ArrayList<Integer> getPlacement() {
-        return placement;
-    }
-
-    public Integer getPlacementAt(Integer i) {
-        return placement.get(i);
-    }
 }

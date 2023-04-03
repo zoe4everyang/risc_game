@@ -19,36 +19,4 @@ public class MoveCommitRequest extends Message{
         this.to = to;
         this.nums = nums;
     }
-
-    public ArrayList<Integer> getOperation() {
-        return operation;
-    }
-
-    public Integer getOperationAt(Integer i) {
-        return operation.get(i);
-    }
-
-    public ArrayList<Integer> getFrom() {
-        return from;
-    }
-
-    public Integer getFromAt(Integer i) {
-        return from.get(i);
-    }
-
-    public ArrayList<Integer> getTo() {
-        return to;
-    }
-
-    public Integer getToAt(Integer i) {
-        return to.get(i);
-    }
-
-    public ArrayList<Integer> getNums() {
-        return nums;
-    }
-
-    public Integer getNumsAt(Integer i) {
-        return nums.get(i);
-    }
 }

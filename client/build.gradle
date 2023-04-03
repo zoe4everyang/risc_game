@@ -30,7 +30,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     // dependencies for server for territory class
-    implementation project(':server')
+    implementation project(':server');
+
 }
 
 tasks.named('test') {

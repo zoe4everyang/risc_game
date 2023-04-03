@@ -11,8 +11,9 @@ import java.io.IOException;
 
 public class RISCClient {
 
-    HttpClient theClient;
-    ObjectMapper jsonMapper;
+    private final HttpClient theClient;
+    private final ObjectMapper jsonMapper;
+    private final String serverURL = "http://localhost:8080";
 
     public RISCClient() {
         theClient = HttpClientBuilder.create().build();
@@ -20,7 +21,7 @@ public class RISCClient {
     }
 
     public InitResponse sendStart() throws IOException {
-        HttpPost request = new HttpPost("http://localhost:8080" + "/start");
+        HttpPost request = new HttpPost(serverURL + "/start");
 
         // set request headers
         request.setHeader("Content-Type", "application/json");
@@ -53,7 +54,7 @@ public class RISCClient {
         return jsonMapper.readValue(responseContent, Response.class);
     }
     public Response sendPlacement(PlacementRequest requestBody) throws IOException {
-        HttpPost request = new HttpPost("http://localhost:8080" + "/place");
+        HttpPost request = new HttpPost(serverURL + "/place");
 
         return sendCommand(request, requestBody);
     }

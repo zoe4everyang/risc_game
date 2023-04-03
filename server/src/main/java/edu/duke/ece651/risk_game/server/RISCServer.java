@@ -21,16 +21,15 @@ public class RISCServer {
     }
 
     @PostMapping("/start")
-    public String GameStartListen(@RequestBody String requestBody) {
-
+    public String GameStartListen(@RequestBody Message requestBody) {
         return requestHandler.GameStartHandler(requestBody);
     }
     @PostMapping("/place")
-    public String PlaceUnitListen(@RequestBody String requestBody) {
+    public String PlaceUnitListen(@RequestBody Message requestBody) {
         return requestHandler.PlaceUnitHandler(requestBody);
     }
     @PostMapping("/Movecommit")
-    public String OperationListen(@RequestBody String requestBody) {
+    public String OperationListen(@RequestBody Message requestBody) {
         return requestHandler.OperationHandler(requestBody);
     }
 }

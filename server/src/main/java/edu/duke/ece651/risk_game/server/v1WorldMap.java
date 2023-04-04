@@ -142,5 +142,16 @@ public class v1WorldMap implements WorldMap{
         map.get(from).removeUnit(num);
         map.get(to).addUnit(num);
     }
+
+    // TODO: check if one id is on the map (used in checker)
+    @Override
+    public Boolean checkOnMap(int id){
+        for(Territory T : map){
+            if(T.getId() == id){
+                return true;
+            }
+        }
+        return false;
+    }
 }
 

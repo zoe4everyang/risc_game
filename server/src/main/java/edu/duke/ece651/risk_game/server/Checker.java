@@ -39,4 +39,12 @@ public class Checker {
         }
         return true;
     }
+
+    // TODO: check the new check method
+    public Boolean checkUsable(int playerId, int from, int to, int num, WorldMap map) {
+       if(map.checkOnMap(to) == false && checkAttack(num) == false) {
+            throw new IllegalArgumentException("you are trying to move from/to a territory which does not exist!");
+            return false;
+       }
+    }
 }

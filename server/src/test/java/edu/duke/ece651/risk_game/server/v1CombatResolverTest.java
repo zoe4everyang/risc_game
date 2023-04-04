@@ -16,4 +16,39 @@ public class v1CombatResolverTest {
         System.out.println(result);
         assertEquals(result, 98);
     }   
+
+    // to test the combat resolver, we need to fix the seed
+    @Test 
+    public void test2_CombatResolver() {
+        CombatResolver combatResolver = new v1CombatResolver();
+        int attackNum = 100;
+        int defendNum = 2;
+        combatResolver.setSeed(1);
+        int result = combatResolver.resolveCombat(attackNum, defendNum);
+        System.out.println(result);
+        assertEquals(result, 99);
+    }
+
+    @Test 
+    public void test3_CombatResolver() {
+        CombatResolver combatResolver = new v1CombatResolver();
+        int attackNum = 100;
+        int defendNum = 2;
+        combatResolver.setSeed(0);
+        int result = combatResolver.resolveCombat(attackNum, defendNum);
+        System.out.println(result);
+        assertEquals(result, 100);
+    }
+
+    @Test 
+    public void test4_CombatResolver() {
+        CombatResolver combatResolver = new v1CombatResolver();
+        int attackNum = 100;
+        int defendNum = 50;
+        combatResolver.setSeed(0);
+        int result = combatResolver.resolveCombat(attackNum, defendNum);
+        System.out.println(result);
+        assertEquals(result, 58);
+    }
+
 }

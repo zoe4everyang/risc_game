@@ -27,6 +27,7 @@ public class v1TerritoryTest {
         territory.removeUnit(unit);
         assertEquals(territory.getUnits(), 0);
     }
+
     @Test 
     public void test_defence() {
         CombatResolver combatResolver = new v1CombatResolver();
@@ -49,6 +50,7 @@ public class v1TerritoryTest {
         assertEquals(territory.getOwner(), attacker);
         assertEquals(territory.getUnits(), 98);
     }
+
     @Test
     public void test_getDistances() {
         CombatResolver combatResolver = new v1CombatResolver();
@@ -63,4 +65,20 @@ public class v1TerritoryTest {
         v1Territory territory = new v1Territory(id, name, owner, distances, combatResolver);
         assertEquals(territory.getDistances(), distances);
     }
+
+    @Test
+    public void test_removeUnit() {
+        CombatResolver combatResolver = new v1CombatResolver();
+        int id = 1;
+        String name = "Territory1";
+        int owner = 1;
+        List<Integer> distances = new ArrayList<Integer>();
+        combatResolver.setSeed(0);
+        v1Territory territory = new v1Territory(id, name, owner, distances, combatResolver);
+        territory.addUnit(2);
+        assertEquals(territory.getUnits(), 2);
+        territory.removeUnit(1);
+        assertEquals(territory.getUnits(), 1);
+    }
+
 }

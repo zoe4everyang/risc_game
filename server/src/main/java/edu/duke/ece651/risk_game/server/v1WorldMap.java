@@ -146,9 +146,9 @@ public class v1WorldMap implements WorldMap{
 
     // TODO: check if one id is on the map (used in checker)
     @Override
-    public Boolean checkOnMap(int id) {
-        for(Territory T : map) {
-            if(T.getID() == id) {
+    public Boolean checkOnMap(int id){
+        for(Territory T : map){
+            if(T.getID() == id){
                 return true;
             }
         }

@@ -18,12 +18,12 @@ Initialize the game. Set the num of units  to each territory.  unitPlacement[i] 
 public void initGame(List<int> unitPlacement)
 ```
 
-#### getWorld
+#### getTerritories
 
 get the state of current world game. Return a list of territory represent current state of the world.
 
 ```java
-public List<Territory> getWrold()
+public List<Territory> getTerritories()
 ```
 
 

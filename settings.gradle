@@ -11,6 +11,7 @@ rootProject.name = 'risk_game'
 
 include 'client'
 project(':client').projectDir = new File(rootProject.projectDir, 'client')
-
 include 'server'
 project(':server').projectDir = new File(rootProject.projectDir, 'server')
+include 'shared'
+project(':shared').projectDir = new File(rootProject.projectDir, 'shared')

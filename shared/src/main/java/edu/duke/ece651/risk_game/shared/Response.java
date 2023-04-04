@@ -7,6 +7,7 @@ import java.util.List;
  */
 public class Response extends Message{
     private final String playerName;
+    private final Integer gameState;
     private final List<Territory> territories;
 
     /**
@@ -16,15 +17,21 @@ public class Response extends Message{
      * @param playerName the name of the player
      * @param territories the list of territories that the player owns
      */
-    public Response(Integer playerID, String playerName, List<Territory> territories) {
+    public Response(Integer playerID, String playerName, Integer gameState, List<Territory> territories) {
         super(playerID);
         this.playerName = playerName;
+        this.gameState = gameState;
         this.territories = territories;
     }
 
     // This method is used to get the name of the player.
     public String getPlayerName() {
         return playerName;
+    }
+
+    // This method is used to get the state of the game.
+    public Integer getGameState() {
+        return gameState;
     }
 
     // This method is used to get the list of territories that the player owns.

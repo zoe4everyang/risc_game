@@ -66,7 +66,6 @@ public class v1MapFactory implements MapFactory{
         Territory t9 = new v1Territory(8, "t9", 4, List.of(4, 3, 2, 3, 2, 1, 2, 1, 0, 3), new v1CombatResolver());
         Territory t10 = new v1Territory(9, "t10", 4, List.of(3, 4, 5, 2, 3, 4, 1, 2, 3, 0), new v1CombatResolver());
         return new v1WorldMap(3, List.of(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
-        throw new UnsupportedOperationException("Unimplemented method 'make5PlayerMap'");
     }
     
 }

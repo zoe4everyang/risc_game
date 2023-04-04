@@ -4,13 +4,12 @@ import java.util.List;
 
 public class Controller {
     // TODO: write test cases for the CONTROLLER
-    private MapFactory mapFactory;
+    private final MapFactory mapFactory = new v1MapFactory();
     private int numPlayers;
     private WorldMap world;
     private List<Territory> territories;
-    Controller(int numPlayers, MapFactory mapFactory) {
+    Controller(int numPlayers) {
         // constructor
-        this.mapFactory = mapFactory;
         if (numPlayers == 2) {
             this.world = mapFactory.make2PlayerMap();
         } else if (numPlayers == 3) {
@@ -30,27 +29,7 @@ public class Controller {
     }
 
 
-    private void resolveAttack(List<Integer> playerIds, 
-            List<Integer> fromIds, 
-            List<Integer> toIds, 
-            List<Integer> unitNums) {
-        // resolve attack
-        for (int i = 0; i < playerIds.size(); i++) {
-           world.makeAttack(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i));
-        }
-    }
 
-    private void resolveMove(List<Integer> playerIds, 
-            List<Integer> fromIds, 
-            List<Integer> toIds, 
-            List<Integer> unitNums
-            ) {
-        // resolve move
-        for (int i = 0; i < playerIds.size(); i++) {
-            world.makeMove(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i));
-        }
-        
-    }
 
     public void initGame(List<Integer> unitPlacement) {
         // init game
@@ -67,8 +46,8 @@ public class Controller {
             List<Integer> moveNum
     ) {
         // make a step
-        resolveMove(moverIds, moveFrom, moveTo, moveNum);
-        resolveAttack(attackerIds, attackFrom, attackTo, attackNum);
+        world.resolveMove(moverIds, moveFrom, moveTo, moveNum);
+        world.resolveAttack(attackerIds, attackFrom, attackTo, attackNum);
         return checkEnd();
     }
 
@@ -88,6 +67,10 @@ public class Controller {
     public Boolean checkEnd() {
         // check if game ends
         return world.checkEnd();
+    }
+
+    public int getPlayers() {
+        return numPlayers;
     }
 
 

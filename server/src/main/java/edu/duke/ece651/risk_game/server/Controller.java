@@ -1,6 +1,7 @@
 package edu.duke.ece651.risk_game.server;
 
 import java.util.List;
+
 public class Controller {
     // TODO: write test cases for the CONTROLLER
     private MapFactory mapFactory;

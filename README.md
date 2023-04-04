@@ -17,6 +17,8 @@ This project can be used as a practical case study for learning Java language pr
 - Java11
 - Gradle 7.3.3
 - Springboot 2.7.10
+- Jackson 2.13
+- HttpClient 4.5.13
 
 
 
@@ -24,17 +26,19 @@ This project can be used as a practical case study for learning Java language pr
 
 The UML class diagram of our design is shown below:
 
-[此处应有uml图]
+![](./RISC_evo1.drawio.png)
 
+#### Sub-module A. Front-End (client)
 
+##### (1) RISC-Front (main)
 
-#### A. Front-End (Client)
+##### (2) ClientController
 
-##### Client
+Control the game logic at the client side
+
+##### (3) Client
 
 Manage the initial connection with server as well as the later game process including sending request and receiving response.
-
-（注意收到server“command错误”的响应后重新要求用户输入command的逻辑）
 
 **Notice:**
 
@@ -42,37 +46,21 @@ A player loses when he no longer controls any territories.
 
 A player who has lost may continue to watch the game if he desires, or may disconnect.
 
-##### 	a. SimpleChecker
-
-​	Do simple pre-check over the input command of players. 
-
-​	(字符串格式正常即可通过check， 目的是减轻server压力)
-
-##### 	b. ResultParser
-
-​	Parse the json message received from the server about how the world looks like now.
-
-##### 	c. View
+##### 	(4) View
 
 ​	Helps to present the current world. (text-based for Evo1)
 
 
 
- 
-
-#### B. Back-End (Server)
+#### Sub-module B. Back-End (server)
 
 ##### (1) RISC-back
 
-Responsible for starting the server. (在这里做玩家人数的输入？)
+Responsible for starting the server.
 
 ##### (2) Server
 
 Responsible for receiving and parsing requests from the client, and pass it to handler for further process.
-
-##### 	a. CommandParser
-
-​	Parse the json message received from the server about how the world looks like now.
 
 ##### (3) RequestHandler
 
@@ -98,11 +86,7 @@ When a player has lost, the server should automatically consider his moves to be
 
 ​	**a. Player**
 
-​	**b. Territory**
-
-​	Each territory shall be “owned” by one player at any given time. 
-
-​	**c. AbstractWorldFactory** (Abstract Factory)
+​	**b. AbstractWorldFactory** (Abstract Factory)
 
 ​	 Generate the world (the initial territories and soldier distribution for each player) according to the number of players(use hardcode).
 
@@ -112,15 +96,19 @@ When a player has lost, the server should automatically consider his moves to be
 
 ​	 Each player shall have the same number of initial units.
 
-​	**d. Checker** (Chain of Responsibility)
 
-​		i. Check if adjacency of the attack command
 
-​		ii. Check if the move action is feasible (人够+人过得去)
+#### Sub-module C. Shared Library (shared)
 
-​	**e. CombatResolver**
+**(1) Message**
 
-​		Responsible for the combat logic. Each territory should have an instance of this resolver. And every turn, the resolver of all territories should be 	traversed.
+**(2) Territory**
+
+Each territory shall be “owned” by one player at any given time. 
+
+​	**a. CombatResolver**
+
+​	Responsible for the combat logic. Each territory should have an instance of this resolver. And every turn, the resolver of all territories should be traversed.
 
 ​	**Combat Logic:**
 
@@ -136,47 +124,65 @@ When a player has lost, the server should automatically consider his moves to be
 
 ​	(d) If units from territory X attack territory Y, and at the same time, units from territory Y attack territory X, then they are assumed to take drastically different routes between their territories, missing each other, and ending up at their destination with no combat in the middle. For example, if all units from X attack Y, and all units from Y attack X, then (assuming no other players attack those territories) both attacks will be successful with no units lost by either side (since there will be no defenders at the start of the battle). 
 
+**d. Checker** 
+
+​		i. Check if adjacency of the attack command
+
+​		ii. Check if the move action is feasible
+
 
 
 ## 4. HTTP Connection Info
 
 We plan to use Restful API to build HTTP connection between client and server.
 
-### MoveCommit
+### Action
 
 #### Request
 
 ```http
-POST /Movecommit/
+POST /act/
 ```
 
-| Parameter name | type  | comments                                                   |
-| -------------- | ----- | ---------------------------------------------------------- |
-| Player ID      | int   | Player's Identity                                          |
-| Operation      | int[] | Player's Opeation ID, 1 represent move, 2 represent attack |
-| From           | int[] | src territories ids                                        |
-| To             | int[] | des territories ids                                        |
-| Nums           | int[] | num of units                                               |
+| Parameter name | type  | comments                              |
+| -------------- | ----- | ------------------------------------- |
+| Player ID      | int   | Player's Identity                     |
+| MoveFrom       | int[] | src territories ids for move action   |
+| MoveTo         | int[] | des territories ids for move action   |
+| MoveNums       | int[] | num of units for move action          |
+| AttackFrom     | int[] | src territories ids for attack action |
+| AttackTo       | int[] | des territories ids for attack action |
+| AttackNums     | int[] | num of units  for attack action       |
 
 ```json
 {
     "PlayerId": 1,
-    "Operation" : [
-        1, 
-        2, 
-        1
-    ],
-    "From" : [
+    "MoveFrom" : [
         0, 
         0, 
         1, 
     ],
-    "To" : [
+    "MoveTo" : [
         1, 
         2,
         3
     ],
-    "Nums": [
+    "MoveNums": [
+        10,
+        20,
+        30
+    ],
+    "AttackFrom" : [
+        0, 
+        0, 
+        1, 
+    ],
+    "AttackTo" : [
+        1, 
+        2,
+        3
+    ],
+    "AttackNums": [
         10,
         20,
         30
@@ -190,11 +196,12 @@ POST /Movecommit/
 
 #### Full Response
 
-| Parameter Name | Type        | comments            |
-| -------------- | ----------- | ------------------- |
-| Player ID      | int         | Player's Identity   |
-| Territories    | []Territory | List of Territories |
-| playerName     | string      | the name of player  |
+| Parameter Name | Type        | comments                                    |
+| -------------- | ----------- | ------------------------------------------- |
+| Player ID      | int         | Player's Identity                           |
+| playerName     | string      | the name of player                          |
+| gameState      | int         | 0 for next turn, 1 for lose, 2 for gameover |
+| Territories    | []Territory | List of Territories                         |
 
 #### Territory
 
@@ -377,3 +384,15 @@ POST /place/
     ],
 }
 ```
+
+
+
+## 5. HTTP Design in Action Phase (to be deleted) 
+
+在action阶段：
+客户端：
+每个玩家会发出两个请求，一个post请求，用以发出move和attack指令来修改服务器状态，服务器只会return一个"success"。在这个post请求收到以后（不知道这里需不需要显式地进行阻塞），client再发一个get request单纯用来请求现在世界状态，服务器会返回territory list。
+
+服务端：
+
+服务端接收到post指令，先把指令存进redis，然后被阻塞。假设现在是三个玩家，那么就是第三个线程进来的时候，会终止阻塞，但是它会在notify all之前把指令从redis提出来并整合，然后传给后端（controller部分）更新状态。然后notify all，服务器给所有玩家return一个success。接着各个玩家去获取现在的territory list

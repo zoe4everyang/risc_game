@@ -1,3 +1,4 @@
 rootProject.name = 'risk_game'
-include ':server'
+include (':server', ':shared')
 project(':server').projectDir = new File(settingsDir, 'server')
+project(':shared').projectDir = new File(settingsDir, '../shared')

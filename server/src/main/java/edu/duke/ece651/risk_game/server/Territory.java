@@ -1,6 +1,6 @@
 package edu.duke.ece651.risk_game.server;
 import java.util.List;
-interface Territory {
+public interface Territory {
     public void addUnit(int unit);
     public void removeUnit(int unit);
     public void defence(int attacker, int unit);

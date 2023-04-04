@@ -117,7 +117,9 @@ public class v1WorldMap implements WorldMap{
             if (map.get(i).getUnits() != 0) {
                 throw new IllegalArgumentException("Cannot set units for territories that already have units");
             }
-            map.get(i).addUnit(placement.get(i));
+            if (placement.get(i) > 0) {
+                map.get(i).addUnit(placement.get(i));
+            }
         }
     }
 
@@ -130,7 +132,6 @@ public class v1WorldMap implements WorldMap{
         if (!checker.checkAttack(playerId, from, to, num, this)) {
             return;
         }
-        map.get(from).removeUnit(num);
         map.get(to).defence(playerId, num);
     }
 
@@ -152,6 +153,36 @@ public class v1WorldMap implements WorldMap{
             }
         }
         return false;
+    }
+
+    @Override
+    public void resolveAttack(List<Integer> playerIds, 
+    List<Integer> fromIds, 
+    List<Integer> toIds, 
+    List<Integer> unitNums) {
+    // get attack units
+    for (int i = 0; i < playerIds.size(); i++) {
+        if (!checker.checkAttackNumber(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i), this)) {
+            map.get(i).removeUnit(unitNums.get(i));
+        }
+    }
+    // resolve attack
+    for (int i = 0; i < playerIds.size(); i++) {
+        makeAttack(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i));
+    }
+    }
+
+    @Override
+    public void resolveMove(List<Integer> playerIds, 
+            List<Integer> fromIds, 
+            List<Integer> toIds, 
+            List<Integer> unitNums
+            ) {
+        // resolve move
+        for (int i = 0; i < playerIds.size(); i++) {
+            makeMove(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i));
+        }
+        
     }
 }
 

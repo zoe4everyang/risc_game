@@ -13,6 +13,8 @@ public interface WorldMap {
     public void setUnits(List<Integer> palcement);
     public void makeAttack(int playerId, int from, int to, int num);
     public void makeMove(int playerId, int from, int to, int num);
+    public void resolveAttack(List<Integer> playerIds, List<Integer> fromIds, List<Integer> toIds, List<Integer> unitNums);
+    public void resolveMove(List<Integer> playerIds, List<Integer> fromIds, List<Integer> toIds, List<Integer> unitNums);
 
     //TODO: check if the territory is on the map
     public Boolean checkOnMap(int id);

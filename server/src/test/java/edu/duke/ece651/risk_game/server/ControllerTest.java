@@ -12,7 +12,7 @@ public class ControllerTest {
     @Test
     public void test_isEnd() {
         // write test cases for this class
-        Controller controller = new Controller(2, new v1MapFactory());
+        Controller controller = new Controller(2);
         assertTrue(!controller.checkEnd());
         assertTrue(controller.getLosers().size() == 0);
         assertEquals(controller.getWinner(), -1);
@@ -42,7 +42,7 @@ public class ControllerTest {
 
 
         // second test case
-        Controller controller2 = new Controller(3, new v1MapFactory());
+        Controller controller2 = new Controller(3);
         assertTrue(!controller2.checkEnd());
         assertTrue(controller2.getLosers().size() == 0);
         assertEquals(controller2.getWinner(), -1);

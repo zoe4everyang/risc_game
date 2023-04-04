@@ -3,12 +3,16 @@ package edu.duke.ece651.risk_game.server;
 import java.util.Random;
 
 public class v1CombatResolver implements CombatResolver {
+    
     private int seed;
+
     private Random generator;
+
     v1CombatResolver() {
         seed = (int) Math.random() * 5000;
         generator = new Random(seed);
     }
+
     public int resolveCombat(int attackNum, int defendNum) {
         // return the number of units that survive, positive indicate attacker wins, negative indicate defender wins
         // the absolute value of return value indicate the number of units that survive

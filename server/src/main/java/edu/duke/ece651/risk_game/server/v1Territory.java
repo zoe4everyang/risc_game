@@ -1,5 +1,6 @@
 package edu.duke.ece651.risk_game.server;
 import java.util.List;
+
 public class v1Territory implements Territory{
     private int id;
     private String name;
@@ -23,10 +24,12 @@ public class v1Territory implements Territory{
         // add unit to territory
         this.units += unit;
     }
+
     public void removeUnit(int unit) {
         // remove unit from territory
         this.units -= unit;
     }
+    
     public void defence(int attacker, int unit) {
         // defend against attacker
         int result = combatResolver.resolveCombat(unit, this.units);
@@ -39,6 +42,7 @@ public class v1Territory implements Territory{
             this.units = -result;
         }
     }
+    
     public List<Integer> getDistances() {
         // return list of distances to other territories
         return distances;

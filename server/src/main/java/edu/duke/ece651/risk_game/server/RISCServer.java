@@ -1,7 +1,6 @@
 package edu.duke.ece651.risk_game.server;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
+import edu.duke.ece651.risk_game.shared.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,27 +13,40 @@ public class RISCServer {
 
     public RISCServer() {
         this.playerNum = 2;
-        this.requestHandler = new RequestHandler(playerNum);
+        this.requestHandler = new RequestHandler(this.playerNum);
     }
 
     public RISCServer(@Value("${risk.game.playerCount}") Integer playerNum) {
         this.playerNum = playerNum;
-        this.requestHandler = new RequestHandler(playerNum);
+        this.requestHandler = new RequestHandler(this.playerNum);
     }
 
     @PostMapping("/start")
-    public String GameStartListen(@RequestBody Message requestBody) {
-        // TODO: message object convert to json string
-        return requestHandler.gameStartHandler();
+    public Message GameStartListen(@RequestBody Message requestBody) {
+        try{
+            return requestHandler.gameStartHandler();
+        }catch(InterruptedException e) {
+            System.out.println(e);
+        }
+        return null;
     }
     @PostMapping("/place")
-    public String PlaceUnitListen(@RequestBody Message requestBody) {
-        // TODO: message object convert to json string
-        return requestHandler.placeUnitHandler(requestBody);
+    public Message PlaceUnitListen(@RequestBody PlacementRequest requestBody) {
+        try{
+            return requestHandler.placeUnitHandler(requestBody);
+        }catch(InterruptedException e) {
+            System.out.println(e);
+        }
+        return null;
+
     }
     @PostMapping("/act")
-    public String OperationListen(@RequestBody Message requestBody) {
-        // TODO: message object convert to json string
-        return requestHandler.operationHandler(requestBody);
+    public Message OperationListen(@RequestBody ActionRequest requestBody) {
+        try{
+            return requestHandler.operationHandler(requestBody);
+        }catch(InterruptedException e) {
+            System.out.println(e);
+        }
+        return null;
     }
 }

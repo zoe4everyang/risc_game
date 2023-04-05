@@ -1,15 +1,16 @@
 package edu.duke.ece651.risk_game.server;
-import org.apache.logging.log4j.message.Message;
+import edu.duke.ece651.risk_game.shared.*;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+
 public class RequestHandler {
     private Controller controller;
-    private AtomicInteger count = new AtomicInteger(0);
+    private AtomicInteger count;
     private int playerNum;
-    private Queue<Message> msgList = new LinkedList<>();
-
+    //private Queue<Message> msgList;
+    private int registerID;
     List<Integer> attackPlayers;
     List<Integer> movePlayers;
     List<Integer> attackFrom;
@@ -22,67 +23,76 @@ public class RequestHandler {
 
     public RequestHandler(int playerNum) {
         this.playerNum = playerNum;
-        v1MapFactory v1MapFactory = new v1MapFactory();
-        controller = new Controller(playerNum, v1MapFactory);
+        controller = new Controller(playerNum);
+        count = new AtomicInteger(0);
+        //:msgList = new LinkedList<>();
+        registerID = -1;
+        attackFrom = new ArrayList<>();
+        attackTo = new ArrayList<>();
+        attackNum = new ArrayList<>();
+        moveFrom = new ArrayList<>();
+        moveTo = new ArrayList<>();
+        moveNum = new ArrayList<>();
     }
 
     public Message gameStartHandler() throws InterruptedException {
-        int playerID = controller.registerPlayer();
-        int playerName = controller.getPlayerName(playerID);
+        int playerID;
         synchronized (this) {
             count.incrementAndGet();
+            playerID = registerPlayer();
             while (count.get() < playerNum) {
                 wait();
             }
             count.set(0);
             notifyAll();
         }
-        int unitAvailable = 100;  // TODO: change later, get from controller?
+        int unitAvailable = controller.getUnitAvailable();
         List<Territory> territories = controller.getTerritories();
-        Message initResponse = new initResponse(playerID, playerName, unitAvailable, territories);
+        Message initResponse = new InitResponse(playerID, territories, unitAvailable);
         return initResponse;
     }
 
+    private int registerPlayer(){
+        registerID += 1;
+        return registerID;
+    }
+
     // place unit on all territories based on user input
-    public Message placeUnitHandler(Message msg) throws InterruptedException{
+    public Message placeUnitHandler(PlacementRequest msg) throws InterruptedException{
         synchronized (this) {
-            setPlacementByID(msg.getPlayerID, msg.getPlacememt());
+            List<Integer> unitPlacement = msg.getPlacement();
+            controller.initGame(unitPlacement);
             count.incrementAndGet();
             while (count.get() < playerNum) {
                 wait();
             }
-            List<Integer> unitPlacement = controller.getUnitPlacement();
-            controller.initGame(unitPlacement);
             count.set(0);
             notifyAll();
         }
         List<Territory> territories = controller.getTerritories();
-
-        // assign PlayerID
-        int playerID = msg.getPlayerID();
-        Message response = new response(playerID, controller.getPlayerName(playerID), territories, false);
+        Message response = new Response(msg.getPlayerID(), territories, false, false);
         return response;
     }
 
     // move & attack
-    public Message operationHandler(Message msg) throws InterruptedException{
+    public Message operationHandler(ActionRequest msg) throws InterruptedException{
 
         Boolean isGameEnd;
         int playerID = msg.getPlayerID();
-        for(int i = 0; i < msg.getAttackFrom().size(); i++){
-            attackPlayers.add(playerID);
-            attackFrom.add(msg.getAttackFrom().get(i));
-            attackTo.add(msg.getAttackTo().get(i));
-            attackNum.add(msg.getAttackNum().get(i));
-        }
-        for(int i = 0; i < msg.getMoveFrom().size(); i++){
-            movePlayers.add(playerID);
-            moveFrom.add(msg.getMoveFrom().get(i));
-            moveTo.add(msg.getMoveTo().get(i));
-            moveNum.add(msg.getMoveNum().get(i));
-        }
         synchronized (this) {
             count.incrementAndGet();
+            for(int i = 0; i < msg.getAttackFrom().size(); i++){
+                attackPlayers.add(playerID);
+                attackFrom.add(msg.getAttackFrom().get(i));
+                attackTo.add(msg.getAttackTo().get(i));
+                attackNum.add(msg.getAttackNums().get(i));
+            }
+            for(int i = 0; i < msg.getMoveFrom().size(); i++){
+                movePlayers.add(playerID);
+                moveFrom.add(msg.getMoveFrom().get(i));
+                moveTo.add(msg.getMoveTo().get(i));
+                moveNum.add(msg.getMoveNums().get(i));
+            }
             while (count.get() < playerNum) {
                 wait();
             }
@@ -92,25 +102,8 @@ public class RequestHandler {
             notifyAll();
         }
         List<Territory> territories = new ArrayList<>();
-        Message response = new response(playerID, controller.getPlayerName(playerID), territories, isGameEnd);
+        Boolean isPlayerLose = controller.checkLose(playerID);
+        Message response = new Response(playerID, territories, isPlayerLose, isGameEnd);
         return response;
     }
-}
-
-//
-//    private List<Integer> getAllUnits(Iterable<Message> msgList){
-//        List<Integer> unitPlacement = new ArrayList<>();
-//        List<Territory> territories = controller.getTerritories();
-//        for(Message msg : msgList) {
-//            int playerID = msg.getPlayerID();
-//            List<Territory> playerTerritory = getPlayerTerritories(playerID, territories);
-//            List<Integer> playerUnits = msg.getPlacement();
-//            for(int i = 0; i < playerUnits.size(); i++){
-//                int territoryID = playerTerritory.get(i).getID();
-//                unitPlacement.add(territoryID, playerUnits.get(i));
-//            }
-//        }
-//        return unitPlacement;
-//    }
-
 }

@@ -81,7 +81,7 @@ public class Controller {
         return getLosers().contains(playerId);
     }
 
-    public int getUnitAvailabel() {
+    public int getUnitAvailable() {
         return world.getUnitAvailable();
     }
 

@@ -40,11 +40,13 @@ public class RequestHandler {
         synchronized (this) {
             count.incrementAndGet();
             playerID = registerPlayer();
-            while (count.get() < playerNum) {
+            if (count.get() < playerNum) {
                 wait();
+                System.out.println(count.get());
+            } else {
+                notifyAll();
+                count.set(0);
             }
-            count.set(0);
-            notifyAll();
         }
         int unitAvailable = controller.getUnitAvailable();
         List<Territory> territories = controller.getTerritories();
@@ -63,11 +65,12 @@ public class RequestHandler {
             List<Integer> unitPlacement = msg.getPlacement();
             controller.initGame(unitPlacement);
             count.incrementAndGet();
-            while (count.get() < playerNum) {
+            if (count.get() < playerNum) {
                 wait();
+            } else {
+                count.set(0);
+                notifyAll();
             }
-            count.set(0);
-            notifyAll();
         }
         List<Territory> territories = controller.getTerritories();
         Message response = new Response(msg.getPlayerID(), territories, false, false);
@@ -93,17 +96,19 @@ public class RequestHandler {
                 moveTo.add(msg.getMoveTo().get(i));
                 moveNum.add(msg.getMoveNums().get(i));
             }
-            while (count.get() < playerNum) {
+            if (count.get() < playerNum) {
                 wait();
+            } else {
+                controller.step(attackPlayers, attackFrom, attackTo, attackNum,
+                        movePlayers, moveFrom, moveTo, moveNum);
+                count.set(0);
+                notifyAll();
             }
-            isGameEnd = controller.step(attackPlayers, attackFrom, attackTo, attackNum,
-                                        movePlayers, moveFrom, moveTo, moveNum);
-            count.set(0);
-            notifyAll();
+
         }
         List<Territory> territories = new ArrayList<>();
         Boolean isPlayerLose = controller.checkLose(playerID);
-        Message response = new Response(playerID, territories, isPlayerLose, isGameEnd);
+        Message response = new Response(playerID, territories, isPlayerLose, controller.checkEnd());
         return response;
     }
 }

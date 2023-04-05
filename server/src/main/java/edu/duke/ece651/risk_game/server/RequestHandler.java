@@ -48,7 +48,7 @@ public class RequestHandler {
         }
         int unitAvailable = controller.getUnitAvailable();
         List<Territory> territories = controller.getTerritories();
-        Message initResponse = new InitResponse(playerID, territories, unitAvailable);
+        Message initResponse = new InitResponse(playerID, territories, false, false, unitAvailable);
         return initResponse;
     }
 

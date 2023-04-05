@@ -1,4 +1,4 @@
-package edu.duke.ece651.risk_game.server;
+package edu.duke.ece651.risk_game.shared;
 
 import java.util.Random;
 
@@ -8,7 +8,7 @@ public class v1CombatResolver implements CombatResolver {
 
     private Random generator;
 
-    v1CombatResolver() {
+    public v1CombatResolver() {
         seed = (int) Math.random() * 5000;
         generator = new Random(seed);
     }

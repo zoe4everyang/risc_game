@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import edu.duke.ece651.risk_game.shared.*;
 
 public class v1WorldMapTest {
     @Test

@@ -1,9 +1,12 @@
 package edu.duke.ece651.risk_game.server;
-import edu.duke.ece651.risk_game.shared.*;
 
-import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
+import edu.duke.ece651.risk_game.shared.*;
 import org.springframework.data.redis.core.RedisTemplate;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class RequestHandler {
     private Controller controller;
@@ -119,7 +122,4 @@ public class RequestHandler {
 //        return new InitResponse(playerID, controller.getPlayerName(playerID), controller.getLosers(),
 //                controller.getTerritories(), controller.checkEnd(), controller.getUnitAvailable(playerID));
 //    }
-}
-
-
 }

@@ -5,37 +5,30 @@ import java.util.List;
 /**
  * This class is used to create a message that contains the information of response from the server.
  */
-public class Response extends Message{
+public class Response extends Message {
     //private final String playerName;
 
     private final List<Territory> territories;
-    private final Boolean winState;
+    private final Boolean loseState;
     private final Boolean endState;
 
     /**
      * This constructor is used to create a message that contains the information of the player's response.
      *
-     * @param playerID the ID of the player
-//     * @param playerName the name of the player
+     * @param playerID    the ID of the player
      * @param territories the list of territories that the player owns
+     * @param loseState   the result of the player
+     *                    (true: the player loses the game; false: the player does not lose the game)
+     * @param endState    the state of the game
+     *                    (true: the game is end; false: the game is not end)
      */
-    public Response(Integer playerID, List<Territory> territories, Boolean winState, Boolean endState) {
-    //public Response(Integer playerID, String playerName, Integer gameState, List<Territory> territories, Boolean gameEnd) {
+    public Response(Integer playerID, List<Territory> territories, Boolean loseState, Boolean endState) {
+        //public Response(Integer playerID, String playerName, Integer gameState, List<Territory> territories, Boolean gameEnd) {
         super(playerID);
         //this.playerName = playerName;
         this.territories = territories;
-        this.winState = winState;
+        this.loseState = loseState;
         this.endState = endState;
-    }
-
-    // This method is used to get the name of the player.
-//    public String getPlayerName() {
-//        return playerName;
-//    }
-
-    // This method is used to get the state of the game.
-    public Integer getGameState() {
-        return gameState;
     }
 
     // This method is used to get the list of territories that the player owns.
@@ -44,8 +37,8 @@ public class Response extends Message{
     }
 
     // This method is used to get the result of the player.
-    public Boolean isWin() {
-        return winState;
+    public Boolean isLose() {
+        return loseState;
     }
 
     // This method is used to get if the game is end.

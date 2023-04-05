@@ -13,14 +13,17 @@ public class InitResponse extends Response {
      * This constructor is used to create a message that contains the information of the player's response.
      *
      * @param playerID      the ID of the player
-     * @param playerName    the name of the player
      * @param territories   the list of territories that the player owns
+     * @param loseState     the result of the player
+     *                      (true: the player loses the game; false: the player does not lose the game)
+     * @param endState      the state of the game
+     *                      (true: the game is end; false: the game is not end)
      * @param unitAvailable the number of units that the player can place on the territories
      */
 //    public InitResponse(Integer playerID, String playerName, Integer gameState, List<Territory> territories, Boolean gameEnd, Integer unitAvailable) {
 //        super(playerID, playerName, gameState, territories, gameEnd);
-    public InitResponse(Integer playerID, List<Territory> territories, Boolean winState, Boolean endState, Integer unitAvailable) {
-        super(playerID, territories, winState, endState);
+    public InitResponse(Integer playerID, List<Territory> territories, Boolean loseState, Boolean endState, Integer unitAvailable) {
+        super(playerID, territories, loseState, endState);
         this.unitAvailable = unitAvailable;
     }
 

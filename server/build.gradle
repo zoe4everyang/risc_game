@@ -28,6 +28,7 @@ dependencies {
 
     // spring boot
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation project(path: ':')
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     // testing

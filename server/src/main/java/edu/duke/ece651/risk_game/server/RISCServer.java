@@ -1,10 +1,8 @@
 package edu.duke.ece651.risk_game.server;
-import edu.duke.ece651.risk_game.shared.*;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
+import edu.duke.ece651.risk_game.shared.ActionRequest;
+import edu.duke.ece651.risk_game.shared.Message;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +13,7 @@ public class RISCServer {
     private final RequestHandler requestHandler;
 
     public RISCServer() {
-        this.playerNum = 3;
+        this.playerNum = 2;
         this.requestHandler = new RequestHandler(playerNum);
     }
 
@@ -36,13 +34,4 @@ public class RISCServer {
     public Message ActionListen(@RequestBody ActionRequest requestBody) throws InterruptedException {
         return requestHandler.actionHandler(requestBody);
     }
-
-//    @GetMapping("/init-display")
-//    public Message InitDisplayListen(@RequestBody Message requestBody) throws InterruptedException {
-//        return requestHandler.initDisplayHandler(requestBody);
-//    }
-//    @GetMapping("/display")
-//    public Message DisplayListen(@RequestBody Message requestBody) throws InterruptedException {
-//        return requestHandler.displayHandler(requestBody);
-//    }
 }

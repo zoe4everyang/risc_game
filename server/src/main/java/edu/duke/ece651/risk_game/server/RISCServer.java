@@ -1,7 +1,7 @@
 package edu.duke.ece651.risk_game.server;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
+import edu.duke.ece651.risk_game.shared.ActionRequest;
+import edu.duke.ece651.risk_game.shared.Message;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,18 +23,15 @@ public class RISCServer {
     }
 
     @PostMapping("/start")
-    public String GameStartListen(@RequestBody Message requestBody) {
-        // TODO: message object convert to json string
+    public Message GameStartListen() throws InterruptedException {
         return requestHandler.gameStartHandler();
     }
     @PostMapping("/place")
-    public String PlaceUnitListen(@RequestBody Message requestBody) {
-        // TODO: message object convert to json string
+    public Message PlaceUnitListen(@RequestBody Message requestBody) throws InterruptedException {
         return requestHandler.placeUnitHandler(requestBody);
     }
     @PostMapping("/act")
-    public String OperationListen(@RequestBody Message requestBody) {
-        // TODO: message object convert to json string
-        return requestHandler.operationHandler(requestBody);
+    public Message ActionListen(@RequestBody ActionRequest requestBody) throws InterruptedException {
+        return requestHandler.actionHandler(requestBody);
     }
 }

@@ -1,116 +1,125 @@
 package edu.duke.ece651.risk_game.server;
-import org.apache.logging.log4j.message.Message;
+import edu.duke.ece651.risk_game.shared.*;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.springframework.data.redis.core.RedisTemplate;
 
 public class RequestHandler {
     private Controller controller;
-    private AtomicInteger count = new AtomicInteger(0);
+    private AtomicInteger count;
     private int playerNum;
-    private Queue<Message> msgList = new LinkedList<>();
-
-    List<Integer> attackPlayers;
-    List<Integer> movePlayers;
-    List<Integer> attackFrom;
-    List<Integer> attackTo;
-    List<Integer> attackNum;
-    List<Integer> moveFrom;
-    List<Integer> moveTo;
-    List<Integer> moveNum;
+    private final Object lock;
 
 
     public RequestHandler(int playerNum) {
         this.playerNum = playerNum;
-        v1MapFactory v1MapFactory = new v1MapFactory();
-        controller = new Controller(playerNum, v1MapFactory);
+        this.controller = new Controller(playerNum);
+        this.count = new AtomicInteger(0);
+        this.lock = new Object();
     }
 
     public Message gameStartHandler() throws InterruptedException {
-        int playerID = controller.registerPlayer();
-        int playerName = controller.getPlayerName(playerID);
-        synchronized (this) {
-            count.incrementAndGet();
+        int playerID;
+        synchronized (lock) {
+            playerID = count.incrementAndGet();
             while (count.get() < playerNum) {
                 wait();
             }
             count.set(0);
             notifyAll();
         }
-        int unitAvailable = 100;  // TODO: change later, get from controller?
-        List<Territory> territories = controller.getTerritories();
-        Message initResponse = new initResponse(playerID, playerName, unitAvailable, territories);
-        return initResponse;
+        //return new InitResponse(playerID, controller.getTerritories(), controller.checkWin(playerID), controller.checkEnd(), controller.getUnitAvailable(playerID));
+        return new InitResponse(playerID, controller.getTerritories(), false, controller.checkEnd(), 100);
     }
 
     // place unit on all territories based on user input
     public Message placeUnitHandler(Message msg) throws InterruptedException{
-        synchronized (this) {
-            setPlacementByID(msg.getPlayerID, msg.getPlacememt());
-            count.incrementAndGet();
-            while (count.get() < playerNum) {
-                wait();
-            }
-            List<Integer> unitPlacement = controller.getUnitPlacement();
-            controller.initGame(unitPlacement);
-            count.set(0);
-            notifyAll();
-        }
-        List<Territory> territories = controller.getTerritories();
+        RedisTemplate<String, Object> redisTemplate = RedisUtil.getRedisTemplate();
+        redisTemplate.opsForList().rightPush("Placement", msg);
 
-        // assign PlayerID
-        int playerID = msg.getPlayerID();
-        Message response = new response(playerID, controller.getPlayerName(playerID), territories, false);
-        return response;
+        synchronized (lock) {
+            count.incrementAndGet();
+            if (count.get() == playerNum) {
+                // all players have sent their commands, start to update the game state
+                List<Territory> territories = controller.getTerritories();
+                List<Integer> placement = new ArrayList<>(Collections.nCopies(territories.size(), 0));
+                while (redisTemplate.opsForList().size("Placement") > 0) {
+                    PlacementRequest cmd = (PlacementRequest) redisTemplate.opsForList().leftPop("Placement");
+                    assert cmd != null;
+                    List<Integer> placeList = cmd.getPlacement();
+                    for (int i = 0; i < placeList.size(); i++) {
+                        if (territories.get(i).getOwner() == cmd.getPlayerID()) {
+                            placement.set(i, placement.get(i) + placeList.get(i));
+                        }
+                    }
+                }
+                // update game state
+                controller.initGame(placement);
+                count.set(0);
+                lock.notifyAll();
+            } else {
+                lock.wait();
+            }
+        }
+        //return new Response(msg.getPlayerID(), controller.getTerritories(), controller.checkWin(), controller.checkEnd());
+        return new Response(msg.getPlayerID(), controller.getTerritories(), false, controller.checkEnd());
     }
 
     // move & attack
-    public Message operationHandler(Message msg) throws InterruptedException{
+    public Message actionHandler(ActionRequest msg) throws InterruptedException{
 
-        Boolean isGameEnd;
-        int playerID = msg.getPlayerID();
-        for(int i = 0; i < msg.getAttackFrom().size(); i++){
-            attackPlayers.add(playerID);
-            attackFrom.add(msg.getAttackFrom().get(i));
-            attackTo.add(msg.getAttackTo().get(i));
-            attackNum.add(msg.getAttackNum().get(i));
-        }
-        for(int i = 0; i < msg.getMoveFrom().size(); i++){
-            movePlayers.add(playerID);
-            moveFrom.add(msg.getMoveFrom().get(i));
-            moveTo.add(msg.getMoveTo().get(i));
-            moveNum.add(msg.getMoveNum().get(i));
-        }
-        synchronized (this) {
+        RedisTemplate<String, Object> redisTemplate = RedisUtil.getRedisTemplate();
+        redisTemplate.opsForList().rightPush("Commands", msg);
+
+        synchronized (lock) {
             count.incrementAndGet();
-            while (count.get() < playerNum) {
-                wait();
+            if (count.get() == playerNum) {
+                // all players have sent their commands, start to update the game state
+                List<Integer> movePlayers = new ArrayList<>();
+                List<Integer> attackFrom = new ArrayList<>();
+                List<Integer> attackTo = new ArrayList<>();
+                List<Integer> attackNum = new ArrayList<>();
+                List<Integer> attackPlayers = new ArrayList<>();
+                List<Integer> moveFrom = new ArrayList<>();
+                List<Integer> moveTo = new ArrayList<>();
+                List<Integer> moveNum = new ArrayList<>();
+                while (redisTemplate.opsForList().size("Commands") > 0) {
+                    ActionRequest cmd = (ActionRequest) redisTemplate.opsForList().leftPop("Commands");
+                    assert cmd != null;
+                    movePlayers.addAll(Collections.nCopies(cmd.getMoveFrom().size(),cmd.getPlayerID()));
+                    attackPlayers.addAll(Collections.nCopies(cmd.getAttackFrom().size(),cmd.getPlayerID()));
+                    attackFrom.addAll(cmd.getAttackFrom());
+                    attackTo.addAll(cmd.getAttackTo());
+                    attackNum.addAll(cmd.getAttackNums());
+                    moveFrom.addAll(cmd.getMoveFrom());
+                    moveTo.addAll(cmd.getMoveTo());
+                    moveNum.addAll(cmd.getMoveNums());
+                }
+                // update game state
+                controller.step(attackPlayers, attackFrom, attackTo, attackNum,
+                        movePlayers, moveFrom, moveTo, moveNum);
+                count.set(0);
+                lock.notifyAll();
+            } else {
+                lock.wait();
             }
-            isGameEnd = controller.step(attackPlayers, attackFrom, attackTo, attackNum,
-                                        movePlayers, moveFrom, moveTo, moveNum);
-            count.set(0);
-            notifyAll();
         }
-        List<Territory> territories = new ArrayList<>();
-        Message response = new response(playerID, controller.getPlayerName(playerID), territories, isGameEnd);
-        return response;
+        //return new Response(msg.getPlayerID(), controller.getTerritories(), controller.checkWin(), controller.checkEnd());
+        return new Response(msg.getPlayerID(), controller.getTerritories(), false, controller.checkEnd());
     }
+
+//    public Message displayHandler(Message msg) throws InterruptedException {
+//        int playerID = msg.getPlayerID();
+//        return new Response(playerID, controller.getPlayerName(playerID), controller.getLosers(), controller.getTerritories(), controller.checkEnd());
+//    }
+//
+//    public Message initDisplayHandler(Message msg) {
+//        int playerID = msg.getPlayerID();
+//        return new InitResponse(playerID, controller.getPlayerName(playerID), controller.getLosers(),
+//                controller.getTerritories(), controller.checkEnd(), controller.getUnitAvailable(playerID));
+//    }
 }
 
-//
-//    private List<Integer> getAllUnits(Iterable<Message> msgList){
-//        List<Integer> unitPlacement = new ArrayList<>();
-//        List<Territory> territories = controller.getTerritories();
-//        for(Message msg : msgList) {
-//            int playerID = msg.getPlayerID();
-//            List<Territory> playerTerritory = getPlayerTerritories(playerID, territories);
-//            List<Integer> playerUnits = msg.getPlacement();
-//            for(int i = 0; i < playerUnits.size(); i++){
-//                int territoryID = playerTerritory.get(i).getID();
-//                unitPlacement.add(territoryID, playerUnits.get(i));
-//            }
-//        }
-//        return unitPlacement;
-//    }
 
 }

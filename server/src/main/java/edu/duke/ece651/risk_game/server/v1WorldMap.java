@@ -1,5 +1,5 @@
 package edu.duke.ece651.risk_game.server;
-
+import edu.duke.ece651.risk_game.shared.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -8,8 +8,8 @@ public class v1WorldMap implements WorldMap{
     private List<Territory> map;
     private int numPlayers;
     private Checker checker;
-    
-    public v1WorldMap(int numPlayers, List<Territory> map) {
+    private int unitAvailable;
+    public v1WorldMap(int numPlayers, List<Territory> map, int unitAvailable) {
         this.map = map;
         this.numPlayers = numPlayers;
         this.checker = new Checker();
@@ -182,7 +182,10 @@ public class v1WorldMap implements WorldMap{
         for (int i = 0; i < playerIds.size(); i++) {
             makeMove(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i));
         }
-        
+    }
+    @Override
+    public int getUnitAvailable() {
+        return unitAvailable;
     }
 }
 

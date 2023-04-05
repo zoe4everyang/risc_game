@@ -1,5 +1,5 @@
 package edu.duke.ece651.risk_game.server;
-
+import edu.duke.ece651.risk_game.shared.*;
 import java.util.List;
 
 public interface WorldMap {
@@ -15,7 +15,7 @@ public interface WorldMap {
     public void makeMove(int playerId, int from, int to, int num);
     public void resolveAttack(List<Integer> playerIds, List<Integer> fromIds, List<Integer> toIds, List<Integer> unitNums);
     public void resolveMove(List<Integer> playerIds, List<Integer> fromIds, List<Integer> toIds, List<Integer> unitNums);
-
+    public int getUnitAvailable();
     //TODO: check if the territory is on the map
     public Boolean checkOnMap(int id);
 }

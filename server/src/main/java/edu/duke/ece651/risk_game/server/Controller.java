@@ -1,5 +1,5 @@
 package edu.duke.ece651.risk_game.server;
-
+import edu.duke.ece651.risk_game.shared.*;
 import java.util.List;
 
 public class Controller {
@@ -10,6 +10,7 @@ public class Controller {
     private List<Territory> territories;
     Controller(int numPlayers) {
         // constructor
+        this.numPlayers = numPlayers;
         if (numPlayers == 2) {
             this.world = mapFactory.make2PlayerMap();
         } else if (numPlayers == 3) {
@@ -71,6 +72,17 @@ public class Controller {
 
     public int getPlayers() {
         return numPlayers;
+    }
+    public Boolean checkWin(int playerId) {
+        return playerId == getWinner();
+    }
+
+    public Boolean checkLose(int playerId) {
+        return getLosers().contains(playerId);
+    }
+
+    public int getUnitAvailabel() {
+        return world.getUnitAvailable();
     }
 
 

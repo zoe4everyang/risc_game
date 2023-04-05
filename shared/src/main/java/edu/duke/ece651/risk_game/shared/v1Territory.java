@@ -1,4 +1,4 @@
-package edu.duke.ece651.risk_game.server;
+package edu.duke.ece651.risk_game.shared;
 import java.util.List;
 
 public class v1Territory implements Territory{
@@ -9,7 +9,7 @@ public class v1Territory implements Territory{
     private List<Integer> distances;
     private CombatResolver combatResolver;
 
-    v1Territory(int id, String name, int owner, List<Integer> distances, CombatResolver combatResolver) {
+    public v1Territory(int id, String name, int owner, List<Integer> distances, CombatResolver combatResolver) {
         // constructor
         this.id = id;
         this.name = name;

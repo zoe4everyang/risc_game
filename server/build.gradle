@@ -49,3 +49,11 @@ test {
         exceptionFormat = 'full'
     }
 }
+
+springBoot {
+    mainClassName = 'edu.duke.ece651.risk_game.server.RISCBack'
+}
+
+jar {
+    enabled = true
+}

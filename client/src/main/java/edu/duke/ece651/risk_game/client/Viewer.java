@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public interface Viewer {
-    String display();
+    void display();
     void displayGamePrompt();
     String readChoose();
     int playGamePrompt() throws IOException;

@@ -1,4 +1,4 @@
-package edu.duke.ece651.risk_game.server;
+package edu.duke.ece651.risk_game.shared;
 import java.util.List;
 public interface Territory {
     public void addUnit(int unit);

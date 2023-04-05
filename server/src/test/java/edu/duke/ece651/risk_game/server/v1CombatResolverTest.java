@@ -1,6 +1,8 @@
 package edu.duke.ece651.risk_game.server;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
+import edu.duke.ece651.risk_game.shared.CombatResolver;
+import edu.duke.ece651.risk_game.shared.v1CombatResolver;
 public class v1CombatResolverTest {
     @Test 
     public void test_CombatResolver() {

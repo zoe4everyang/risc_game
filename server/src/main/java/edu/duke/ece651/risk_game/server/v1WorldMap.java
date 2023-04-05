@@ -8,8 +8,8 @@ public class v1WorldMap implements WorldMap{
     private List<Territory> map;
     private int numPlayers;
     private Checker checker;
-    
-    public v1WorldMap(int numPlayers, List<Territory> map) {
+    private int unitAvailable;
+    public v1WorldMap(int numPlayers, List<Territory> map, int unitAvailable) {
         this.map = map;
         this.numPlayers = numPlayers;
         this.checker = new Checker();
@@ -182,7 +182,10 @@ public class v1WorldMap implements WorldMap{
         for (int i = 0; i < playerIds.size(); i++) {
             makeMove(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i));
         }
-        
+    }
+    @Override
+    public int getUnitAvailable() {
+        return unitAvailable;
     }
 }
 

@@ -73,6 +73,17 @@ public class Controller {
     public int getPlayers() {
         return numPlayers;
     }
+    public Boolean checkWin(int playerId) {
+        return playerId == getWinner();
+    }
+
+    public Boolean checkLose(int playerId) {
+        return getLosers().contains(playerId);
+    }
+
+    public int getUnitAvailabel() {
+        return world.getUnitAvailable();
+    }
 
 
 }

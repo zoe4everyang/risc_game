@@ -3,6 +3,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.ArrayList;
+import edu.duke.ece651.risk_game.shared.CombatResolver;
+import edu.duke.ece651.risk_game.shared.v1CombatResolver;
+import edu.duke.ece651.risk_game.shared.Territory;
+import edu.duke.ece651.risk_game.shared.v1Territory;
+
 public class v1TerritoryTest {
     @Test
     public void test_Constructor() {

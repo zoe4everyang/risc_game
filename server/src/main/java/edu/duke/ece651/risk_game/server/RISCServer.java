@@ -22,7 +22,7 @@ public class RISCServer {
     }
 
     @PostMapping("/start")
-    public Message GameStartListen(@RequestBody Message requestBody) {
+    public Message GameStartListen() {
         try{
             return requestHandler.gameStartHandler();
         }catch(InterruptedException e) {

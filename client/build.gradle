@@ -47,11 +47,6 @@ test {
         showStandardStreams = true
         exceptionFormat = 'full'
     }
-    }
-
-
-springBoot {
-    mainClassName = 'edu.duke.ece651.risk_game.client.RISCFront'
 }
 
 jar {

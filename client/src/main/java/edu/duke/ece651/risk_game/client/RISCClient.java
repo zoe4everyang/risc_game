@@ -18,7 +18,7 @@ public class RISCClient {
 
     private final HttpClient theClient;
     private final ObjectMapper jsonMapper;
-    private final String serverURL = "http://localhost:8080";
+    private final String serverURL = "10.200.89.145:8080";
 
     /**
      * This constructor is used to create a RISCClient object.

@@ -1,4 +1,5 @@
 package edu.duke.ece651.risk_game.client;
+import edu.duke.ece651.risk_game.shared.Message;
 
 import java.io.InputStream;
 

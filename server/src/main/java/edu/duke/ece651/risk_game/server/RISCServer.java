@@ -22,11 +22,11 @@ public class RISCServer {
     }
 
     @PostMapping("/start")
-    public Message GameStartListen(@RequestBody Message requestBody) {
+    public Message GameStartListen() {
         try{
             return requestHandler.gameStartHandler();
         }catch(InterruptedException e) {
-            System.out.println(e);
+            System.out.println(e.toString());
         }
         return null;
     }
@@ -35,7 +35,7 @@ public class RISCServer {
         try{
             return requestHandler.placeUnitHandler(requestBody);
         }catch(InterruptedException e) {
-            System.out.println(e);
+            System.out.println(e.toString());
         }
         return null;
 
@@ -45,7 +45,7 @@ public class RISCServer {
         try{
             return requestHandler.operationHandler(requestBody);
         }catch(InterruptedException e) {
-            System.out.println(e);
+            System.out.println(e.toString());
         }
         return null;
     }

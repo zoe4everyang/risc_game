@@ -1,4 +1,5 @@
 package edu.duke.ece651.risk_game.client;
+import edu.duke.ece651.risk_game.shared.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;

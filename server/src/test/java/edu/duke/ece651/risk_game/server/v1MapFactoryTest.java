@@ -1,9 +1,11 @@
 package edu.duke.ece651.risk_game.server;
+
+import edu.duke.ece651.risk_game.shared.Territory;
+import org.junit.jupiter.api.Test;
+
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import edu.duke.ece651.risk_game.shared.*;
 
 public class v1MapFactoryTest {
     @Test

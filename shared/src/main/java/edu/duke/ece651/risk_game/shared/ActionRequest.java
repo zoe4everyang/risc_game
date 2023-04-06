@@ -40,36 +40,6 @@ public class ActionRequest extends Message {
         this.attackNums = attackNums;
     }
 
-//    /**
-//     * This constructor is used to create a message that contains the information of the player's action.
-//     *
-//     * @param playerID the ID of the player
-//     * @param actions  the list of actions that the player wants to take
-//     */
-//    public ActionRequest(Integer playerID, List<String> actions) {
-//        super(playerID);
-//        this.moveFrom = new ArrayList<>();
-//        this.moveTo = new ArrayList<>();
-//        this.moveNums = new ArrayList<>();
-//        this.attackFrom = new ArrayList<>();
-//        this.attackTo = new ArrayList<>();
-//        this.attackNums = new ArrayList<>();
-//        for (String action : actions) {
-//            String[] actionInfo = action.split(" ");
-//            if (actionInfo[0].equals("move")) {
-//                moveFrom.add(Integer.parseInt(actionInfo[1]));
-//                moveTo.add(Integer.parseInt(actionInfo[2]));
-//                moveNums.add(Integer.parseInt(actionInfo[3]));
-//            } else if (actionInfo[0].equals("attack")) {
-//                attackFrom.add(Integer.parseInt(actionInfo[1]));
-//                attackTo.add(Integer.parseInt(actionInfo[2]));
-//                attackNums.add(Integer.parseInt(actionInfo[3]));
-//            } else {
-//                throw new IllegalArgumentException("The action should be either move or attack.");
-//            }
-//        }
-//    }
-
     // This method is used to get the list of territories that the player wants to move units from.
     public List<Integer> getAttackFrom() {
         return attackFrom;

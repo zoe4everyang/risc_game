@@ -1,13 +1,16 @@
 package edu.duke.ece651.risk_game.client;
 
-import edu.duke.ece651.risk_game.shared.*;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClientBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.http.util.EntityUtils;
+import edu.duke.ece651.risk_game.shared.*;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 
@@ -16,15 +19,15 @@ import java.io.IOException;
  */
 public class RISCClient {
 
-    private final HttpClient theClient;
+    private final CloseableHttpClient theClient;
     private final ObjectMapper jsonMapper;
-    private final String serverURL = "180.208.59.149:8080";
+    private final String serverURL = "http://localhost:8080";
 
     /**
      * This constructor is used to create a RISCClient object.
      */
     public RISCClient() {
-        theClient = HttpClientBuilder.create().build();
+        theClient = HttpClients.createDefault();
         jsonMapper = new ObjectMapper();
     }
 
@@ -63,13 +66,23 @@ public class RISCClient {
 
         // set request body
         String json = jsonMapper.writeValueAsString(requestBody);
-        request.setEntity(new StringEntity(json));
+        request.setEntity(new StringEntity(json, ContentType.APPLICATION_JSON));
 
         // execute the request
-        HttpResponse response = theClient.execute(request);
+        CloseableHttpResponse response = theClient.execute(request);
 
         // fetch response content
-        String responseContent = EntityUtils.toString(response.getEntity());
+        String responseContent = "";
+        try {
+            // 获取响应实体
+            HttpEntity entity = response.getEntity();
+            if (entity != null) {
+                responseContent = EntityUtils.toString(entity);
+
+            }
+        } finally {
+            response.close();
+        }
 
         // map into a response object
         return jsonMapper.readValue(responseContent, Response.class);

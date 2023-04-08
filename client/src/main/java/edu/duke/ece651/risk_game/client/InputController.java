@@ -88,7 +88,7 @@ public class InputController {
         try {
             response = httpClient.sendPlacement(placementRequest);
         } catch (IOException e) {
-            System.out.println("Error while sending start request: " + e.getMessage());
+            System.out.println("Error while sending placement request: " + e.getMessage());
         }
         riscViewer.displayTheWorld(response, territoryNameMap);
     }
@@ -153,7 +153,7 @@ public class InputController {
 
     private void gamePhase() throws IOException {
         Response response = null;
-        boolean gameEnd = false, failTheGame = false;
+        Boolean gameEnd = false, failTheGame = false;
         while (!gameEnd){
             ArrayList<Integer> MoveFrom = new ArrayList<>();
             ArrayList<Integer> MoveTo = new ArrayList<>();
@@ -168,7 +168,7 @@ public class InputController {
             try {
                 response = httpClient.sendAction(actionRequest);
             } catch (IOException e) {
-                System.out.println("Error while sending start request: " + e.getMessage());
+                System.out.println("Error while sending action request: " + e.getMessage());
             }
             assert response != null;
             gameEnd = response.isEnd();

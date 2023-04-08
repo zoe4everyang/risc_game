@@ -90,6 +90,7 @@ public class RequestHandler {
     // move & attack
     public Message operationHandler(ActionRequest msg) throws InterruptedException{
         //Boolean isGameEnd;
+
         int playerID = msg.getPlayerID();
         synchronized (this) {
             if(count.get() == playerNum) {
@@ -127,6 +128,7 @@ public class RequestHandler {
                 notifyAll();
             }
         }
+
         List<Territory> territories = controller.getTerritories();
         Boolean isPlayerLose = controller.checkLose(playerID);
         Message response = new Response(playerID, territories, isPlayerLose, controller.checkEnd());

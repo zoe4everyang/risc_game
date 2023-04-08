@@ -1,12 +1,9 @@
 package edu.duke.ece651.risk_game.client;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-@SpringBootApplication
 public class RISCFront {
     private final InputController controller;
     public RISCFront() {

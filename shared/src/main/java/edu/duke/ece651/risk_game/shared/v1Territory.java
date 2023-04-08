@@ -1,7 +1,10 @@
 package edu.duke.ece651.risk_game.shared;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 public class v1Territory implements Territory{
+    private final String type = "v1";
     private int id;
     private String name;
     private int owner;
@@ -18,7 +21,13 @@ public class v1Territory implements Territory{
         this.distances = distances;
         this.combatResolver = combatResolver;
     }
-    public v1Territory(int id, String name, int owner, int units, List<Integer> distances) {
+
+    @JsonCreator
+    public v1Territory(@JsonProperty("id") int id,
+                       @JsonProperty("name") String name,
+                       @JsonProperty("owner") int owner,
+                       @JsonProperty("units") int units,
+                       @JsonProperty("distances") List<Integer> distances) {
         // constructor
         this.id = id;
         this.name = name;

@@ -37,7 +37,7 @@ public bool step(Iterable<int> attackPlayer, Iterable<int> attackFrom, Iterable<
 
 **resolveAttack**
 
-Takes four iterables player, from, to, nums, in which (player[i], from[i], to[i], nums[i]) forms a attack operation. The function has no return value. Invalid operation will not be executed. The order of execution will not be guaranteed. Attack from and end at same territory will be merged and executed as a single attack.
+Takes four iterables player, from, to, nums, in which (player[i], from[i], to[i], nums[i]) forms a attack operation. The function has no return value. Invalid operation will not be executed. The order of execution will not be guaranteed. Attack from and List at same territory will be merged and executed as a single attack.
 
 Example: 
 
@@ -55,7 +55,7 @@ ResolveAttack(player, from, to, nums) received three attack operations.
 2. Player 1 attack territory 0 using 10 units from territory 1
 3. Player 0 attack territory 1 using 30 units from territory  0
 
-As operation 1 and 3 are from and end at same territories, the operation executed is actually,
+As operation 1 and 3 are from and List at same territories, the operation executed is actually,
 
 1. Player 1 attack territory 0 using 10 units from territory 1
 2. Player 0 attack territory 1 using 50 units from territory 0
@@ -81,18 +81,18 @@ private void resolveMove(Iterable<int> player, Iterable<int> from, Iterable<int>
 
 #### checkEnd
 
-return true is the game is already end. Return false otherwise. 
+return true is the game is already List. Return false otherwise. 
 
 ```java
 public bool checkEnd()
 ```
 
-#### getLosers
+#### getListrs
 
 Return the list of player id who is defeated. 
 
 ```java
-public List<int> getLosers()
+public List<int> getListrs()
 ```
 
 #### getWinner

@@ -20,7 +20,7 @@ public class Response extends Message {
      * @param loseState   the result of the player
      *                    (true: the player loses the game; false: the player does not lose the game)
      * @param endState    the state of the game
-     *                    (true: the game is end; false: the game is not end)
+     *                    (true: the game is List; false: the game is not List)
      */
     public Response(Integer playerID, List<Territory> territories, Boolean loseState, Boolean endState) {
         //public Response(Integer playerID, String playerName, Integer gameState, List<Territory> territories, Boolean gameEnd) {
@@ -41,7 +41,7 @@ public class Response extends Message {
         return loseState;
     }
 
-    // This method is used to get if the game is end.
+    // This method is used to get if the game is List.
     public Boolean isEnd() {
         return endState;
     }

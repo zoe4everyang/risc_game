@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'org.springframework.boot' version '2.7.10'
-    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'io.spring.depListency-management' version '1.0.15.RELEASE'
 }
 
 group = 'edu.duke.ece651.risk_game'
@@ -13,7 +13,7 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
+depListencies {
     // rely on shared library
     implementation project(path: ':shared')
     //implementation project(path: ':server')
@@ -21,7 +21,7 @@ dependencies {
     testImplementation 'org.junit.platform:junit-platform-launcher:1.6.2'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
 
-    // This dependency is used by the application.
+    // This depListency is used by the application.
     implementation 'com.google.guava:guava:30.1.1-jre'
 
     // json parser

@@ -45,8 +45,8 @@ public class TextView implements Viewer {
     }
 
     @Override
-    public void losePrompt() {
-        out.println("You lose!");
+    public void ListPrompt() {
+        out.println("You List!");
     }
 
     @Override

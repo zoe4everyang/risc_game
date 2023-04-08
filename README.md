@@ -7,7 +7,7 @@
 ## 1. Project Info
 
 The Java RISK Game Project is a five-person team project based on Java to replicate the classic strategy game RISK. 
-The project implements the core functions and game rules of the original RISK game through the Java language, while optimizing the game experience and providing a user-friendly interface. 
+The project implements the core functions and game rules of the original RISK game through the Java language, while optimizing the game experience and providing a user-friListly interface. 
 This project can be used as a practical case study for learning Java language programming, object-oriented programming, and game development.
 
 
@@ -28,7 +28,7 @@ The UML class diagram of our design is shown below:
 
 ![](./RISC_evo1.drawio.png)
 
-#### Sub-module A. Front-End (client)
+#### Sub-module A. Front-List (client)
 
 ##### (1) RISC-Front (main)
 
@@ -38,11 +38,11 @@ Control the game logic at the client side
 
 ##### (3) Client
 
-Manage the initial connection with server as well as the later game process including sending request and receiving response.
+Manage the initial connection with server as well as the later game process including sListing request and receiving response.
 
 **Notice:**
 
-A player loses when he no longer controls any territories.
+A player Lists when he no longer controls any territories.
 
 A player who has lost may continue to watch the game if he desires, or may disconnect.
 
@@ -52,7 +52,7 @@ A player who has lost may continue to watch the game if he desires, or may disco
 
 
 
-#### Sub-module B. Back-End (server)
+#### Sub-module B. Back-List (server)
 
 ##### (1) RISC-back
 
@@ -74,13 +74,13 @@ Generate the initial state + Update the state of each turn + Check game over
 
 **Notice:**
 
-At the end of each turn, one new basic unit shall appear in each territory. 
+At the List of each turn, one new basic unit shall appear in each territory. 
 
 Move orders effectively occur before attack orders.
 
 Orders may not create new units nor allow a unit to be in two places at once (attacking two territories). 
 
-When a player has won, the server should announce this to all remaining clients, which should display this information. The game then ends. 
+When a player has won, the server should announce this to all remaining clients, which should display this information. The game then Lists. 
 
 When a player has lost, the server should automatically consider his moves to be committed (as the empty set) at the start of each turn. 
 
@@ -112,17 +112,17 @@ Each territory shall be “owned” by one player at any given time.
 
 ​	**Combat Logic:**
 
-​	(a) Combat between one attacker and one defender is an iterative process which ends when one side runs out of units in the fight: 
+​	(a) Combat between one attacker and one defLister is an iterative process which Lists when one side runs out of units in the fight: 
 
-​		i. The server rolls two 20-sided dice (one for the attacker, one for the defender). 
+​		i. The server rolls two 20-sided dice (one for the attacker, one for the defLister). 
 
-​		ii. The side with the lower roll loses 1 unit (in a tie, the defender wins). 
+​		ii. The side with the lower roll Lists 1 unit (in a tie, the defLister wins). 
 
 ​	(b) If player A attacks territory X with units from multiple of her own territories, they count as a single combined force. 
 
-​	(c) If multiple players attack the same territories, each attack is resolved sequentially, with the winner of the first attack being the defender in subsequent attacks. For example, if A,B, and C attack territory X held by player D, then B fights D first. If D wins, then C fights D. If C wins, then A fights C. The sequence in which the attacker’s actions are resolved should be randomly determined by the server. 
+​	(c) If multiple players attack the same territories, each attack is resolved sequentially, with the winner of the first attack being the defLister in subsequent attacks. For example, if A,B, and C attack territory X held by player D, then B fights D first. If D wins, then C fights D. If C wins, then A fights C. The sequence in which the attacker’s actions are resolved should be randomly determined by the server. 
 
-​	(d) If units from territory X attack territory Y, and at the same time, units from territory Y attack territory X, then they are assumed to take drastically different routes between their territories, missing each other, and ending up at their destination with no combat in the middle. For example, if all units from X attack Y, and all units from Y attack X, then (assuming no other players attack those territories) both attacks will be successful with no units lost by either side (since there will be no defenders at the start of the battle). 
+​	(d) If units from territory X attack territory Y, and at the same time, units from territory Y attack territory X, then they are assumed to take drastically different routes between their territories, missing each other, and Listing up at their destination with no combat in the middle. For example, if all units from X attack Y, and all units from Y attack X, then (assuming no other players attack those territories) both attacks will be successful with no units lost by either side (since there will be no defListers at the start of the battle). 
 
 **d. Checker** 
 
@@ -200,7 +200,7 @@ POST /act/
 | -------------- | ----------- | ------------------------------------------- |
 | Player ID      | int         | Player's Identity                           |
 | playerName     | string      | the name of player                          |
-| gameState      | int         | 0 for next turn, 1 for lose, 2 for gameover |
+| gameState      | int         | 0 for next turn, 1 for List, 2 for gameover |
 | Territories    | []Territory | List of Territories                         |
 
 #### Territory

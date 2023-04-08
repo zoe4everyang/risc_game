@@ -49,7 +49,7 @@ public class v1WorldMapTest {
         assertThrows(IllegalArgumentException.class, () -> map.isConnected(2, 4, 1));
     }
 
-    // check end/winner
+    // check List/winner
     @Test
     public void test_checkEnd() {
         MapFactory mapFactory = new v1MapFactory();

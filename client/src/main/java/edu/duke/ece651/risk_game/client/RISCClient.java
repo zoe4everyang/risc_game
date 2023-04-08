@@ -19,6 +19,7 @@ import java.io.IOException;
 
 /**
  * This class is used to send requests to the server and receive responses from the server.
+ * It is used by the RISCFront class.
  */
 public class RISCClient {
 
@@ -28,6 +29,9 @@ public class RISCClient {
 
     /**
      * This constructor is used to create a RISCClient object.
+     * It creates a CloseableHttpClient object and an ObjectMapper object.
+     * It also sets the server URL.
+     * It is used by the RISCFront class.
      */
     public RISCClient() {
         PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();

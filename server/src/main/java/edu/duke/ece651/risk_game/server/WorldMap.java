@@ -2,6 +2,9 @@ package edu.duke.ece651.risk_game.server;
 import edu.duke.ece651.risk_game.shared.*;
 import java.util.List;
 
+/**
+ * This class is used to represent the world map
+ */
 public interface WorldMap {
     public int getNumTerritories();
     public Boolean isConnected(int id1, int id2, int playerId);
@@ -16,6 +19,5 @@ public interface WorldMap {
     public void resolveAttack(List<Integer> playerIds, List<Integer> fromIds, List<Integer> toIds, List<Integer> unitNums);
     public void resolveMove(List<Integer> playerIds, List<Integer> fromIds, List<Integer> toIds, List<Integer> unitNums);
     public int getUnitAvailable();
-    //TODO: check if the territory is on the map
     public Boolean checkOnMap(int id);
 }

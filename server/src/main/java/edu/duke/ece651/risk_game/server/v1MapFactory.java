@@ -2,8 +2,15 @@ package edu.duke.ece651.risk_game.server;
 import edu.duke.ece651.risk_game.shared.*;
 import java.util.List;
 
+/**
+ * This class is used to make the v1 map
+ */
 public class v1MapFactory implements MapFactory{
 
+    /**
+     * Make a 2 player map
+     * @return a 2 player map
+     */
     @Override
     public WorldMap make2PlayerMap() {
         Territory t1 = new v1Territory(0, "t1", 0, List.of(0, 1, 1, 2, 2, 3), new v1CombatResolver());
@@ -15,6 +22,10 @@ public class v1MapFactory implements MapFactory{
         return new v1WorldMap(2, List.of(t1, t2, t3, t4, t5, t6), 300);
     }
 
+    /**
+     * Make a 3 player map
+     * @return a 3 player map
+     */
     @Override
     public WorldMap make3PlayerMap() {
         Territory t1 = new v1Territory(0, "t1", 0, List.of(0, 1, 1, 2, 2, 3), new v1CombatResolver());
@@ -26,12 +37,10 @@ public class v1MapFactory implements MapFactory{
         return new v1WorldMap(3, List.of(t1, t2, t3, t4, t5, t6), 200);
     }
 
-    // TODO : Check that if the territory map is correctly initialized
-    // the distributed map is initialized like this:
-    // 11
-    // 23
-    // 23
-    // 44
+    /**
+     * Make a 4 player map
+     * @return a 4 player map
+     */
     @Override
     public WorldMap make4PlayerMap() {
         Territory t1 = new v1Territory(0, "t1", 0, List.of(0, 1, 1, 2, 2, 3, 3, 4), new v1CombatResolver());
@@ -46,12 +55,10 @@ public class v1MapFactory implements MapFactory{
         // throw new UnsupportedOperationException("Unimplemented method 'make4PlayerMap'");
     }
 
-    // TODO : Check that if the territory map is correctly initialized
-    // the distributed map is initialized like this:
-    // 114
-    // 234
-    // 235
-    // 5
+    /**
+     * Make a 5 player map
+     * @return a 5 player map
+     */
     @Override
     public WorldMap make5PlayerMap() {
         // TODO : Check that if the territory map is correctly initialized

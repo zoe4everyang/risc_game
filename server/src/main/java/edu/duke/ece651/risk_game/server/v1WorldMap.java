@@ -4,12 +4,20 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-
+/**
+ * This class is used to represent the world map
+ */
 public class v1WorldMap implements WorldMap{
     private List<Territory> map;
     private int numPlayers;
     private Checker checker;
     private int unitAvailable;
+    /**
+     * Constructor
+     * @param numPlayers number of players
+     * @param map map
+     * @param unitAvailable number of units available
+     */
     public v1WorldMap(int numPlayers, List<Territory> map, int unitAvailable) {
         this.map = map;
         this.numPlayers = numPlayers;
@@ -18,13 +26,23 @@ public class v1WorldMap implements WorldMap{
     }
 
 
-
+    /**
+     * Get the map
+     * @return map
+     */
     @Override
     public int getNumTerritories() {
         return map.size();
     }
 
-
+    /**
+     * Get the map
+     * @param id1 id1
+     * @param id2 id2
+     * @param visited visited
+     * @param playerId player id
+     * @return map
+     */
     private Boolean dfs(int id1, int id2, List<Boolean> visited, int playerId) {
         // if id1 is visited, return false
         if (id1 == id2) {
@@ -46,6 +64,13 @@ public class v1WorldMap implements WorldMap{
         return false;
     }
 
+    /**
+     * Get the map
+     * @param id1 id1
+     * @param id2 id2
+     * @param playerId player id
+     * @return map
+     */
     @Override
     public Boolean isConnected(int id1, int id2, int playerId) {
         // dfs to check if id1 is connected to id2
@@ -65,11 +90,20 @@ public class v1WorldMap implements WorldMap{
         return dfs(id1, id2, visited, playerId);
     }
 
+    /**
+     * Get the map
+     * @param id1 id1
+     * @param id2 id2
+     * @return map
+     */
     @Override
     public Boolean isNeighbour(int id1, int id2) {
         return map.get(id1).getDistances().get(id2) == 1;
     }
 
+    /**
+     * Get the map
+     */
     @Override
     public List<Integer> getLosers() {
         // return list of losers
@@ -89,6 +123,10 @@ public class v1WorldMap implements WorldMap{
         return losers;
     }
 
+    /**
+     * Get the map
+     * @return map
+     */
     @Override
     public int getWinner() {
         // return winner
@@ -98,6 +136,10 @@ public class v1WorldMap implements WorldMap{
         return -1;
     }
 
+    /**
+     * Get the map
+     * @return map
+     */
     @Override
     public Boolean checkEnd() {
         // check if game ends
@@ -108,12 +150,21 @@ public class v1WorldMap implements WorldMap{
         return owners.size() == 1;
     }
 
+    /**
+     * Get the map
+     * @return map
+     */
     @Override
     public List<Territory> getTerritories() {
         // return list of territories
         return map;
     }
 
+    /**
+     * Get the map
+     * @param placement placement
+     * @return map
+     */
     @Override
     public void setUnits(List<Integer> placement) {
         // set units for each territory
@@ -127,6 +178,14 @@ public class v1WorldMap implements WorldMap{
         }
     }
 
+    /**
+     * Get the map
+     * @param playerId player id
+     * @param from from
+     * @param to to
+     * @param num num
+     * @return map
+     */
     @Override
     public void makeAttack(int playerId, int from, int to, int num) {
         // if the target it already belongs to the player, move units to the target
@@ -139,6 +198,14 @@ public class v1WorldMap implements WorldMap{
         map.get(to).defence(playerId, num);
     }
 
+    /**
+     * Get the map
+     * @param playerId player id
+     * @param from from
+     * @param to to
+     * @param num num
+     * @return map
+     */
     @Override
     public void makeMove(int playerId, int from, int to, int num) {
         if (!checker.checkMove(playerId, from, to, num, this)) {
@@ -148,7 +215,11 @@ public class v1WorldMap implements WorldMap{
         map.get(to).addUnit(num);
     }
 
-    // TODO: check if one id is on the map (used in checker)
+    /**
+     * Get the map
+     * @param id id
+     * @return map
+     */
     @Override
     public Boolean checkOnMap(int id){
         for(Territory T : map){
@@ -159,6 +230,13 @@ public class v1WorldMap implements WorldMap{
         return false;
     }
 
+    /**
+     * Get the map
+     * @param playerIds
+     * @param fromIds
+     * @param toIds
+     * @param unitNums
+     */
     @Override
     public void resolveAttack(List<Integer> playerIds, 
     List<Integer> fromIds, 
@@ -182,6 +260,13 @@ public class v1WorldMap implements WorldMap{
         }
     }
 
+    /**
+     * Get the map
+     * @param playerIds
+     * @param fromIds
+     * @param toIds
+     * @param unitNums
+     */
     @Override
     public void resolveMove(List<Integer> playerIds, 
             List<Integer> fromIds, 

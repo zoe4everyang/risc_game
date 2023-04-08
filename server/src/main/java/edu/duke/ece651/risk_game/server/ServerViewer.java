@@ -7,6 +7,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is used to display the game state
+ */
 public class ServerViewer {
     Controller game;
     private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -14,11 +17,19 @@ public class ServerViewer {
         this.game = game;
     }
 
+    /**
+     * Print the player id
+     */
     public void display() {
         for (int i = 0; i < game.getPlayers(); ++i) {
             printPlayerId(i);
         }
     }
+
+    /**
+     * Print the player id
+     * @param s player id
+     */
     public List<Integer> parseString(String s){
         List<Integer> list = new ArrayList<Integer>();
         String[] split = s.split(" ");
@@ -28,6 +39,9 @@ public class ServerViewer {
         return list;
     }
 
+    /**
+     * Read the operations
+     */
     public void run() throws IOException{
         System.out.println("There are" + game.getPlayers() + " players");
         game.initGame(List.of(100, 100, 200, 200, 300, 300));
@@ -55,6 +69,10 @@ public class ServerViewer {
 
         System.out.println("Game Over, the winner is " + game.getWinner() + "!!");
     }
+
+    /**
+     * Read the operations
+     */
     public List<List<Integer>> readOperations() {
         List<List<Integer>> operations = new ArrayList<List<Integer>>();
         for(int i = 0; i < 4; ++i) {
@@ -77,6 +95,11 @@ public class ServerViewer {
         }
         return operations;
     }
+
+    /**
+     * Print the territory
+     * @param t territory
+     */
     public void printTerritory(Territory t) {
         System.out.println("Territory " + t.getName() + " has " + t.getUnits() + " units.");
 
@@ -89,6 +112,10 @@ public class ServerViewer {
         System.out.println();
     }
 
+    /**
+     * Print the player id
+     * @param playerId player id
+     */
     public void printPlayerId(int playerId) {
         System.out.println("Player " + playerId + " has territories: ");
         for (Territory t : game.getTerritories()) {

@@ -67,7 +67,7 @@ public class RISCClient {
         // set request body
         String json = jsonMapper.writeValueAsString(requestBody);
         request.setEntity(new StringEntity(json, ContentType.APPLICATION_JSON));
-
+        System.out.println(json);
         // execute the request
         CloseableHttpResponse response = theClient.execute(request);
 

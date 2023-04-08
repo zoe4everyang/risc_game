@@ -2,6 +2,10 @@ package edu.duke.ece651.risk_game.shared;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+
+/**
+ * This interface is used to represent a territory.
+ */
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,

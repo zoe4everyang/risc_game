@@ -19,20 +19,35 @@ public class RISCServer {
     private final Integer playerNum;
     private final RequestHandler requestHandler;
 
+    /**
+     * Constructor
+     */
     public RISCServer() {
         this.playerNum = 3;
         this.requestHandler = new RequestHandler(this.playerNum);
     }
 
+    /**
+     * Set the context
+     * @param context the context
+     */
     public static void setContext(ConfigurableApplicationContext context) {
         RISCServer.context = context;
     }
 
+    /**
+     * Constructor
+     * @param playerNum number of players
+     */
     public RISCServer(@Value("${risk.game.playerCount}") Integer playerNum) {
         this.playerNum = playerNum;
         this.requestHandler = new RequestHandler(this.playerNum);
     }
 
+    /**
+     * Listen to the start request
+     * @return the message
+     */
     @PostMapping("/start")
     public Message GameStartListen() {
         try {
@@ -43,6 +58,11 @@ public class RISCServer {
         return null;
     }
 
+    /**
+     * Listen to the place request
+     * @param requestBody the request body
+     * @return the message
+     */
     @PostMapping("/place")
     public Message PlaceUnitListen(@RequestBody PlacementRequest requestBody) {
         try {
@@ -54,6 +74,11 @@ public class RISCServer {
 
     }
 
+    /**
+     * Listen to the attack request
+     * @param requestBody the request body
+     * @return the message
+     */
     @PostMapping("/act")
     public Message OperationListen(@RequestBody ActionRequest requestBody) {
         try {
@@ -64,6 +89,9 @@ public class RISCServer {
         return null;
     }
 
+    /**
+     * Listen to the game over request
+     */
     @GetMapping("/gameover")
     public void gameover() {
         System.out.println("Game Over");

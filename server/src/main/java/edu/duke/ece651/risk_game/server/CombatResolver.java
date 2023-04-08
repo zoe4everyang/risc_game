@@ -1,4 +1,8 @@
 package edu.duke.ece651.risk_game.server;
+
+/**
+ * This interface is used to resolve combat between two players
+ */
 public interface CombatResolver {
     // return the number of units that survive, positive indicate attacker wins, negative indicate defender wins
     // the absolute value of return value indicate the number of units that survive

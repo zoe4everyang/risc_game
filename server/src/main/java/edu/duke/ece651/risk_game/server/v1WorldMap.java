@@ -125,10 +125,12 @@ public class v1WorldMap implements WorldMap{
 
     @Override
     public void makeAttack(int playerId, int from, int to, int num) {
+        // if the target it already belongs to the player, move units to the target
         if (!checker.checkAttackTarget(playerId, from, to, num, this)) {
             map.get(to).addUnit(num);
             return;
         }
+
         if (!checker.checkAttack(playerId, from, to, num, this)) {
             return;
         }

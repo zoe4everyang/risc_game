@@ -18,6 +18,15 @@ public class v1Territory implements Territory{
         this.distances = distances;
         this.combatResolver = combatResolver;
     }
+    public v1Territory(int id, String name, int owner, int units, List<Integer> distances) {
+        // constructor
+        this.id = id;
+        this.name = name;
+        this.owner = owner;
+        this.units = units;
+        this.distances = distances;
+        this.combatResolver = new v1CombatResolver();
+    }
 
 
     public void addUnit(int unit) {

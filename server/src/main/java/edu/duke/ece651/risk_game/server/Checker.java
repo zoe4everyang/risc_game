@@ -34,10 +34,7 @@ public class Checker {
         }
         return true;
     }
-    public Boolean checkAttack(int playerId, int from, int to, int num, WorldMap map) {
-        if (!checkAttackTarget(playerId, from, to, num, map)) {
-            return false;
-        }
+    public Boolean checkNeighbour(int playerId, int from, int to, int num, WorldMap map) {
         if (!map.isNeighbour(from, to)) {
             // throw new IllegalArgumentException("you can only attack the connected territory!");
 

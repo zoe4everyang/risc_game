@@ -164,22 +164,22 @@ public class v1WorldMap implements WorldMap{
     List<Integer> fromIds, 
     List<Integer> toIds, 
     List<Integer> unitNums) {
-    // get attack units
-    HashSet<Integer> verified = new HashSet<>();
-    for (int i = 0; i < playerIds.size(); i++) {
-        if (checker.checkAttackTarget(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i), this) &&
-        checker.checkAttackNumber(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i), this) &&
-        checker.checkNeighbour(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i), this)) {
-            map.get(fromIds.get(i)).removeUnit(unitNums.get(i));
-            verified.add(i);
+        // get attack units
+        HashSet<Integer> verified = new HashSet<>();
+        for (int i = 0; i < playerIds.size(); i++) {
+            if (checker.checkAttackTarget(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i), this) &&
+            checker.checkAttackNumber(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i), this) &&
+            checker.checkNeighbour(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i), this)) {
+                map.get(fromIds.get(i)).removeUnit(unitNums.get(i));
+                verified.add(i);
+            }
         }
-    }
-    // resolve attack
-    for (int i = 0; i < playerIds.size(); i++) {
-        if (verified.contains(i)) {
-            makeAttack(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i));
+        // resolve attack
+        for (int i = 0; i < playerIds.size(); i++) {
+            if (verified.contains(i)) {
+                makeAttack(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i));
+            }
         }
-    }
     }
 
     @Override

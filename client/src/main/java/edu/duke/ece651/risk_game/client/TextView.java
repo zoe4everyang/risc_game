@@ -29,7 +29,6 @@ public class TextView implements Viewer {
             if (territory.getOwner() == id) {
                 territoryNames.append(territoryNameMap.get(territory.getID())).append(" ");
             }
-            territoryNames.append(territory.getName()).append("\n");
         }
         out.println("You have been connected to the server successfully!\n" +
                 "You are Player" + id + ".\n" +
@@ -50,9 +49,10 @@ public class TextView implements Viewer {
     }
 
     @Override
-    public void resultPrompt(boolean failTheGame, Integer winner) {
+    public void resultPrompt(boolean failTheGame){ //, Integer winner) {
         if (failTheGame) {
-            out.println("Winner is Player" + winner + ".");
+            //out.println("Winner is Player" + winner + ".");
+            out.println("You lose!");
         } else {
             out.println("You win!");
         }

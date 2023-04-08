@@ -36,11 +36,16 @@ public class InputController {
     private InitResponse initPhase() {
         riscViewer.initPrompt();
         InitResponse initResponse = null;
-        try {
-            initResponse = httpClient.sendStart();
-        } catch (IOException e) {
-            System.out.println("Error while sending start request: " + e.getMessage());
-        }
+        boolean error;
+        do {
+            error = false;
+            try {
+                initResponse = httpClient.sendStart();
+            } catch (IOException e) {
+                System.out.println("Error while sending start request: " + e.getMessage());
+                error = true;
+            }
+        } while (error);
         assert initResponse != null;
         playerID = initResponse.getPlayerID();
         List<Territory> territories = initResponse.getTerritories();
@@ -51,16 +56,12 @@ public class InputController {
         return initResponse;
     }
 
-    private void readPlacement(ArrayList<Integer> placement, Integer unitAvailable, ArrayList<Integer> territoryIDs) {
+    private void readPlacement(ArrayList<Integer> placement, Integer unitAvailable, ArrayList<Integer> territoryIDs) throws IOException {
         int unitLeft = unitAvailable;
         for (Integer territoryID : territoryIDs) {
             riscViewer.placeOneTerritoryPrompt(territoryNameMap.get(territoryID));
             String numStr = "";
-            try {
-                numStr = input.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            numStr = input.readLine();
             int num = Integer.parseInt(numStr);
             if (num > unitLeft) {
                 throw new IllegalArgumentException("You don't have enough units!");
@@ -73,7 +74,7 @@ public class InputController {
         }
     }
 
-    private void placementPhase(InitResponse initResponse) {
+    private void placementPhase(InitResponse initResponse) throws IOException {
         riscViewer.placePrompt(initResponse, territoryNameMap);
         ArrayList<Integer> territoryIDs = new ArrayList<>();
         for (Territory territory : initResponse.getTerritories()) {
@@ -82,7 +83,17 @@ public class InputController {
             }
         }
         ArrayList<Integer> placement = new ArrayList<Integer>(Collections.nCopies(territoryNameMap.size(), -1));
-        readPlacement(placement, initResponse.getUnitAvailable(), territoryIDs);
+        boolean error;
+        do {
+            error = false;
+            try {
+                readPlacement(placement, initResponse.getUnitAvailable(), territoryIDs);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+                System.out.println("Please input again!");
+                error = true;
+            }
+        } while (error);
         PlacementRequest placementRequest = new PlacementRequest(playerID, placement);
         Response response = null;
         try {
@@ -131,7 +142,18 @@ public class InputController {
                                 + "(D)one");
 
         while(true){
-            String[] command = readCommand();
+            String[] command = null;
+            boolean error;
+            do {
+                error = false;
+                try {
+                    command = readCommand();
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                    System.out.println("Please input again!");
+                    error = true;
+                }
+            } while (error);
             if (command[0].equals("D")){
                 break;
             } else {

@@ -12,14 +12,6 @@ sourceCompatibility = '11'
 repositories {
     mavenCentral()
 }
-//configurations.configureEach {
-//    exclude(group: 'commons-logging', module: 'commons-logging')
-//    exclude(group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl')
-//    exclude(group: 'org.slf4j', module: 'jcl-over-slf4j')
-//    exclude(group: 'org.slf4j', module: 'jul-to-slf4j')
-//    exclude(group: 'org.slf4j', module: 'log4j-over-slf4j')
-//    exclude(group: 'org.slf4j', module: 'slf4j-log4j12')
-//}
 
 dependencies {
     // rely on shared library
@@ -39,7 +31,7 @@ dependencies {
 
     // apache http client
     implementation('org.apache.httpcomponents:httpclient:4.5.13')
-    implementation 'org.apache.logging.log4j:log4j-api:2.14.1'
+    implementation 'org.apache.logging.log4j:log4j-api:2.17.1'
     implementation 'commons-logging:commons-logging:1.2'
     implementation 'org.apache.logging.log4j:log4j-slf4j18-impl:2.14.1'
 

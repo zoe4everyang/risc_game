@@ -1,11 +1,13 @@
 plugins {
     id 'java'
+    id 'application'
     id 'org.springframework.boot' version '2.7.10'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
 group = 'edu.duke.ece651.risk_game'
 sourceCompatibility = '11'
+
 
 repositories {
     mavenCentral()
@@ -31,7 +33,7 @@ dependencies {
     // sprint boot
     implementation 'org.springframework.boot:spring-boot-starter-web'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+   testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 
 
@@ -48,8 +50,10 @@ test {
     }
 }
 
-bootJar {
-    archiveFileName = 'RISC_client.jar'
-    enabled = true
-    mainClass = 'edu.duke.ece651.risk_game.server.RISCFront'
+jar {
+    manifest {
+        attributes 'Main-Class': 'edu.duke.ece651.risk_game.client.RISCFront'
+    }
+    archivesBaseName = 'RISC_client'
+    project.version = '1.0.1'
 }

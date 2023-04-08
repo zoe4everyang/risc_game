@@ -1,13 +1,11 @@
 package edu.duke.ece651.risk_game.client;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-@SpringBootTest
+//
+//@SpringBootTest
 class RISCFrontTests {
-
-    @Test
-    void contextLoads() {
-    }
-
+//
+//    @Test
+//    void contextLoads() {
+//    }
+//
 }

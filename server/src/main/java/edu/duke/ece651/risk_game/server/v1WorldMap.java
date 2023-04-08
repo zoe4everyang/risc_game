@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+
 public class v1WorldMap implements WorldMap{
     private List<Territory> map;
     private int numPlayers;
@@ -13,7 +14,10 @@ public class v1WorldMap implements WorldMap{
         this.map = map;
         this.numPlayers = numPlayers;
         this.checker = new Checker();
+        this.unitAvailable = unitAvailable;
     }
+
+
 
     @Override
     public int getNumTerritories() {
@@ -114,10 +118,10 @@ public class v1WorldMap implements WorldMap{
     public void setUnits(List<Integer> placement) {
         // set units for each territory
         for (int i = 0; i < map.size(); i++) {
-            if (map.get(i).getUnits() != 0) {
-                throw new IllegalArgumentException("Cannot set units for territories that already have units");
-            }
             if (placement.get(i) > 0) {
+                if (map.get(i).getUnits() != 0) {
+                    throw new IllegalArgumentException("Cannot set units for territories that already have units");
+                }
                 map.get(i).addUnit(placement.get(i));
             }
         }

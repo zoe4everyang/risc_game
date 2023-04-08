@@ -67,18 +67,16 @@ public class RISCClient {
         // set request body
         String json = jsonMapper.writeValueAsString(requestBody);
         request.setEntity(new StringEntity(json, ContentType.APPLICATION_JSON));
-
+        System.out.println(json);
         // execute the request
         CloseableHttpResponse response = theClient.execute(request);
 
         // fetch response content
         String responseContent = "";
         try {
-            // 获取响应实体
             HttpEntity entity = response.getEntity();
             if (entity != null) {
                 responseContent = EntityUtils.toString(entity);
-
             }
         } finally {
             response.close();
@@ -109,7 +107,7 @@ public class RISCClient {
      * @throws IOException if the request cannot be sent
      */
     public Response sendAction(ActionRequest requestBody) throws IOException {
-        HttpPost request = new HttpPost("serverURL" + "/act");
+        HttpPost request = new HttpPost(serverURL + "/act");
 
         return sendCommand(request, requestBody);
     }

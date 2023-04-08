@@ -90,18 +90,19 @@ public class RequestHandler {
     // move & attack
     public Message operationHandler(ActionRequest msg) throws InterruptedException{
         //Boolean isGameEnd;
+
         int playerID = msg.getPlayerID();
         synchronized (this) {
             if(count.get() == playerNum) {
                 count.set(0);
             }
             count.incrementAndGet();
-            attackPlayers.addAll(Collections.nCopies(playerID, msg.getAttackFrom().size()));
+            attackPlayers.addAll(Collections.nCopies(msg.getAttackFrom().size(), playerID));
             attackFrom.addAll(msg.getAttackFrom());
             attackTo.addAll(msg.getAttackTo());
             attackNum.addAll(msg.getAttackNums());
 
-            movePlayers.addAll(Collections.nCopies(playerID, msg.getMoveFrom().size()));
+            movePlayers.addAll(Collections.nCopies(msg.getMoveFrom().size(), playerID));
             moveFrom.addAll(msg.getMoveFrom());
             moveTo.addAll(msg.getMoveTo());
             moveNum.addAll(msg.getMoveNums());
@@ -124,9 +125,18 @@ public class RequestHandler {
             } else {
                 controller.step(attackPlayers, attackFrom, attackTo, attackNum,
                         movePlayers, moveFrom, moveTo, moveNum);
+                attackPlayers.clear();
+                attackFrom.clear();
+                attackTo.clear();
+                attackNum.clear();
+                movePlayers.clear();
+                moveFrom.clear();
+                moveTo.clear();
+                moveNum.clear();
                 notifyAll();
             }
         }
+
         List<Territory> territories = controller.getTerritories();
         Boolean isPlayerLose = controller.checkLose(playerID);
         Message response = new Response(playerID, territories, isPlayerLose, controller.checkEnd());

@@ -45,7 +45,7 @@ public class RISCServer {
         try{
             return requestHandler.operationHandler(requestBody);
         }catch(InterruptedException e) {
-            System.out.println(e.toString());
+            System.out.println("Interrupted Exception in Operation Listening");
         }
         return null;
     }

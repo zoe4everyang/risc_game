@@ -12,11 +12,19 @@ sourceCompatibility = '11'
 repositories {
     mavenCentral()
 }
+//configurations.configureEach {
+//    exclude(group: 'commons-logging', module: 'commons-logging')
+//    exclude(group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl')
+//    exclude(group: 'org.slf4j', module: 'jcl-over-slf4j')
+//    exclude(group: 'org.slf4j', module: 'jul-to-slf4j')
+//    exclude(group: 'org.slf4j', module: 'log4j-over-slf4j')
+//    exclude(group: 'org.slf4j', module: 'slf4j-log4j12')
+//}
 
 dependencies {
     // rely on shared library
     implementation project(path: ':shared')
-
+    implementation 'org.apache.logging.log4j:log4j-core:2.17.1'
     // Use JUnit Jupiter for testing.
     testImplementation 'org.junit.platform:junit-platform-launcher:1.6.2'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
@@ -30,14 +38,16 @@ dependencies {
 
 
     // apache http client
-    implementation 'org.apache.httpcomponents:httpclient:4.5.13'
+    implementation('org.apache.httpcomponents:httpclient:4.5.13')
+    implementation 'org.apache.logging.log4j:log4j-api:2.14.1'
+    implementation 'commons-logging:commons-logging:1.2'
+    implementation 'org.apache.logging.log4j:log4j-slf4j18-impl:2.14.1'
 
     // sprint boot
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-   testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 }
 

@@ -12,7 +12,7 @@ public class RISCServer {
     private final RequestHandler requestHandler;
 
     public RISCServer() {
-        this.playerNum = 2;
+        this.playerNum = 3;
         this.requestHandler = new RequestHandler(this.playerNum);
     }
 

@@ -10,6 +10,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
@@ -27,7 +28,16 @@ public class RISCClient {
      * This constructor is used to create a RISCClient object.
      */
     public RISCClient() {
-        theClient = HttpClients.createDefault();
+        PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
+        connManager.setValidateAfterInactivity(-1);
+        theClient = HttpClients.custom()
+                .setConnectionManager(connManager)
+                .disableCookieManagement()
+                .disableRedirectHandling()
+                .disableAuthCaching()
+                .disableAutomaticRetries()
+                .disableConnectionState()
+                .build();;
         jsonMapper = new ObjectMapper();
     }
 

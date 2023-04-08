@@ -164,24 +164,6 @@ public class InputController {
             if (!failTheGame) {
                 getOneTurnInput(MoveFrom, MoveTo, MoveNums, AttackFrom, AttackTo, AttackNums);
             }
-            for (int i : AttackFrom)
-                System.out.print(i + " ");
-            System.out.print("\n");
-            for (int i : AttackTo)
-                System.out.print(i + " ");
-            System.out.print("\n");
-            for (int i : AttackNums)
-                System.out.print(i + " ");
-            System.out.print("\n");
-            for (int i : MoveFrom)
-                System.out.print(i + " ");
-            System.out.print("\n");
-            for (int i : MoveTo)
-                System.out.print(i + " ");
-            System.out.print("\n");
-            for (int i : MoveNums)
-                System.out.print(i + " ");
-            System.out.print("\n");
             ActionRequest actionRequest = new ActionRequest(playerID, MoveFrom, MoveTo, MoveNums, AttackFrom, AttackTo, AttackNums);
             try {
                 response = httpClient.sendAction(actionRequest);

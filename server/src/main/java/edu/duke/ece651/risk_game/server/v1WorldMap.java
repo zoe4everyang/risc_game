@@ -129,10 +129,6 @@ public class v1WorldMap implements WorldMap{
 
     @Override
     public void makeAttack(int playerId, int from, int to, int num) {
-        
-        if (!checker.checkNeighbour(playerId, from, to, num, this)) {
-            return;
-        }
         // if the target it already belongs to the player, move units to the target
         if (!checker.checkAttackTarget(playerId, from, to, num, this)) {
             map.get(to).addUnit(num);
@@ -172,7 +168,7 @@ public class v1WorldMap implements WorldMap{
     HashSet<Integer> verified = new HashSet<>();
     for (int i = 0; i < playerIds.size(); i++) {
         if (checker.checkAttackTarget(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i), this) &&
-        checker.checkAttackNumber(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i), this)&&
+        checker.checkAttackNumber(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i), this) &&
         checker.checkNeighbour(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i), this)) {
             map.get(fromIds.get(i)).removeUnit(unitNums.get(i));
             verified.add(i);

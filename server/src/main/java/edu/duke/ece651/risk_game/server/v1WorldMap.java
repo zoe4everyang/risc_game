@@ -126,7 +126,7 @@ public class v1WorldMap implements WorldMap{
     @Override
     public void makeAttack(int playerId, int from, int to, int num) {
         if (!checker.checkAttackTarget(playerId, from, to, num, this)) {
-            makeMove(playerId, from, to, num);
+            map.get(to).addUnit(num);
             return;
         }
         if (!checker.checkAttack(playerId, from, to, num, this)) {
@@ -161,14 +161,18 @@ public class v1WorldMap implements WorldMap{
     List<Integer> toIds, 
     List<Integer> unitNums) {
     // get attack units
+    HashSet<Integer> verified = new HashSet<>();
     for (int i = 0; i < playerIds.size(); i++) {
         if (!checker.checkAttackNumber(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i), this)) {
-            map.get(i).removeUnit(unitNums.get(i));
+            map.get(fromIds.get(i)).removeUnit(unitNums.get(i));
+            verified.add(i);
         }
     }
     // resolve attack
     for (int i = 0; i < playerIds.size(); i++) {
-        makeAttack(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i));
+        if (verified.contains(i)) {
+            makeAttack(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i));
+        }
     }
     }
 

@@ -28,16 +28,13 @@ public class Checker {
         return true;
     }
     public Boolean checkAttackNumber(int playerId, int from, int to, int num, WorldMap map) {
-        if (num > map.getTerritories().get(from).getUnits() - 1) {
+        if (num >= map.getTerritories().get(from).getUnits()) {
             // throw new IllegalArgumentException("you do not have enough units to attack!");
             return false;
         }
         return true;
     }
-    public Boolean checkAttack(int playerId, int from, int to, int num, WorldMap map) {
-        if (!checkAttackTarget(playerId, from, to, num, map)) {
-            return false;
-        }
+    public Boolean checkNeighbour(int playerId, int from, int to, int num, WorldMap map) {
         if (!map.isNeighbour(from, to)) {
             // throw new IllegalArgumentException("you can only attack the connected territory!");
 

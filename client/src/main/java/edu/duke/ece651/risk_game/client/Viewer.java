@@ -23,7 +23,8 @@ public interface Viewer {
     public void placePrompt(InitResponse initResponse, HashMap<Integer, String> territoryNameMap);
     public void placeOneTerritoryPrompt(String territoryName);
     public void losePrompt();
-    public void resultPrompt(boolean failTheGame, Integer winner);
+    //public void resultPrompt(boolean failTheGame, Integer winner);
+    public void resultPrompt(boolean failTheGame);
     public void displayTheWorld(Response response, HashMap<Integer, String> territoryNameMap);
 
 }

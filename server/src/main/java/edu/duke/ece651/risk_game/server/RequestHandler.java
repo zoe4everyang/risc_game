@@ -93,7 +93,8 @@ public class RequestHandler {
 
         int playerID = msg.getPlayerID();
         synchronized (this) {
-            if(count.get() == playerNum) {
+
+            if(count.get() >= playerNum) {
                 count.set(0);
             }
             count.incrementAndGet();
@@ -106,18 +107,6 @@ public class RequestHandler {
             moveFrom.addAll(msg.getMoveFrom());
             moveTo.addAll(msg.getMoveTo());
             moveNum.addAll(msg.getMoveNums());
-            //            for(int i = 0; i < msg.getAttackFrom().size(); i++){
-//                attackPlayers.add(playerID);
-//                attackFrom.add(msg.getAttackFrom().get(i));
-//                attackTo.add(msg.getAttackTo().get(i));
-//                attackNum.add(msg.getAttackNums().get(i));
-//            }
-//            for(int i = 0; i < msg.getMoveFrom().size(); i++){
-//                movePlayers.add(playerID);
-//                moveFrom.add(msg.getMoveFrom().get(i));
-//                moveTo.add(msg.getMoveTo().get(i));
-//                moveNum.add(msg.getMoveNums().get(i));
-//            }
             if (count.get() < playerNum) {
                 while(count.get() < playerNum) {
                     wait();
@@ -139,6 +128,11 @@ public class RequestHandler {
 
         List<Territory> territories = controller.getTerritories();
         Boolean isPlayerLose = controller.checkLose(playerID);
+        if (isPlayerLose) {
+            playerNum--;
+            System.out.println("Player " + playerID + " lose!");
+
+        }
         Message response = new Response(playerID, territories, isPlayerLose, controller.checkEnd());
         return response;
     }

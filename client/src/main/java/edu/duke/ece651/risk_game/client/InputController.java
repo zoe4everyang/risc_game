@@ -183,9 +183,9 @@ public class InputController {
             ArrayList<Integer> AttackFrom = new ArrayList<>();
             ArrayList<Integer> AttackTo = new ArrayList<>();
             ArrayList<Integer> AttackNums = new ArrayList<>();
-            if (!failTheGame) {
+            //if (!failTheGame) {
                 getOneTurnInput(MoveFrom, MoveTo, MoveNums, AttackFrom, AttackTo, AttackNums);
-            }
+            //}
             ActionRequest actionRequest = new ActionRequest(playerID, MoveFrom, MoveTo, MoveNums, AttackFrom, AttackTo, AttackNums);
             try {
                 response = httpClient.sendAction(actionRequest);
@@ -196,12 +196,20 @@ public class InputController {
             gameEnd = response.isEnd();
             failTheGame = response.isLose();
             if (failTheGame) {
-                riscViewer.losePrompt();
+                break;
+//                riscViewer.losePrompt();
             }
             riscViewer.displayTheWorld(response, territoryNameMap);
         }
-        riscViewer.resultPrompt(failTheGame, response.getTerritories().get(0).getOwner());
-
+        //riscViewer.resultPrompt(failTheGame, response.getTerritories().get(0).getOwner());
+        if (!failTheGame) {
+            try {
+                httpClient.sendEnd();
+            } catch (IOException e) {
+                System.out.println("You win!");
+            }
+        }
+        riscViewer.resultPrompt(failTheGame);
     }
 }
 

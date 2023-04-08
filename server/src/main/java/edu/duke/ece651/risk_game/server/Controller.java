@@ -30,8 +30,6 @@ public class Controller {
     }
 
 
-
-
     public void initGame(List<Integer> unitPlacement) {
         // init game
         world.setUnits(unitPlacement);

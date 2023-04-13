@@ -4,18 +4,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.duke.ece651.risk_game.shared.*;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 
 /**
  * This class is used to send requests to the server and receive responses from the server.
+ * It is used by the RISCFront class.
  */
 public class RISCClient {
 
@@ -25,9 +29,21 @@ public class RISCClient {
 
     /**
      * This constructor is used to create a RISCClient object.
+     * It creates a CloseableHttpClient object and an ObjectMapper object.
+     * It also sets the server URL.
+     * It is used by the RISCFront class.
      */
     public RISCClient() {
-        theClient = HttpClients.createDefault();
+        PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
+        connManager.setValidateAfterInactivity(-1);
+        theClient = HttpClients.custom()
+                .setConnectionManager(connManager)
+                .disableCookieManagement()
+                .disableRedirectHandling()
+                .disableAuthCaching()
+                .disableAutomaticRetries()
+                .disableConnectionState()
+                .build();;
         jsonMapper = new ObjectMapper();
     }
 
@@ -67,18 +83,15 @@ public class RISCClient {
         // set request body
         String json = jsonMapper.writeValueAsString(requestBody);
         request.setEntity(new StringEntity(json, ContentType.APPLICATION_JSON));
-
         // execute the request
         CloseableHttpResponse response = theClient.execute(request);
 
         // fetch response content
         String responseContent = "";
         try {
-            // 获取响应实体
             HttpEntity entity = response.getEntity();
             if (entity != null) {
                 responseContent = EntityUtils.toString(entity);
-
             }
         } finally {
             response.close();
@@ -109,8 +122,21 @@ public class RISCClient {
      * @throws IOException if the request cannot be sent
      */
     public Response sendAction(ActionRequest requestBody) throws IOException {
-        HttpPost request = new HttpPost("serverURL" + "/act");
+        HttpPost request = new HttpPost(serverURL + "/act");
 
         return sendCommand(request, requestBody);
+    }
+
+    public String sendEnd() throws IOException {
+        RequestConfig config = RequestConfig.custom()
+                    .setConnectTimeout(1)
+                    .setSocketTimeout(1)
+                    .build();
+
+        HttpGet request = new HttpGet(serverURL + "/gameover");
+        request.setConfig(config);
+        request.setHeader("Content-Type", "application/json");
+        theClient.execute(request);
+        return "success";
     }
 }

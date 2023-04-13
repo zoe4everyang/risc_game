@@ -4,6 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * This class is used to start the game.
+ * It is used by the RISCFront class.
+ */
 public class RISCFront {
     private final InputController controller;
     public RISCFront() {
@@ -11,7 +15,6 @@ public class RISCFront {
         this.controller = new InputController(input, System.out);
     }
     public static void main(String[] args) throws IOException {
-        //SpringApplication.run(RISCFront.class, args);
         RISCFront front = new RISCFront();
         front.controller.startGame();
     }

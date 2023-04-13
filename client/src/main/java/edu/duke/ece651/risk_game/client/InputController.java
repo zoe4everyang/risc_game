@@ -10,6 +10,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+/* This class is responsible for the interaction between the user and the game.
+ * It will send the user's input to the server and display the response from the server.
+ * It will also display the game prompt to the user.
+ */
 public class InputController {
     private final RISCClient httpClient;
     private final BufferedReader input;
@@ -18,6 +22,10 @@ public class InputController {
     private final HashMap<Integer, String> territoryNameMap;
     private final HashMap<String, Integer> territoryIDMap;
 
+    /* Constructor for InputController
+     * @param input: the input stream
+     * @param output: the output stream
+     */
     public InputController(BufferedReader input, PrintStream output){
         this.httpClient = new RISCClient();
         this.input = input;
@@ -27,20 +35,32 @@ public class InputController {
         this.territoryIDMap = new HashMap<>();
     }
 
+    /* This method is responsible for the whole game.
+     * It will call the initPhase, placementPhase, and gamePhase methods.
+     */
     public void startGame() throws IOException {
         InitResponse initResponse = initPhase();
         placementPhase(initResponse);
         gamePhase();
     }
 
+    /* This method is responsible for the init phase.
+     * It will send the start request to the server and get the response.
+     * It will also initialize the territoryNameMap and territoryIDMap.
+     */
     private InitResponse initPhase() {
         riscViewer.initPrompt();
         InitResponse initResponse = null;
-        try {
-            initResponse = httpClient.sendStart();
-        } catch (IOException e) {
-            System.out.println("Error while sending start request: " + e.getMessage());
-        }
+        boolean error;
+        do {
+            error = false;
+            try {
+                initResponse = httpClient.sendStart();
+            } catch (IOException e) {
+                System.out.println("Error while sending start request: " + e.getMessage());
+                error = true;
+            }
+        } while (error);
         assert initResponse != null;
         playerID = initResponse.getPlayerID();
         List<Territory> territories = initResponse.getTerritories();
@@ -51,16 +71,19 @@ public class InputController {
         return initResponse;
     }
 
-    private void readPlacement(ArrayList<Integer> placement, Integer unitAvailable, ArrayList<Integer> territoryIDs) {
+    /* This method is responsible for the placement phase.
+     * It will send the placement request to the server and get the response.
+     * It will also display the game prompt to the user.
+     * @param placement: the placement of the player
+     * @param unitAvailable: the number of units available for the player
+     * @param territoryIDs: the IDs of the territories owned by the player
+     */
+    private void readPlacement(ArrayList<Integer> placement, Integer unitAvailable, ArrayList<Integer> territoryIDs) throws IOException {
         int unitLeft = unitAvailable;
         for (Integer territoryID : territoryIDs) {
             riscViewer.placeOneTerritoryPrompt(territoryNameMap.get(territoryID));
             String numStr = "";
-            try {
-                numStr = input.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            numStr = input.readLine();
             int num = Integer.parseInt(numStr);
             if (num > unitLeft) {
                 throw new IllegalArgumentException("You don't have enough units!");
@@ -73,7 +96,12 @@ public class InputController {
         }
     }
 
-    private void placementPhase(InitResponse initResponse) {
+    /* This method is responsible for the placement phase.
+     * It will send the placement request to the server and get the response.
+     * It will also display the game prompt to the user.
+     * @param initResponse: the response from the server
+     */
+    private void placementPhase(InitResponse initResponse) throws IOException {
         riscViewer.placePrompt(initResponse, territoryNameMap);
         ArrayList<Integer> territoryIDs = new ArrayList<>();
         for (Territory territory : initResponse.getTerritories()) {
@@ -82,17 +110,31 @@ public class InputController {
             }
         }
         ArrayList<Integer> placement = new ArrayList<Integer>(Collections.nCopies(territoryNameMap.size(), -1));
-        readPlacement(placement, initResponse.getUnitAvailable(), territoryIDs);
+        boolean error;
+        do {
+            error = false;
+            try {
+                readPlacement(placement, initResponse.getUnitAvailable(), territoryIDs);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+                System.out.println("Please input again!");
+                error = true;
+            }
+        } while (error);
         PlacementRequest placementRequest = new PlacementRequest(playerID, placement);
         Response response = null;
         try {
             response = httpClient.sendPlacement(placementRequest);
         } catch (IOException e) {
-            System.out.println("Error while sending start request: " + e.getMessage());
+            System.out.println("Error while sending placement request: " + e.getMessage());
         }
         riscViewer.displayTheWorld(response, territoryNameMap);
     }
 
+    /* This method is responsible for the game phase.
+     * It will send the game request to the server and get the response.
+     * It will also display the game prompt to the user.
+     */
     private String[] readCommand() {
         String text = "";
         try {
@@ -105,6 +147,11 @@ public class InputController {
         return command;
     }
 
+    /* This method is responsible for the game phase.
+     * It will send the game request to the server and get the response.
+     * It will also display the game prompt to the user.
+     * @param command: the command input by the user
+     */
     private void simpleCommandCheck(String[] command) {
         // TODO: more check logic (e.g. checking the existence of territory and unit)
         if (command.length == 0) {
@@ -123,6 +170,16 @@ public class InputController {
         }
     }
 
+    /* This method is responsible for the game phase.
+     * It will send the game request to the server and get the response.
+     * It will also display the game prompt to the user.
+     * @param MoveFrom: the list of territories to move from
+     * @param MoveTo: the list of territories to move to
+     * @param MoveNums: the list of units to move
+     * @param AttackFrom: the list of territories to attack from
+     * @param AttackTo: the list of territories to attack to
+     * @param AttackNums: the list of units to attack
+     */
     private void getOneTurnInput(ArrayList<Integer> MoveFrom, ArrayList<Integer> MoveTo, ArrayList<Integer> MoveNums,
                                 ArrayList<Integer> AttackFrom, ArrayList<Integer> AttackTo, ArrayList<Integer> AttackNums) throws IOException {
         System.out.println("Player " + playerID + ", what would you like to do?\n"
@@ -131,7 +188,18 @@ public class InputController {
                                 + "(D)one");
 
         while(true){
-            String[] command = readCommand();
+            String[] command = null;
+            boolean error;
+            do {
+                error = false;
+                try {
+                    command = readCommand();
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                    System.out.println("Please input again!");
+                    error = true;
+                }
+            } while (error);
             if (command[0].equals("D")){
                 break;
             } else {
@@ -151,9 +219,13 @@ public class InputController {
         }
     }
 
+    /* This method is responsible for the game phase.
+     * It will send the game request to the server and get the response.
+     * It will also display the game prompt to the user.
+     */
     private void gamePhase() throws IOException {
         Response response = null;
-        boolean gameEnd = false, failTheGame = false;
+        Boolean gameEnd = false, failTheGame = false;
         while (!gameEnd){
             ArrayList<Integer> MoveFrom = new ArrayList<>();
             ArrayList<Integer> MoveTo = new ArrayList<>();
@@ -161,71 +233,32 @@ public class InputController {
             ArrayList<Integer> AttackFrom = new ArrayList<>();
             ArrayList<Integer> AttackTo = new ArrayList<>();
             ArrayList<Integer> AttackNums = new ArrayList<>();
-            if (!failTheGame) {
+            //if (!failTheGame) {
                 getOneTurnInput(MoveFrom, MoveTo, MoveNums, AttackFrom, AttackTo, AttackNums);
-            }
+            //}
             ActionRequest actionRequest = new ActionRequest(playerID, MoveFrom, MoveTo, MoveNums, AttackFrom, AttackTo, AttackNums);
             try {
                 response = httpClient.sendAction(actionRequest);
             } catch (IOException e) {
-                System.out.println("Error while sending start request: " + e.getMessage());
+                System.out.println("Error while sending action request: " + e.getMessage());
             }
             assert response != null;
             gameEnd = response.isEnd();
             failTheGame = response.isLose();
             if (failTheGame) {
-                riscViewer.losePrompt();
+                break;
+//                riscViewer.losePrompt();
             }
             riscViewer.displayTheWorld(response, territoryNameMap);
         }
-        riscViewer.resultPrompt(failTheGame, response.getTerritories().get(0).getOwner());
-
+        //riscViewer.resultPrompt(failTheGame, response.getTerritories().get(0).getOwner());
+        if (!failTheGame) {
+            try {
+                httpClient.sendEnd();
+            } catch (IOException e) {
+                System.out.println("You win!");
+            }
+        }
+        riscViewer.resultPrompt(failTheGame);
     }
 }
-
-
-// HOW to use the textviewer:
-
-// initalize the units:
-// TextView(ArrayList<Territory> toDisplay,int game_end,int fail_the_game, int unit_count, int player_id, String player_name)
-// when you initialize the TextView and the unit_count is not 0, then the textviewer will enter the phase to ask player to intitalize their units
-// get the distribution of the Territory by TextViewer.getDistribution
-/*example:
-TextView TextViewer = TextView(toDisplay, 0, 0, 100, player_id, player_name);
-ArrayList<Integer> Placement = TextViewer.getPlacement();
-*/
-
-
-// Play the game:
-// TextView(ArrayList<Territory> toDisplay,int game_end,int fail_the_game, int unit_count, int player_id, String player_name)
-// initialize the TextView with the toDisplay (the territory list)
-/*example:
-TextView TextViewer = TextView(toDisplay, 0, 0, 0, player_id, player_name);
-TextViewer.playOneTurn();
-*/
-// And the following function is used to get the result of playing:
-/*
-    public ArrayList<Integer> getMoveFrom(){
-        return this.MoveFrom;
-    }
-
-    public ArrayList<Integer> getMoveTo(){
-        return this.MoveTo;
-    }
-
-    public ArrayList<Integer> getMoveNums(){
-        return this.MoveNums;
-    }
-
-    public ArrayList<Integer> getAttackFrom(){
-        return this.AttackFrom;
-    }
-
-    public ArrayList<Integer> getAttackTo(){
-        return this.AttackTo;
-    }
-
-    public ArrayList<Integer> getAttackNums(){
-        return this.AttackNums;
-    }
-*/

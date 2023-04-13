@@ -4,7 +4,9 @@ import edu.duke.ece651.risk_game.shared.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
+/**
+ * This class is used to handle the request from the client
+ */
 public class RequestHandler {
     private Controller controller;
     private AtomicInteger count;
@@ -21,7 +23,10 @@ public class RequestHandler {
     List<Integer> moveTo;
     List<Integer> moveNum;
 
-
+    /**
+     * Constructor
+     * @param playerNum number of players
+     */
     public RequestHandler(int playerNum) {
         this.playerNum = playerNum;
         controller = new Controller(playerNum);
@@ -39,6 +44,9 @@ public class RequestHandler {
         moveNum = new ArrayList<>();
     }
 
+    /**
+     * Handle the game start request
+     */
     public Message gameStartHandler() throws InterruptedException {
         int playerID;
         synchronized (this) {
@@ -60,12 +68,18 @@ public class RequestHandler {
         return initResponse;
     }
 
+    /**
+     * Handle the game end request
+     */
     private int registerPlayer(){
         registerID += 1;
         return registerID;
     }
 
-    // place unit on all territories based on user input
+    /**
+     * Handle the game end request
+     * @param msg message
+     */
     public Message placeUnitHandler(PlacementRequest msg) throws InterruptedException{
         synchronized (this) {
             List<Integer> unitPlacement = msg.getPlacement();
@@ -87,36 +101,29 @@ public class RequestHandler {
         return response;
     }
 
-    // move & attack
+    /**
+     * Handle the game end request
+     * @param msg message
+     */
     public Message operationHandler(ActionRequest msg) throws InterruptedException{
         //Boolean isGameEnd;
+
         int playerID = msg.getPlayerID();
         synchronized (this) {
-            if(count.get() == playerNum) {
+
+            if(count.get() >= playerNum) {
                 count.set(0);
             }
             count.incrementAndGet();
-            attackPlayers.addAll(Collections.nCopies(playerID, msg.getAttackFrom().size()));
+            attackPlayers.addAll(Collections.nCopies(msg.getAttackFrom().size(), playerID));
             attackFrom.addAll(msg.getAttackFrom());
             attackTo.addAll(msg.getAttackTo());
             attackNum.addAll(msg.getAttackNums());
 
-            movePlayers.addAll(Collections.nCopies(playerID, msg.getMoveFrom().size()));
+            movePlayers.addAll(Collections.nCopies(msg.getMoveFrom().size(), playerID));
             moveFrom.addAll(msg.getMoveFrom());
             moveTo.addAll(msg.getMoveTo());
             moveNum.addAll(msg.getMoveNums());
-            //            for(int i = 0; i < msg.getAttackFrom().size(); i++){
-//                attackPlayers.add(playerID);
-//                attackFrom.add(msg.getAttackFrom().get(i));
-//                attackTo.add(msg.getAttackTo().get(i));
-//                attackNum.add(msg.getAttackNums().get(i));
-//            }
-//            for(int i = 0; i < msg.getMoveFrom().size(); i++){
-//                movePlayers.add(playerID);
-//                moveFrom.add(msg.getMoveFrom().get(i));
-//                moveTo.add(msg.getMoveTo().get(i));
-//                moveNum.add(msg.getMoveNums().get(i));
-//            }
             if (count.get() < playerNum) {
                 while(count.get() < playerNum) {
                     wait();
@@ -124,11 +131,25 @@ public class RequestHandler {
             } else {
                 controller.step(attackPlayers, attackFrom, attackTo, attackNum,
                         movePlayers, moveFrom, moveTo, moveNum);
+                attackPlayers.clear();
+                attackFrom.clear();
+                attackTo.clear();
+                attackNum.clear();
+                movePlayers.clear();
+                moveFrom.clear();
+                moveTo.clear();
+                moveNum.clear();
                 notifyAll();
             }
         }
+
         List<Territory> territories = controller.getTerritories();
         Boolean isPlayerLose = controller.checkLose(playerID);
+        if (isPlayerLose) {
+            playerNum--;
+            System.out.println("Player " + playerID + " lose!");
+
+        }
         Message response = new Response(playerID, territories, isPlayerLose, controller.checkEnd());
         return response;
     }

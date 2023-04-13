@@ -12,7 +12,7 @@ public class v2CombatResolverTest {
         assertEquals(result, 1);
         assertEquals(combatResolver.resolveCombat(118, 20), 98);
         assertEquals(combatResolver.resolveCombat(2, 100), -98);
-
+        
     }
 
 }

@@ -452,7 +452,7 @@ POST /act/
 same as POST /act/commit/
 
 #### Attack
-
+##### Request HTTP Interface:
 ```http
 POST /act/attack/
 ```
@@ -515,7 +515,7 @@ POST /act/attack/
 
 
 #### Move
-
+##### Request HTTP Interface:
 ```http
 POST /act/move/
 ```
@@ -528,15 +528,89 @@ Same as Attack
 Same as Attack
 
 #### Upgrade Unit
-
+##### Request HTTP Interface:
 ```http
 POST /act/upgrade_unit/
 ```
+##### Request Format
+
+| Parameter name | type   | comments                                       |
+| -------------- | ------ | ---------------------------------------------- |
+| Player ID      | int    | Player's Identity                              |
+| TerritoryId    | int    | the territory where the unit locate            |
+| UnitId         | int    | the unit id                                    |
+| LevelUpgraded  | int    | Level to increase (lv2 -> lv5, should input 3) |
+| UserName       | String | name of the user                               |
+| RoomId         | int    | room id                                        |
+
+```json
+    {
+        "UserName" : "Player1",
+    	"RoomId" : 1,
+    	"PlayerId" : 0,
+        "TerritoryId": 0,
+        "UnitId" : 0,
+        "LevelUpgraded": 3
+    }
+```
+
+##### Response Format 
+
+| Parameter name | type | comments                         |
+| -------------- | ---- | -------------------------------- |
+| Success        | bool | Indicate if the operation succed |
+| ErrorCode      | int  | Error code to classify the error |
+| Information    | int  | Information related              |
+
+
+```json
+{
+    "Success" : False,
+    "ErrorCode" : 5,
+    "Information" :  "Insufficient Resources",
+}
+```
+
+
+
 #### Upgrade Technology
+
+##### Request HTTP Interface:
 ```http
 POST /act/upgrade_tech/
 ```
+##### Request Format
 
+| Parameter name | type   | comments                                       |
+| -------------- | ------ | ---------------------------------------------- |
+| Player ID      | int    | Player's Identity                              |
+| TerritoryId    | int    | the territory where the unit locate            |
+| UnitId         | int    | the unit id                                    |
+| LevelUpgraded  | int    | Level to increase (lv2 -> lv5, should input 3) |
+| UserName       | String | name of the user                               |
+| RoomId         | int    | room id                                        |
+    {
+        "UserName" : "Player1",
+    	"RoomId" : 1,
+    	"PlayerId" : 0,
+    }
+    
+##### Response Format 
+
+| Parameter name | type | comments                         |
+| -------------- | ---- | -------------------------------- |
+| Success        | bool | Indicate if the operation succed |
+| ErrorCode      | int  | Error code to classify the error |
+| Information    | int  | Information related              |
+
+
+```json
+{
+    "Success" : False,
+    "ErrorCode" : 5,
+    "Information" :  "Insufficient Resources",
+}
+```
 #### Move Commit
 
 ##### Request HTTP interface

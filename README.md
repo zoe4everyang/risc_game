@@ -22,11 +22,428 @@ This project can be used as a practical case study for learning Java language pr
 
 
 
-## 3. Program Structure
+
+## 3. Game Flow Design
+
+### Evo 1 Design
+
+![State Machine EVO1.drawio.png](README.assets/State_Machine_EVO1.drawio.png)
+
+#### (1) Start Phase
+
+##### Purpose: 
+
+build connection with the server
+
+##### Request HTTP Interface (with empty request body sent):
+
+```http
+POST /start/
+```
+
+##### Response Format:
+
+| Parameter Name | Type        | Comments                                                     |
+| -------------- | ----------- | ------------------------------------------------------------ |
+| playerId       | int         | Player's Identity                                            |
+| territories    | []Territory | List of Territories                                          |
+| lose           | boolean     | true if the player lose the game                             |
+| end            | boolean     | true if the game is over                                     |
+| unitAvailable  | int         | units available for the player to place at his/her initial territories |
+
+```json
+{
+    "playerId": 1,
+    "territories" : [
+        {
+            "Name": "A",
+            "TerritoryId" : 0,
+            "Owner" : 1,
+            "UnitNum" : 0,
+            "Distance" : [0, 1, 2]
+        }, 
+        {
+            "Name" : "B",
+            "TerritoryId" : 1,
+            "Owner" : 2,
+            "UnitNum" : 0,
+            "Distance" : [1, 0, 1]
+        },
+        {
+            "Name" : "C",
+             "TerritoryId" : 2,
+            "Owner" : 0,
+            "UnitNum" : 20086,
+            "Distance" : [2, 1, 0]
+        }
+    ],
+        "lose": false,
+        "end": false,
+    "unitAvailable": 50
+}
+```
+
+
+
+*The Territory object contains:
+
+| Parameter name | Type   | Comments                                                     |
+| -------------- | ------ | ------------------------------------------------------------ |
+| Name           | string | Name of the territory                                        |
+| TerritoryId    | int    | Unique Identity of the territory                             |
+| Owner          | int    | The player id which this territory belongs to                |
+| UnitNum        | int    | Number of Units in this Territory                            |
+| Distance       | []int  | Distance to other territories. Distance[i] indicate the distance toward territory with id i. |
+
+
+
+#### (2) Placement Phase
+
+##### Purpose: 
+
+place units in the territories
+
+##### Request HTTP Interface:
+
+```http
+POST /place/
+```
+
+##### Request Format: 
+
+| Parameter name | Type  | Comments                                                     |
+| -------------- | ----- | ------------------------------------------------------------ |
+| PlayerId       | int   | Player's identity                                            |
+| Placement      | int[] | Placement[i] denotes the number of units the plaer deployed on territory with id i. The territory not belongs to the player will be set to -1. |
+
+```json
+{
+    "PlayerId": 0,
+    "Placement": [
+        -1, 
+        20,
+        30,
+        50,
+        -1,
+        -1
+    ]
+}
+```
+
+##### Response Format:
+
+Same as start stage but without unitAvailable
+
+
+
+#### (3) Action Phase
+
+##### Purpose: 
+
+Game execution phase, send command to server and print view to the player
+
+##### Request HTTP Interface:
+
+```http
+POST /act/
+```
+
+##### Request Format: 
+
+| Parameter name | type  | comments                              |
+| -------------- | ----- | ------------------------------------- |
+| Player ID      | int   | Player's Identity                     |
+| MoveFrom       | []int | src territories ids for move action   |
+| MoveTo         | []int | des territories ids for move action   |
+| MoveNums       | []int | num of units for move action          |
+| AttackFrom     | []int | src territories ids for attack action |
+| AttackTo       | []int | des territories ids for attack action |
+| AttackNums     | []int | num of units  for attack action       |
+
+```json
+{
+    "PlayerId": 1,
+    "MoveFrom" : [
+        0, 
+        0, 
+        1 
+    ],
+    "MoveTo" : [
+        1, 
+        2,
+        3
+    ],
+    "MoveNums": [
+        10,
+        20,
+        30
+    ],
+    "AttackFrom" : [
+        0, 
+        0, 
+        1
+    ],
+    "AttackTo" : [
+        1, 
+        2,
+        3
+    ],
+    "AttackNums": [
+        10,
+        20,
+        30
+    ]
+}
+```
+
+##### Response Format:
+
+Same as start stage but without unitAvailable
+
+
+
+### Evo 2 Design
+
+![State Machine EVO2.drawio.png](README.assets/State_Machine_EVO2.drawio.png)
+
+#### (1) Login Phase
+
+- Ask the player to type in username and password and send it to server
+- The server will register for the player if the username is new.
+- Otherwise, the password will be checked and the player will be required to type again if the password fails to match the username.
+
+##### Request HTTP Interface:
+
+```http
+POST /login/
+```
+
+##### Request Format: 
+
+| Parameter name | type   | comments                        |
+| -------------- | ------ | ------------------------------- |
+| username       | String | username, unique for one player |
+| password       | String | password of for that username   |
+
+```json
+{
+    "username": "tenkitenki",
+    "password": "riscrisc123"
+}
+```
+
+##### Reponse Format:
+
+A string indicating success or failure of login.
+
+
+
+#### (2) Room Select Phase
+
+- First, the player will be given with all the game room available for him/her (past games that is not over or a new game), queried by a GET request
+
+##### Request HTTP Interface:
+
+```http
+GET /roomid/
+```
+
+##### Request Format: 
+
+| Parameter name | type   | comments                        |
+| -------------- | ------ | ------------------------------- |
+| username       | String | username, unique for one player |
+
+```json
+{
+    "username": "tenkitenki"
+}
+```
+
+##### Reponse Format:
+
+| Parameter name | type   | comments                                |
+| -------------- | ------ | --------------------------------------- |
+| username       | String | username, unique for one player         |
+| roomids        | []int  | roomid available to join for the player |
+
+```json
+{
+    "username": "tenkitenki",
+    "roomids" : [
+        10010, 
+        32792, 
+        8787
+    ]
+}
+```
+
+
+
+- Ask the player to type in the room ID to join a new game or return to a old game
+- The player could also choose to exit the game here
+- For the room ID，the back-end may be changed by：
+    - The server will hold a hashMap with room ID corresponding to a request handler, which will handle the request for a certain game
+    - a max Room ID will be maintained to ensure that every time a player enter the Room Select Phase, he/she would be able to join a new game
+
+##### Request HTTP Interface:
+
+```http
+POST /join/{roomid}
+```
+
+##### Request Format: 
+
+| Parameter name | type   | comments                        |
+| -------------- | ------ | ------------------------------- |
+| username       | String | username, unique for one player |
+| roomid         | int    | ID of the room to join          |
+
+```json
+{
+    "username": "tenkitenki",
+    "roomid" : 8787
+}
+```
+
+##### Reponse Format:
+
+Same as Action Phase, please check that below.
+
+
+
+#### (3) Placement Phase
+
+##### Request HTTP Interface:
+
+```http
+POST /place/{roomid}
+```
+
+##### Request Format: 
+
+| Parameter name | Type  | Comments                                                     |
+| -------------- | ----- | ------------------------------------------------------------ |
+| PlayerId       | int   | Player's identity                                            |
+| Placement      | int[] | Placement[i] denotes the number of units the plaer deployed on territory with id i. The territory not belongs to the player will be set to -1. |
+
+```json
+{
+    "PlayerId": 0,
+    "Placement": [
+        -1, 
+        20,
+        30,
+        50,
+        -1,
+        -1
+    ]
+}
+```
+
+##### Reponse Format:
+
+Same as Action Phase, please check that below.
+
+
+
+#### (4) Action Phase
+
+- Add upgrade and switch game operation based on EVO1
+- The game will go back to Room Select Phase when a switch game command is received from the player or the current game is over
+
+##### Request HTTP Interface (*potentially plan to divide into move, attack, upgrade and commit in the future):
+
+```http
+POST /act/{roomid}
+```
+
+## Please update the JSON interface here, Quanzhi! (Also for the placement phase, maybe.)
+
+##### Request Format: 
+
+| Parameter name | type   | comments                        |
+| -------------- | ------ | ------------------------------- |
+| username       | String | username, unique for one player |
+| roomid         | int    | ID of the room to join          |
+
+```json
+{
+    "PlayerId": 1,
+    "MoveFrom" : [
+        0, 
+        0, 
+        1
+    ],
+    "MoveTo" : [
+        1, 
+        2,
+        3
+    ],
+    "MoveNums": [
+        10,
+        20,
+        30
+    ],
+    "AttackFrom" : [
+        0, 
+        0, 
+        1 
+    ],
+    "AttackTo" : [
+        1, 
+        2,
+        3
+    ],
+    "AttackNums": [
+        10,
+        20,
+        30
+    ]
+}
+```
+
+##### Response Format:
+
+```json
+{
+    "playerId": 1,
+    "territories" : [
+        {
+            "Name": "A",
+            "TerritoryId" : 0,
+            "Owner" : 1,
+            "UnitNum" : 0,
+            "Distance" : [0, 1, 2]
+        }, 
+        {
+            "Name" : "B",
+            "TerritoryId" : 1,
+            "Owner" : 2,
+            "UnitNum" : 0,
+            "Distance" : [1, 0, 1]
+        },
+        {
+            "Name" : "C",
+             "TerritoryId" : 2,
+            "Owner" : 0,
+            "UnitNum" : 20086,
+            "Distance" : [2, 1, 0]
+        }
+    ],
+        "lose": false,
+        "end": false,
+    "unitAvailable": 50
+}
+```
+
+
+
+## 4. Class Design
 
 The UML class diagram of our design is shown below:
 
-![](./RISC_evo1.drawio.png)
+![](README.assets/RISC_evo1.drawio.png)
 
 #### Sub-module A. Front-End (client)
 
@@ -106,293 +523,27 @@ When a player has lost, the server should automatically consider his moves to be
 
 Each territory shall be “owned” by one player at any given time. 
 
-​	**a. CombatResolver**
+**a. CombatResolver**
 
-​	Responsible for the combat logic. Each territory should have an instance of this resolver. And every turn, the resolver of all territories should be traversed.
+Responsible for the combat logic. Each territory should have an instance of this resolver. And every turn, the resolver of all territories should be traversed.
 
-​	**Combat Logic:**
+**Combat Logic:**
 
-​	(a) Combat between one attacker and one defender is an iterative process which ends when one side runs out of units in the fight: 
+(a) Combat between one attacker and one defender is an iterative process which ends when one side runs out of units in the fight: 
 
 ​		i. The server rolls two 20-sided dice (one for the attacker, one for the defender). 
 
 ​		ii. The side with the lower roll loses 1 unit (in a tie, the defender wins). 
 
-​	(b) If player A attacks territory X with units from multiple of her own territories, they count as a single combined force. 
+(b) If player A attacks territory X with units from multiple of her own territories, they count as a single combined force. 
 
-​	(c) If multiple players attack the same territories, each attack is resolved sequentially, with the winner of the first attack being the defender in subsequent attacks. For example, if A,B, and C attack territory X held by player D, then B fights D first. If D wins, then C fights D. If C wins, then A fights C. The sequence in which the attacker’s actions are resolved should be randomly determined by the server. 
+(c) If multiple players attack the same territories, each attack is resolved sequentially, with the winner of the first attack being the defender in subsequent attacks. For example, if A,B, and C attack territory X held by player D, then B fights D first. If D wins, then C fights D. If C wins, then A fights C. The sequence in which the attacker’s actions are resolved should be randomly determined by the server. 
 
-​	(d) If units from territory X attack territory Y, and at the same time, units from territory Y attack territory X, then they are assumed to take drastically different routes between their territories, missing each other, and ending up at their destination with no combat in the middle. For example, if all units from X attack Y, and all units from Y attack X, then (assuming no other players attack those territories) both attacks will be successful with no units lost by either side (since there will be no defenders at the start of the battle). 
+(d) If units from territory X attack territory Y, and at the same time, units from territory Y attack territory X, then they are assumed to take drastically different routes between their territories, missing each other, and ending up at their destination with no combat in the middle. For example, if all units from X attack Y, and all units from Y attack X, then (assuming no other players attack those territories) both attacks will be successful with no units lost by either side (since there will be no defenders at the start of the battle). 
 
-**d. Checker** 
+**b. Checker** 
 
 ​		i. Check if adjacency of the attack command
 
 ​		ii. Check if the move action is feasible
 
-
-
-## 4. HTTP Connection Info
-
-We plan to use Restful API to build HTTP connection between client and server.
-
-### Action
-
-#### Request
-
-```http
-POST /act/
-```
-
-| Parameter name | type  | comments                              |
-| -------------- | ----- | ------------------------------------- |
-| Player ID      | int   | Player's Identity                     |
-| MoveFrom       | int[] | src territories ids for move action   |
-| MoveTo         | int[] | des territories ids for move action   |
-| MoveNums       | int[] | num of units for move action          |
-| AttackFrom     | int[] | src territories ids for attack action |
-| AttackTo       | int[] | des territories ids for attack action |
-| AttackNums     | int[] | num of units  for attack action       |
-
-```json
-{
-    "PlayerId": 1,
-    "MoveFrom" : [
-        0, 
-        0, 
-        1, 
-    ],
-    "MoveTo" : [
-        1, 
-        2,
-        3
-    ],
-    "MoveNums": [
-        10,
-        20,
-        30
-    ],
-    "AttackFrom" : [
-        0, 
-        0, 
-        1, 
-    ],
-    "AttackTo" : [
-        1, 
-        2,
-        3
-    ],
-    "AttackNums": [
-        10,
-        20,
-        30
-    ]
-}
-```
-
-
-
-#### Response
-
-#### Full Response
-
-| Parameter Name | Type        | comments                                    |
-| -------------- | ----------- | ------------------------------------------- |
-| Player ID      | int         | Player's Identity                           |
-| playerName     | string      | the name of player                          |
-| gameState      | int         | 0 for next turn, 1 for lose, 2 for gameover |
-| Territories    | []Territory | List of Territories                         |
-
-#### Territory
-
-| parameter name | Type   | comments                                                     |
-| -------------- | ------ | ------------------------------------------------------------ |
-| Name           | string | Name of the territory                                        |
-| TerritoryId    | int    | Unique Identity of the territory                             |
-| Owner          | int    | The player id which this territory belongs to                |
-| UnitNum        | int    | Number of Units in this Territory                            |
-| Distance       | []int  | Distance to other territories. Distance[i] indicate the distance toward territory with id i. |
-
-#### Response Sample
-
-```json
-{
-    "playerId": 1,
-    "playerName": "Tenki",
-    "Territories" : [
-        {
-            "Name": "A",
-            "TerritoryId" : 0,
-            "Owner" : 1,
-            "UnitNum" : 10086,
-            "Distance" : [0, 1, 2],
-        }, 
-        {
-           	"Name" : "B",
-            "TerritoryId" : 1,
-            "Owner" : 2,
-            "UnitNum" : 40086,
-            "Distance" : [1, 0, 1],
-        },
-        {
-            "Name" : "C",
-             "TerritoryId" : 2,
-            "Owner" : 1,
-            "UnitNum" : 20086,
-            "Distance" : [2, 1, 0]
-        }
-    ],
-}
-```
-
-### Start Game
-
-```http
-POST /start/
-```
-
-#### Response
-
-#### Full Response
-
-| Parameter Name | Type        | comments                             |
-| -------------- | ----------- | ------------------------------------ |
-| Player ID      | int         | Player's Identity                    |
-| Territories    | []Territory | List of Territories                  |
-| playerName     | string      | the name of player                   |
-| UnitAvailable  | int         | Number of units the player can place |
-
-#### Territory
-
-| parameter name | Type   | comments                                                     |
-| -------------- | ------ | ------------------------------------------------------------ |
-| Name           | string | Name of the territory                                        |
-| TerritoryId    | int    | Unique Identity of the territory                             |
-| Owner          | int    | The player id which this territory belongs to                |
-| UnitNum        | int    | Number of Units in this Territory (all zero for this response) |
-| Distance       | []int  | Distance to other territories. Distance[i] indicate the distance toward territory with id i. |
-
-#### Response Sample
-
-```json
-{
-    "playerId": 1,
-    "playerName": "Tenki",
-    "Territories" : [
-        {
-            "Name": "A",
-            "TerritoryId" : 0,
-            "Owner" : 1,
-            "UnitNum" : 0,
-            "Distance" : [0, 1, 2],
-        }, 
-        {
-           	"Name" : "B",
-            "TerritoryId" : 1,
-            "Owner" : 2,
-            "UnitNum" : 0,
-            "Distance" : [1, 0, 1],
-        },
-        {
-            "Name" : "C",
-             "TerritoryId" : 2,
-            "Owner" : 0,
-            "UnitNum" : 20086,
-            "Distance" : [2, 1, 0]
-        }
-    ],
-    "UnitAvailable": 50
-}
-```
-
-### Place Unit
-
-```http
-POST /place/
-```
-
-#### Request
-
-| parameter name | type  | comments                                                     |
-| -------------- | ----- | ------------------------------------------------------------ |
-| PlayerId       | int   | Player's identity                                            |
-| Placement      | int[] | Placement[i] denotes the number of units the plaer deployed on territory with id i. The territory not belongs to the player will be set to -1. |
-
-```json
-{
-    "PlayerId": 0,
-    "Placement": [
-        -1, 
-        20,
-        30,
-        50,
-        -1,
-        -1
-    ]
-    
-}
-```
-
-#### Response
-
-#### Full Response
-
-| Parameter Name | Type        | comments            |
-| -------------- | ----------- | ------------------- |
-| Player ID      | int         | Player's Identity   |
-| Territories    | []Territory | List of Territories |
-| playerName     | string      | the name of player  |
-
-#### Territory
-
-| parameter name | Type   | comments                                                     |
-| -------------- | ------ | ------------------------------------------------------------ |
-| Name           | string | Name of the territory                                        |
-| TerritoryId    | int    | Unique Identity of the territory                             |
-| Owner          | int    | The player id which this territory belongs to                |
-| UnitNum        | int    | Number of Units in this Territory                            |
-| Distance       | []int  | Distance to other territories. Distance[i] indicate the distance toward territory with id i. |
-
-#### Response Sample
-
-```json
-{
-    "playerId": 1,
-    "playerName": "Tenki",
-    "Territories" : [
-        {
-            "Name": "A",
-            "TerritoryId" : 0,
-            "Owner" : 1,
-            "UnitNum" : 10086,
-            "Distance" : [0, 1, 2],
-        }, 
-        {
-           	"Name" : "B",
-            "TerritoryId" : 1,
-            "Owner" : 2,
-            "UnitNum" : 40086,
-            "Distance" : [1, 0, 1],
-        },
-        {
-            "Name" : "C",
-             "TerritoryId" : 2,
-            "Owner" : 1,
-            "UnitNum" : 20086,
-            "Distance" : [2, 1, 0]
-        }
-    ],
-}
-```
-
-
-
-## 5. HTTP Design in Action Phase (to be deleted) 
-
-在action阶段：
-客户端：
-每个玩家会发出两个请求，一个post请求，用以发出move和attack指令来修改服务器状态，服务器只会return一个"success"。在这个post请求收到以后（不知道这里需不需要显式地进行阻塞），client再发一个get request单纯用来请求现在世界状态，服务器会返回territory list。
-
-服务端：
-
-服务端接收到post指令，先把指令存进redis，然后被阻塞。假设现在是三个玩家，那么就是第三个线程进来的时候，会终止阻塞，但是它会在notify all之前把指令从redis提出来并整合，然后传给后端（controller部分）更新状态。然后notify all，服务器给所有玩家return一个success。接着各个玩家去获取现在的territory list

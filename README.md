@@ -359,17 +359,21 @@ POST /act/
 
 ##### Request Format: 
 
-| Parameter name | type      | comments                              |
-| -------------- | --------- | ------------------------------------- |
-| Player ID      | int       | Player's Identity                     |
-| MoveFrom       | []int     | src territories ids for move action   |
-| MoveTo         | [\][]int  | des territories ids for move action   |
-| MoveTroop      | []Unit    | Units to be moved                     |
-| AttackFrom     | []int     | src territories ids for attack action |
-| AttackTo       | []int     | des territories ids for attack action |
-| AttackTroop    | [\][]Unit | Units to attack                       |
-| UserName       | String    | name of the user                      |
-| RoomId         | int       | room id                               |
+| Parameter name       | type      | comments                                                   |
+| -------------------- | --------- | ---------------------------------------------------------- |
+| Player ID            | int       | Player's Identity                                          |
+| MoveFrom             | []int     | src territories ids for move action                        |
+| MoveTo               | [\][]int  | des territories ids for move action                        |
+| MoveTroop            | []Unit    | Units to be moved                                          |
+| AttackFrom           | []int     | src territories ids for attack action                      |
+| AttackTo             | []int     | des territories ids for attack action                      |
+| AttackTroop          | [\][]Unit | Units to attack                                            |
+| UserName             | String    | name of the user                                           |
+| RoomId               | int       | room id                                                    |
+| UpgradeUnitTerritory | []int     | The territories id where the unit to be upgraded locate    |
+| UpgradeUnitId        | []int     | The unit id you wan upgraded                               |
+| UpgradeUnitLevel     | []int     | The number of level you want the unit upgrade.             |
+| UpgradeTechnology    | bool      | True if player want upgrade technology level in this round |
 
 ```json
 {
@@ -420,7 +424,24 @@ POST /act/
   					Level : 4,
                     CombatPts: 5
                 }
-    ]]
+    ]],
+    "UpgradeUnitTerritory":[
+        0, 
+        1, 
+        1
+    ],
+    "UpgradeUnitId":[
+        0, 
+        3,
+        2,
+    ],
+    "UpgradeUnitLevel":[
+        2,
+        2,
+        1
+    ],
+    "UpgradeTechnology": True
+    
 }
 ```
 

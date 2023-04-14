@@ -386,18 +386,22 @@ POST /act/
 
 ##### Request Format: 
 
-| Parameter name | type   | comments                              |
-| -------------- | ------ | ------------------------------------- |
-| Player ID      | int    | Player's Identity                     |
-| MoveFrom       | []int  | src territories ids for move action   |
-| MoveTo         | []int  | des territories ids for move action   |
-| MoveTroop      | []Unit | Units to be moved                     |
-| AttackFrom     | []int  | src territories ids for attack action |
-| AttackTo       | []int  | des territories ids for attack action |
-| AttackTroop    | []Unit | Units to attack                       |
+| Parameter name | type      | comments                              |
+| -------------- | --------- | ------------------------------------- |
+| Player ID      | int       | Player's Identity                     |
+| MoveFrom       | []int     | src territories ids for move action   |
+| MoveTo         | [\][]int  | des territories ids for move action   |
+| MoveTroop      | []Unit    | Units to be moved                     |
+| AttackFrom     | []int     | src territories ids for attack action |
+| AttackTo       | []int     | des territories ids for attack action |
+| AttackTroop    | [\][]Unit | Units to attack                       |
+| UserName       | String    | name of the user                      |
+| RoomId         | int       | room id                               |
 
 ```json
 {
+    "UserName": "player1",
+    "RoomId": 0,
     "PlayerId": 1,
     "MoveFrom" : [
         0, 
@@ -409,7 +413,7 @@ POST /act/
         2,
         3
     ],
-    "MoveTroop": [
+    "MoveTroop": [[
                 {
                     Name : "Guowang",
                     UnitId : 0,
@@ -418,13 +422,13 @@ POST /act/
                     CombatPts: 0
                 },
                 {
-                    name: "Yiheng",
+                    Name: "Yiheng",
                     UnitId : 1,
                     levelName : "PhD",
                     Level : 5
                     CombatPts: 11
                 }
-    ],
+    ]],
     "AttackFrom" : [
         0, 
         0, 
@@ -435,7 +439,7 @@ POST /act/
         2,
         3
     ],
-    "AttackTroop": [
+    "AttackTroop": [[
                 {
                     Name : "Quanzhi",
                     UnitId : 2,
@@ -443,7 +447,7 @@ POST /act/
   					Level : 4,
                     CombatPts: 5
                 }
-    ]
+    ]]
 }
 ```
 
@@ -456,6 +460,64 @@ same as POST /act/commit/
 ```http
 POST /act/attack/
 ```
+##### Request Format
+
+| Parameter name | type   | comments                            |
+| -------------- | ------ | ----------------------------------- |
+| Player ID      | int    | Player's Identity                   |
+| From           | int    | src territoriy id for attack action |
+| To             | int    | des territory id for attack action  |
+| Troop          | []Unit | Units to attack                     |
+| UserName       | String | name of the user                    |
+| RoomId         | int    | room id                             |
+
+```json
+{
+    "UserName" : "Player1",
+    "RoomId" : 1,
+    "PlayerId" : 0,
+    "From" : 0,
+    "To" : 1,
+    "Troop" : [
+                {
+                    Name : "Guowang",
+                    UnitId : 0,
+                    LevelName : "primary school",
+  					Level : 0,
+                    CombatPts: 0
+                },
+                {
+                    Name: "Yiheng",
+                    UnitId : 1,
+                    levelName : "PhD",
+                    Level : 5
+                    CombatPts: 11
+                }
+    ]
+    
+}
+```
+
+##### Response Format 
+| Parameter name | type | comments                         |
+| -------------- | ---- | -------------------------------- |
+| Success        | bool | Indicate if the operation succed |
+| ErrorCode      | int  | Error code to classify the error |
+| Information    | int  | Information related              |
+
+
+```json
+{
+    "Success" : False,
+    "ErrorCode" : 5,
+    "Information" :  "Insufficient Resources",
+}
+```
+
+
+
+
+
 #### Move
 
 ```http

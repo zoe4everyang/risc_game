@@ -264,12 +264,10 @@ GET /roomid/
 
 | Parameter name | type   | comments                                |
 | -------------- | ------ | --------------------------------------- |
-| username       | String | username, unique for one player         |
 | roomids        | []int  | roomid available to join for the player |
 
 ```json
 {
-    "username": "tenkitenki",
     "roomids" : [
         10010, 
         32792, 
@@ -352,27 +350,6 @@ Same as Action Phase, please check that below.
 - Add upgrade and switch game operation based on EVO1
 - The game will go back to Room Select Phase when a switch game command is received from the player or the current game is over
 
-##### Request HTTP Interface (*potentially plan to divide into move, attack, upgrade and commit in the future):
-
-```http
-POST /act/{roomid}
-```
-##### Request Format: 
-
-| Parameter name | type   | comments                        |
-| -------------- | ------ | ------------------------------- |
-| username       | String | username, unique for one player |
-| roomid         | int    | ID of the room to join          |
-
-
-```json
-{
-    "Username" : "qf37",
-    "RoomId" : 1,
-}
-```
-
-## Please update the JSON interface here, Quanzhi! (Also for the placement phase, maybe.)
 #### Action (legacy)
 ##### Request HTTP Interface:
 
@@ -627,12 +604,13 @@ POST /act/commit/
 }
 ```
 ##### Response Format:
-| Parameter name | type   | comments                      |
-| -------------- | ------ | ----------------------------- |
-| PlayerInfo     | Player | Information of players        |
-| Territories    | []int  | Information of the map        |
-| lose           | bool   | indicate if the play has lost |
-| end            | bool   | indicate if the game was over |
+| Parameter name | type     | comments                                                          |
+|----------------|----------|-------------------------------------------------------------------|
+| PlayerInfo     | Player   | Information of players                                            |
+| Territories    | []int    | Information of the map                                            |
+| lose           | bool     | indicate if the play has lost                                     |
+| end            | bool     | indicate if the game was over                                     |
+| playerList     | []String | name list of players in the room, with index identifying playerId |
 
 ```json
 {
@@ -709,9 +687,11 @@ POST /act/commit/
     ],
         "lose": false,
         "end": false,
+        "playerList": ["Tenki", "Quanzhi", "Yiheng", "Zoe", "Guowang"]
 }
 ```
 Territory
+
 | Parameter name | Type   | Comments                                                     |
 | -------------- | ------ | ------------------------------------------------------------ |
 | Name           | string | Name of the territory                                        |
@@ -723,6 +703,7 @@ Territory
 |                |        |                                                              |
 
 Unit
+
 | Parameter name | Type   | Comments            |
 | -------------- | ------ | ------------------- |
 | Name           | string | unit name           |
@@ -732,6 +713,7 @@ Unit
 | UnitId         | int    | id of unit          |
 
 Player
+
 | Parameter name  | Type     | Comments               |
 | --------------- | -------- | ---------------------- |
 | PlayerId        | int      | PlayerId               |

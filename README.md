@@ -357,9 +357,6 @@ Same as Action Phase, please check that below.
 ```http
 POST /act/{roomid}
 ```
-
-## Please update the JSON interface here, Quanzhi! (Also for the placement phase, maybe.)
-
 ##### Request Format: 
 
 | Parameter name | type   | comments                        |
@@ -367,77 +364,249 @@ POST /act/{roomid}
 | username       | String | username, unique for one player |
 | roomid         | int    | ID of the room to join          |
 
+
+```json
+{
+    "Username" : "qf37",
+    "RoomId" : 1,
+}
+```
+
+## Please update the JSON interface here, Quanzhi! (Also for the placement phase, maybe.)
+#### Action (legacy)
+```http
+POST /act/
+```
+##### Request Format
+##### Request HTTP Interface:
+
+```http
+POST /act/
+```
+
+##### Request Format: 
+
+| Parameter name | type   | comments                              |
+| -------------- | ------ | ------------------------------------- |
+| Player ID      | int    | Player's Identity                     |
+| MoveFrom       | []int  | src territories ids for move action   |
+| MoveTo         | []int  | des territories ids for move action   |
+| MoveTroop      | []Unit | Units to be moved                     |
+| AttackFrom     | []int  | src territories ids for attack action |
+| AttackTo       | []int  | des territories ids for attack action |
+| AttackTroop    | []Unit | Units to attack                       |
+
 ```json
 {
     "PlayerId": 1,
     "MoveFrom" : [
         0, 
         0, 
-        1
+        1 
     ],
     "MoveTo" : [
         1, 
         2,
         3
     ],
-    "MoveNums": [
-        10,
-        20,
-        30
+    "MoveTroop": [
+                {
+                    Name : "Guowang",
+                    UnitId : 0,
+                    LevelName : "primary school",
+  					Level : 0,
+                    CombatPts: 0
+                },
+                {
+                    name: "Yiheng",
+                    UnitId : 1,
+                    levelName : "PhD",
+                    Level : 5
+                    CombatPts: 11
+                }
     ],
     "AttackFrom" : [
         0, 
         0, 
-        1 
+        1
     ],
     "AttackTo" : [
         1, 
         2,
         3
     ],
-    "AttackNums": [
-        10,
-        20,
-        30
+    "AttackTroop": [
+                {
+                    Name : "Quanzhi",
+                    UnitId : 2,
+                    LevelName : "master",
+  					Level : 4,
+                    CombatPts: 5
+                }
     ]
 }
 ```
 
 ##### Response Format:
 
+same as POST /act/commit/
+
+#### Attack
+
+```http
+POST /act/attack/
+```
+#### Move
+
+```http
+POST /act/move/
+```
+#### Upgrade Unit
+```http
+POST /act/upgrade_unit/
+```
+#### Upgrade Technology
+```http
+POST /act/upgrade_tech/
+```
+
+#### Move Commit
+
+##### Request HTTP interface
+
+```http
+POST /act/commit/
+```
+##### Request Format:
+| Parameter name | type   | comments                                |
+| -------------- | ------ | --------------------------------------- |
+| username       | String | username, unique for one player         |
+| roomids        | []int  | roomid available to join for the player |
 ```json
 {
-    "playerId": 1,
-    "territories" : [
+    "Username": "qf37",
+    "roomId": 1,
+}
+```
+##### Response Format:
+| Parameter name | type   | comments                      |
+| -------------- | ------ | ----------------------------- |
+| PlayerInfo     | Player | Information of players        |
+| Territories    | []int  | Information of the map        |
+| lose           | bool   | indicate if the play has lost |
+| end            | bool   | indicate if the game was over |
+
+```json
+{
+    "PlayerInfo" : {"PlayerId": 1,
+                "Resources": {
+               		"Tech_pts" : 30,
+                	"Tood_pts" : 30,
+                },
+                "TechnologyLevel": 2
+               },
+ 
+    "Territories" : [
         {
             "Name": "A",
             "TerritoryId" : 0,
             "Owner" : 1,
-            "UnitNum" : 0,
+            "Troop" : [
+                {
+                    Name : "Guowang",
+                    UnitId : 0,
+                    LevelName : "primary school",
+  					Level : 0,
+                    CombatPts: 0
+                },
+                {
+                    name: "Yiheng",
+                    UnitId : 1,
+                    levelName : "PhD",
+                    Level : 5
+                    CombatPts: 11
+                }
+            ],
+            "Cost" : 30,
             "Distance" : [0, 1, 2]
         }, 
         {
             "Name" : "B",
             "TerritoryId" : 1,
             "Owner" : 2,
-            "UnitNum" : 0,
+            "Troop" : [
+                {
+                    Name : "Quanzhi",
+                    LevelName : "master",
+  					Level : 4,
+                    CombatPts: 5
+                }
+            ],
+            "Cost" : 30,
             "Distance" : [1, 0, 1]
         },
         {
             "Name" : "C",
              "TerritoryId" : 2,
             "Owner" : 0,
-            "UnitNum" : 20086,
+            "Troop" : [
+                {
+                    Name : "Tenki",
+                    UnitId : 2,
+                    LevelName : "middle school",
+  					Level : 1,
+                    CombatPts: 3
+                },
+                {
+                    Name: "Zoe",
+                    UnitId : 3,
+                    LevelName : "professor",
+                    Level : 6
+                    CombatPts: 15
+                }
+            ],
+            "Cost" : 30,
             "Distance" : [2, 1, 0]
         }
     ],
         "lose": false,
         "end": false,
-    "unitAvailable": 50
 }
 ```
+Territory
+| Parameter name | Type   | Comments                                                     |
+| -------------- | ------ | ------------------------------------------------------------ |
+| Name           | string | Name of the territory                                        |
+| TerritoryId    | int    | Unique Identity of the territory                             |
+| Owner          | int    | The player id which this territory belongs to                |
+| Troop          | []Unit | Units                                                        |
+| Distance       | []int  | Distance to other territories. Distance[i] indicate the distance toward territory with id i. |
+| Cost           | int    | number of food need to go through the territory              |
+|                |        |                                                              |
 
+Unit
+| Parameter name | Type   | Comments            |
+| -------------- | ------ | ------------------- |
+| Name           | string | unit name           |
+| LevelName      | int    | name of this level  |
+| Level          | int    | level of unit       |
+| CombatPts      | int    | bonus of this level |
+| UnitId         | int    | id of unit          |
 
+Player
+| Parameter name  | Type     | Comments               |
+| --------------- | -------- | ---------------------- |
+| PlayerId        | int      | PlayerId               |
+| Resources       | Resource | Resource the unit have |
+| TechnologyLevel | int      | technology level       |
+
+Resource
+
+| Parameter name | Type | Comments          |
+| -------------- | ---- | ----------------- |
+| Tech_pts       | int  | Technology points |
+| Food_pts       | int  | Food points       |
+|                |      |                   |
 
 ## 4. Class Design
 

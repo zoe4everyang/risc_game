@@ -374,10 +374,6 @@ POST /act/{roomid}
 
 ## Please update the JSON interface here, Quanzhi! (Also for the placement phase, maybe.)
 #### Action (legacy)
-```http
-POST /act/
-```
-##### Request Format
 ##### Request HTTP Interface:
 
 ```http
@@ -523,7 +519,16 @@ POST /act/attack/
 ```http
 POST /act/move/
 ```
+##### Request Format
+
+Same as Attack
+
+##### Response Format
+
+Same as Attack
+
 #### Upgrade Unit
+
 ```http
 POST /act/upgrade_unit/
 ```

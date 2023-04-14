@@ -581,20 +581,17 @@ POST /act/upgrade_tech/
 ```
 ##### Request Format
 
-| Parameter name | type   | comments                                       |
-| -------------- | ------ | ---------------------------------------------- |
-| Player ID      | int    | Player's Identity                              |
-| TerritoryId    | int    | the territory where the unit locate            |
-| UnitId         | int    | the unit id                                    |
-| LevelUpgraded  | int    | Level to increase (lv2 -> lv5, should input 3) |
-| UserName       | String | name of the user                               |
-| RoomId         | int    | room id                                        |
+| Parameter name | type   | comments          |
+| -------------- | ------ | ----------------- |
+| Player ID      | int    | Player's Identity |
+| UserName       | String | name of the user  |
+| RoomId         | int    | room id           |
     {
         "UserName" : "Player1",
     	"RoomId" : 1,
     	"PlayerId" : 0,
     }
-    
+
 ##### Response Format 
 
 | Parameter name | type | comments                         |

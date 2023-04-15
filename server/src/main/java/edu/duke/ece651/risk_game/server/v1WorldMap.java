@@ -9,7 +9,8 @@ import java.util.List;
  */
 public class v1WorldMap implements WorldMap{
     private List<Territory> map;
-    private int numPlayers;
+
+    private List<Player> players;
     private Checker checker;
     private int unitAvailable;
     /**

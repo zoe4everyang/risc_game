@@ -27,4 +27,15 @@ public class TerritoryTest {
         territory.defence(attackTroop);
         assertEquals(1, territory.getOwner());
     }
+
+    @Test
+    public void test_territoryUpgrade() {
+        CombatResolver cr = new evo2CombatResolver();
+        cr.setRandom(false);
+        Territory territory = new v1Territory(0, "t1",
+                0, List.of(0, 1),
+                30, 5, 5, cr);
+
+        territory.addTroop(new unitTroop(0, List.of(new Unit("test", 3, 0))));
+    }
 }

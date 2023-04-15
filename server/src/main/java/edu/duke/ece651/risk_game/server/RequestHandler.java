@@ -106,7 +106,7 @@ public class RequestHandler {
             moveFrom.addAll(msg.getMoveFrom());
             moveTo.addAll(msg.getMoveTo());
             moveNum.addAll(msg.getMoveNums());
-            //            for(int i = 0; i < msg.getAttackFrom().size(); i++){
+//            for(int i = 0; i < msg.getAttackFrom().size(); i++){
 //                attackPlayers.add(playerID);
 //                attackFrom.add(msg.getAttackFrom().get(i));
 //                attackTo.add(msg.getAttackTo().get(i));

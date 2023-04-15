@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
         gradlePluginPortal()
     }
-    dependencies {
+    depListencies {
         classpath 'com.bmuschko:gradle-clover-plugin:2.2.3'
     }
 }
@@ -13,7 +13,7 @@ allprojects{
         mavenCentral()
     }
     apply plugin: 'com.bmuschko.clover'
-    dependencies {
+    depListencies {
         clover 'org.openclover:clover:4.3.1'
     }
 }

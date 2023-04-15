@@ -26,4 +26,9 @@ public interface Territory {
     public String getName();
     public int getOwner();
 
+    public List<Integer> getNeighbours();
+
+    public int getCost();
+
+    public void upgradeUnit(int UnitId, int amount);
 }

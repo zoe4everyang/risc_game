@@ -1,6 +1,8 @@
 package edu.duke.ece651.risk_game.shared;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class v1Territory implements Territory{
@@ -90,6 +92,28 @@ public class v1Territory implements Territory{
         return owner;
     }
 
+    @Override
+    public List<Integer> getNeighbours() {
+        // return list of neighbours
+        ArrayList<Integer> neighbours = new ArrayList<>();
+        for (int i = 0; i < distances.size(); i++) {
+            if (distances.get(i) == 1) {
+                neighbours.add(i);
+            }
+        }
+        return neighbours;
+    }
+
+    @Override
+    public int getCost() {
+        return cost;
+    }
+
+    @Override
+    public void upgradeUnit(int UnitId, int amount) {
+        // upgrade unit
+        this.troop.upgrade(UnitId, amount);
+    }
 
 
 }

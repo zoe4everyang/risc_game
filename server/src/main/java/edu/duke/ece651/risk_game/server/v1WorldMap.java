@@ -43,11 +43,13 @@ public class v1WorldMap implements WorldMap{
      * @return return the cost of the shortest path from id1 to id2 if such path exists,
      * otherwise return -1
      */
-    private int shortestPath(int id1, int id2, int playerId) {
+    @Override
+    public int shortestPath(int id1, int id2, int playerId) {
+        // TODO: test dijkstra
         if (id1 == id2) {
             return 0;
         }
-        // use dijkstra to find the shortest path
+        // use dijkstra to find the shortest path and return the cost
         // initialize the distance
         List<Integer> distance = new ArrayList<>();
         for (int i = 0; i < map.size(); i++) {
@@ -57,7 +59,7 @@ public class v1WorldMap implements WorldMap{
         // initialize the visited
         List<Boolean> visited = new ArrayList<>();
         for (int i = 0; i < map.size(); i++) {
-            visited.set(i, false);
+            visited.add(false);
         }
         // initialize the queue
         Queue<Integer> queue = new LinkedList<>();
@@ -66,17 +68,19 @@ public class v1WorldMap implements WorldMap{
             int cur = queue.poll();
             visited.set(cur, true);
             for (int i = 0; i < map.get(cur).getNeighbours().size(); i++) {
-                int next = map.get(cur).getNeighbours().get(i);
-                if (visited.get(next)) {
-                    continue;
-                }
-                if (distance.get(next) > distance.get(cur) + 1) {
-                    distance.set(next, distance.get(cur) + 1);
-                    queue.add(next);
+                int neighbour = map.get(cur).getNeighbours().get(i);
+                if (map.get(neighbour).getOwner() == playerId && !visited.get(neighbour)) {
+                    if ( distance.get(neighbour) > distance.get(cur) + map.get(neighbour).getCost()) {
+                        distance.set(neighbour, distance.get(cur) + map.get(neighbour).getCost());
+                        queue.add(neighbour);
+                    }
                 }
             }
         }
-
+        if (distance.get(id2) == Integer.MAX_VALUE) {
+            return -1;
+        }
+        return distance.get(id2) - map.get(id2).getCost();
     }
 
     /**
@@ -102,7 +106,7 @@ public class v1WorldMap implements WorldMap{
         for (int i = 0; i < map.size(); i++) {
             visited.add(false);
         }
-        return dfs(id1, id2, visited, playerId);
+        return shortestPath(id1, id2, playerId) > 0;
     }
 
     /**

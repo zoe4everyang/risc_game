@@ -12,7 +12,15 @@ public class v1Territory implements Territory{
     private List<Integer> distances;
     private CombatResolver combatResolver;
 
-    public v1Territory(int id, String name, int owner, List<Integer> distances, CombatResolver combatResolver) {
+    private int cost;
+
+    private int tech_production;
+    private int food_production;
+
+    public v1Territory(int id, String name,
+                       int owner, List<Integer> distances,
+                       int cost, int tech_prod, int food_prod,
+                       CombatResolver combatResolver) {
         // constructor
         this.id = id;
         this.name = name;
@@ -20,6 +28,9 @@ public class v1Territory implements Territory{
         this.troop = new unitTroop(owner);
         this.distances = distances;
         this.combatResolver = combatResolver;
+        this.cost = cost;
+        this.tech_production = tech_prod;
+        this.food_production = food_prod;
     }
 
     @JsonCreator
@@ -48,18 +59,15 @@ public class v1Territory implements Territory{
         this.troop.removeTroop(troop);
     }
     
-    public void defence(Troop troop) {
-        // TODO: finalize defence after reolve combat is done
-//        // defend against attacker
-//        int result = combatResolver.resolveCombat(unit, this.units);
-//        if (result > 0) {
-//            // attacker wins
-//            this.owner = attacker;
-//            this.units = result;
-//        } else if (result < 0) {
-//            // defender wins
-//            this.units = -result;
-//        }
+    public void defence(Troop attackTroop) {
+        // defend against attacker
+        Troop winner = combatResolver.resolveCombat(attackTroop, this.troop);
+        if (winner.getOwner() != this.owner) {
+            // attacker winner
+            this.troop = attackTroop;
+            this.owner = this.troop.getOwner();
+
+        }
     }
     
     public List<Integer> getDistances() {

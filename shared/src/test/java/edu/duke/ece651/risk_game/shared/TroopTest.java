@@ -31,4 +31,20 @@ public class TroopTest {
         troop.upgrade(2, 5);
         assertEquals(troop.getUnits().get(2).getLevel(), 5);
     }
+
+    @Test
+    public void test_addDeleteTroop() {
+        Troop troop = new unitTroop(0);
+        troop.addUnit(new Unit("test", 0));
+        troop.addUnit(new Unit("test2", 888));
+        troop.addUnits(List.of(new Unit("test3", 2), new Unit("test4", 3)));
+        assertEquals(troop.getUnits().size(), 4);
+        Troop troop1 = new unitTroop(1);
+        troop1.addUnit(new Unit("test5", 4));
+        troop1.addUnit(new Unit("test6", 5));
+        troop.addTroop(troop1);
+        assertEquals(troop.getUnits().size(), 6);
+        troop.removeTroop(troop1);
+        assertEquals(troop.getUnits().size(), 4);
+    }
 }

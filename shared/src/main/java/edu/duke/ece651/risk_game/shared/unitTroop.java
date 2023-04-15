@@ -31,9 +31,10 @@ public class unitTroop implements Troop{
         for (int i = 0; i < units.size(); i++) {
             if (units.get(i).getUnitId() == unitId) {
                 units.remove(i);
-                break;
+                return;
             }
         }
+        throw new IllegalArgumentException("unitId not found");
     }
 
     @Override
@@ -44,6 +45,20 @@ public class unitTroop implements Troop{
     @Override
     public void addUnits(List<Unit> units) {
         this.units.addAll(units);
+    }
+
+    @Override
+    public void addTroop(Troop troop) {
+        addUnits(troop.getUnits());
+    }
+
+
+    @Override
+    public void removeTroop(Troop troop) {
+        // TODO: need some error handling if the given troop is not a subset of this troop
+        for (Unit unit : troop.getUnits()) {
+            deleteUnit(unit.getUnitId());
+        }
     }
 
     @Override

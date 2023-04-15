@@ -1,6 +1,8 @@
 package edu.duke.ece651.risk_game.shared;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 /**
@@ -13,21 +15,22 @@ public class InitResponse extends Response {
     /**
      * This constructor is used to create a message that contains the information of the player's response.
      *
-     * @param playerID      the ID of the player
+     * @param playerInfo    the information of the player
      * @param territories   the list of territories that the player owns
-     * @param lose     the result of the player
+     * @param lose          the result of the player
      *                      (true: the player loses the game; false: the player does not lose the game)
-     * @param end      the state of the game
+     * @param end           the state of the game
      *                      (true: the game is end; false: the game is not end)
      * @param unitAvailable the number of units that the player can place on the territories
      */
     @JsonCreator
-    public InitResponse(@JsonProperty("playerID") Integer playerID,
+    public InitResponse(@JsonProperty("playerID") PlayerInfo playerInfo,
                         @JsonProperty("territories") List<Territory> territories,
                         @JsonProperty("lose") Boolean lose,
                         @JsonProperty("end") Boolean end,
+                        @JsonProperty("playerList") List<String> playerList,
                         @JsonProperty("unitAvailable") Integer unitAvailable) {
-        super(playerID, territories, lose, end);
+        super(playerInfo, territories, lose, end, playerList);
         this.unitAvailable = unitAvailable;
     }
 

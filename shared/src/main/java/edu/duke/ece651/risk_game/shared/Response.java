@@ -1,6 +1,7 @@
 package edu.duke.ece651.risk_game.shared;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.boot.jackson.JsonComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +15,12 @@ public class Response extends Message {
     private final List<Territory> territories;
     private final Boolean lose;
     private final Boolean end;
+    private final List<String> playerList;
 
     /**
      * This constructor is used to create a message that contains the information of the player's response.
      *
-     * @param playerID    the ID of the player
+     * @param playerInfo  the information of the player
      * @param territories the list of territories that the player owns
      * @param lose        the result of the player
      *                    (true: the player loses the game; false: the player does not lose the game)
@@ -26,16 +28,17 @@ public class Response extends Message {
      *                    (true: the game is end; false: the game is not end)
      */
     @JsonCreator
-    public Response(@JsonProperty("playerID") Integer playerID,
+    public Response(@JsonProperty("playerInfo") PlayerInfo playerInfo,
                     @JsonProperty("territories") List<Territory> territories,
                     @JsonProperty("lose") Boolean lose,
-                    @JsonProperty("end") Boolean end) {
-        //public Response(Integer playerID, String playerName, Integer gameState, List<Territory> territories, Boolean gameEnd) {
-        super(playerID);
+                    @JsonProperty("end") Boolean end,
+                    @JsonProperty("playerList") List<String> playerList) {
+        super(playerInfo);
         this.territories = new ArrayList<>();
         this.territories.addAll(territories);
         this.lose = lose;
         this.end = end;
+        this.playerList = playerList;
     }
 
     // This method is used to get the list of territories that the player owns.
@@ -51,5 +54,9 @@ public class Response extends Message {
     // This method is used to get if the game is end.
     public Boolean isEnd() {
         return end;
+    }
+
+    public List<String> getPlayerList() {
+        return playerList;
     }
 }

@@ -39,9 +39,10 @@ public class InputController {
      * It will call the initPhase, placementPhase, and gamePhase methods.
      */
     public void startGame() throws IOException {
-        InitResponse initResponse = initPhase();
+        loginPhase();
+        roomSelectPhase();
         placementPhase(initResponse);
-        gamePhase();
+        actionPhase();
     }
 
     /* This method is responsible for the init phase.

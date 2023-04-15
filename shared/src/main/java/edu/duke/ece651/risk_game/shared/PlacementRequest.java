@@ -12,11 +12,11 @@ public class PlacementRequest extends Message{
     /**
      * This constructor is used to create a message that contains the information of the player's placement.
      *
-     * @param playerID the ID of the player
+     * @param playerId the ID of the player
      * @param placement the list of numbers of units that the player wants to place on each territory
      */
-    public PlacementRequest(Integer playerID, List<Integer> placement) {
-        super(playerID);
+    public PlacementRequest(Integer playerId, List<Integer> placement) {
+        super(playerId);
         this.placement = placement;
     }
 

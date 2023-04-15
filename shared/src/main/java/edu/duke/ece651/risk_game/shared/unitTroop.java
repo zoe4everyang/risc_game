@@ -1,10 +1,22 @@
 package edu.duke.ece651.risk_game.shared;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class unitTroop implements Troop{
     private int owner;
     private List<Unit> units;
+
+    public unitTroop(int owner, List<Unit> units) {
+        this.owner = owner;
+        this.units = units;
+    }
+
+    public unitTroop(int owner) {
+        this.owner = owner;
+        this.units = new ArrayList<>();
+    }
+
     @Override
     public int getOwner() {
         return owner;
@@ -40,8 +52,8 @@ public class unitTroop implements Troop{
     }
 
     @Override
-    public boolean upgrade(int unitId) {
-        units.get(unitId).upgrade();
+    public boolean upgrade(int unitId, int amount) {
+        units.get(unitId).upgrade(amount);
         return true;
     }
 }

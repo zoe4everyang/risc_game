@@ -21,19 +21,28 @@ public class evo2CombatResolver implements CombatResolver {
             attackTroop.getUnits().sort((u1, u2) -> u2.getLevel() - u1.getLevel());
             defendTroop.getUnits().sort((u1, u2) -> u1.getLevel() - u2.getLevel());
             // pair two list of units by index, and resolve combat
+            Boolean attacker = true;
             while (attackTroop.getUnits().size() > 0 && defendTroop.getUnits().size() > 0) {
-                Unit attackUnit = attackTroop.getUnits().get(0);
-                Unit defendUnit = defendTroop.getUnits().get(0);
-                if (resolveCombat(attackUnit, defendUnit)) {
-                    defendTroop.getUnits().remove(attackUnit.getUnitId());
+                Unit attackUnit;
+                Unit defendUnit;
+                if (attacker) {
+                attackUnit = attackTroop.getUnits().get(0);
+                defendUnit = defendTroop.getUnits().get(0);
                 } else {
-                    attackTroop.getUnits().remove(defendUnit.getUnitId());
+                attackUnit = attackTroop.getUnits().get(attackTroop.getUnits().size() - 1);
+                defendUnit = defendTroop.getUnits().get(defendTroop.getUnits().size() - 1);
                 }
+                if (resolveCombat(attackUnit, defendUnit)) {
+                    defendTroop.deleteUnit(defendUnit.getUnitId());
+                } else {
+                    attackTroop.deleteUnit(attackUnit.getUnitId());
+                }
+                attacker = !attacker;
             }
             return attackTroop.getUnits().size() > 0 ? attackTroop : defendTroop;
         }
         // return true if attack wins, false if defend wins
-        private Boolean resolveCombat(Unit attackUnit, Unit defendUnit) {
+        protected Boolean resolveCombat(Unit attackUnit, Unit defendUnit) {
             int attackBonus = this.levelBonus.get(attackUnit.getLevel());
             int defendBonus = this.levelBonus.get(defendUnit.getLevel());
             int attackRoll, defendRoll;

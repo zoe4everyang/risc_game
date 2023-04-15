@@ -16,7 +16,6 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 })
 public interface Territory {
 
-    public void defence(int attacker, int unit);
 
     void addTroop(Troop troop);
 

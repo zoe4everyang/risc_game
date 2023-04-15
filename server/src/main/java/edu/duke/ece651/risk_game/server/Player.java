@@ -18,7 +18,7 @@ public class Player {
     public Player(int playerId, String playerName, List<Integer> territories, Resource resource) {
         this.playerId = playerId;
         this.playerName = playerName;
-        this.territories = territoriesgit;
+        this.territories = territories;
         this.resource = resource;
         this.tech_level = 1;
         this.pendingUpdate = false;

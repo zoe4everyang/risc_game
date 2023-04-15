@@ -26,11 +26,11 @@ public class evo2CombatResolver implements CombatResolver {
                 Unit attackUnit;
                 Unit defendUnit;
                 if (attacker) {
-                attackUnit = attackTroop.getUnits().get(0);
-                defendUnit = defendTroop.getUnits().get(0);
+                    attackUnit = attackTroop.getUnits().get(0);
+                    defendUnit = defendTroop.getUnits().get(0);
                 } else {
-                attackUnit = attackTroop.getUnits().get(attackTroop.getUnits().size() - 1);
-                defendUnit = defendTroop.getUnits().get(defendTroop.getUnits().size() - 1);
+                    attackUnit = attackTroop.getUnits().get(attackTroop.getUnits().size() - 1);
+                    defendUnit = defendTroop.getUnits().get(defendTroop.getUnits().size() - 1);
                 }
                 if (resolveCombat(attackUnit, defendUnit)) {
                     defendTroop.deleteUnit(defendUnit.getUnitId());

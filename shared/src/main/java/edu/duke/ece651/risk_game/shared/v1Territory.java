@@ -58,7 +58,7 @@ public class v1Territory implements Territory{
         // remove unit from territory
         this.troop.removeTroop(troop);
     }
-    
+    @Override
     public void defence(Troop attackTroop) {
         // defend against attacker
         Troop winner = combatResolver.resolveCombat(attackTroop, this.troop);

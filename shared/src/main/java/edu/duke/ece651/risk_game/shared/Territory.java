@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
         @JsonSubTypes.Type(value = v1Territory.class, name = "v1")
 })
 public interface Territory {
-
+    public void defence(Troop troop);
 
     void addTroop(Troop troop);
 

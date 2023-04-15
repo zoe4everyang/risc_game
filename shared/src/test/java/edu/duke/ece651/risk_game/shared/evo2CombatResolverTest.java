@@ -26,6 +26,18 @@ public class evo2CombatResolverTest {
     }
 
     @Test
+    public void testCombatReolverSingle() {
+        CombatResolver cr = new evo2CombatResolver();
+        cr.setRandom(false);
+        Troop troop1 = new unitTroop(0, List.of(new Unit("ei", 3, 0)));
+        troop1.addUnit(new Unit("test2", 3, 888));
+        Troop troop2 = new unitTroop(1, List.of(new Unit("ei", 4, 1)));
+        troop2.addUnit(new Unit("test6", 3, 5));
+        Troop winner = cr.resolveCombat(troop1, troop2);
+        assertEquals(1, winner.getOwner());
+    }
+
+    @Test
     public void testCombatResolverUnit() {
         evo2CombatResolver combatResolver = new evo2CombatResolver();
         combatResolver.setRandom(false);

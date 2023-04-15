@@ -9,7 +9,10 @@ public class unitTroop implements Troop{
 
     public unitTroop(int owner, List<Unit> units) {
         this.owner = owner;
-        this.units = units;
+        this.units = new ArrayList<>();
+        for (Unit unit : units) {
+            this.units.add(unit);
+        }
     }
 
     public unitTroop(int owner) {
@@ -68,7 +71,12 @@ public class unitTroop implements Troop{
 
     @Override
     public boolean upgrade(int unitId, int amount) {
-        units.get(unitId).upgrade(amount);
-        return true;
+        for (Unit unit : units) {
+            if (unit.getUnitId() == unitId) {
+                unit.upgrade(amount);
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -54,9 +54,13 @@ public class v1WorldMapTest {
         MapFactory mapFactory = new v1MapFactory();
         WorldMap map = mapFactory.make2PlayerMap();
         map.setUnits(List.of(10, 10, 10, 10000, 10000, 10000));
-        map.makeAttack(1, 3, 1, 100);
-        map.makeAttack(1, 4, 2, 100);
-        map.makeAttack(1, 1, 0, 50);
+        map.makeAttack(0, createTroop(1, 1000));
+
+        map.makeAttack(1, createTroop(1, 1000));
+        map.makeAttack(2, createTroop(1, 1000));
+        assertEquals(1, map.getTerritories().get(0).getOwner());
+        assertEquals(1, map.getTerritories().get(1).getOwner());
+        assertEquals(1, map.getTerritories().get(2).getOwner());
         assertEquals(map.getWinner(),1);
         assertTrue(map.checkEnd());
     }

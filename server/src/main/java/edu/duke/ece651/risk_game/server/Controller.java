@@ -52,6 +52,9 @@ public class Controller {
         } else {
             throw new IllegalArgumentException("Invalid number of players");
         }
+        for (int i = 0; i < numPlayers; i++) {
+            players.add(new Player(i, "p" + i, new Resource(0, 0)));
+        }
         this.territories = world.getTerritories();
     }
 
@@ -251,7 +254,16 @@ public class Controller {
         }
         attackCache.clear();
         moveCache.clear();
-        return false;
+
+
+        // generate new resources
+        for (Territory t : world.getTerritories()) {
+            t.getTroop().addUnit(new Unit("alili", 0));
+            players.get(t.getOwner()).addFoodPoint(t.getFoodProduction());
+            players.get(t.getOwner()).addTechPoint(t.getTechProduction());
+        }
+        // generate new units
+        return true;
     }
 
 

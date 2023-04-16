@@ -24,7 +24,5 @@ public class PlayerTest {
         assertEquals(1, p.getTechLevel());
         p.commitUpgrade();
         assertEquals(2, p.getTechLevel());
-
-
     }
 }

@@ -7,6 +7,9 @@ import java.util.List;
  */
 public interface WorldMap {
     public int getNumTerritories();
+
+    int shortestPath(int id1, int id2, int playerId);
+
     public Boolean isConnected(int id1, int id2, int playerId);
     public Boolean isNeighbour(int id1, int id2);
     public List<Integer> getLosers();

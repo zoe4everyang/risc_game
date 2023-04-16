@@ -30,11 +30,21 @@ public class v1CombatResolver implements CombatResolver {
         return attackNum - defendNum;
     }
 
+    @Override
+    public Troop resolveCombat(Troop attackTroop, Troop defendTroop) {
+        return null;
+    }
+
     public void setSeed(int seed) {
         // set the seed for random number generator
         this.seed = seed;
         // set seed for Math.random
         generator = new Random(seed);
     }
-    
+
+    @Override
+    public void setRandom(Boolean isRandom) {
+
+    }
+
 }

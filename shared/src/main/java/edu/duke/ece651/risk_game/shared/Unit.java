@@ -26,7 +26,7 @@ public class Unit {
     public int getUnitId() {
         return unitId;
     }
-    public void upgrade() {
-        level++;
+    public void upgrade(int amount) {
+        level += amount;
     }
 }

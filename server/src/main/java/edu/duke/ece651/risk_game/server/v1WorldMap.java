@@ -1,26 +1,26 @@
 package edu.duke.ece651.risk_game.server;
 import edu.duke.ece651.risk_game.shared.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+
+import java.util.*;
 
 /**
  * This class is used to represent the world map
  */
 public class v1WorldMap implements WorldMap{
     private List<Territory> map;
-    private int numPlayers;
+
+    private List<Player> players;
     private Checker checker;
     private int unitAvailable;
     /**
      * Constructor
-     * @param numPlayers number of players
+     * @param Players players of the game
      * @param map map
      * @param unitAvailable number of units available
      */
-    public v1WorldMap(int numPlayers, List<Territory> map, int unitAvailable) {
+    public v1WorldMap(List<Player> Players, List<Territory> map, int unitAvailable) {
         this.map = map;
-        this.numPlayers = numPlayers;
+        this.players = Players;
         this.checker = new Checker();
         this.unitAvailable = unitAvailable;
     }
@@ -39,29 +39,48 @@ public class v1WorldMap implements WorldMap{
      * Get the map
      * @param id1 id1
      * @param id2 id2
-     * @param visited visited
      * @param playerId player id
-     * @return map
+     * @return return the cost of the shortest path from id1 to id2 if such path exists,
+     * otherwise return -1
      */
-    private Boolean dfs(int id1, int id2, List<Boolean> visited, int playerId) {
-        // if id1 is visited, return false
+    @Override
+    public int shortestPath(int id1, int id2, int playerId) {
+        // TODO: test dijkstra
         if (id1 == id2) {
-            return true;
+            return 0;
         }
-        if (visited.get(id1)) {
-            return false;
-        }
-        // if id1 is not visited, mark it as visited
-        visited.set(id1, true);
-        // if id1 is not connected to id2, dfs on all its neighbours
+        // use dijkstra to find the shortest path and return the cost
+        // initialize the distance
+        List<Integer> distance = new ArrayList<>();
         for (int i = 0; i < map.size(); i++) {
-            if (isNeighbour(id1, i) && !visited.get(i) && map.get(i).getOwner() == playerId) {
-                if (dfs(i, id2, visited, playerId)) {
-                    return true;
+            distance.add(Integer.MAX_VALUE);
+        }
+        distance.set(id1, 0);
+        // initialize the visited
+        List<Boolean> visited = new ArrayList<>();
+        for (int i = 0; i < map.size(); i++) {
+            visited.add(false);
+        }
+        // initialize the queue
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(id1);
+        while (!queue.isEmpty()) {
+            int cur = queue.poll();
+            visited.set(cur, true);
+            for (int i = 0; i < map.get(cur).getNeighbours().size(); i++) {
+                int neighbour = map.get(cur).getNeighbours().get(i);
+                if (map.get(neighbour).getOwner() == playerId && !visited.get(neighbour)) {
+                    if ( distance.get(neighbour) > distance.get(cur) + map.get(neighbour).getCost()) {
+                        distance.set(neighbour, distance.get(cur) + map.get(neighbour).getCost());
+                        queue.add(neighbour);
+                    }
                 }
             }
         }
-        return false;
+        if (distance.get(id2) == Integer.MAX_VALUE) {
+            return -1;
+        }
+        return distance.get(id2) - map.get(id2).getCost();
     }
 
     /**
@@ -87,7 +106,7 @@ public class v1WorldMap implements WorldMap{
         for (int i = 0; i < map.size(); i++) {
             visited.add(false);
         }
-        return dfs(id1, id2, visited, playerId);
+        return shortestPath(id1, id2, playerId) > 0;
     }
 
     /**

@@ -1,6 +1,5 @@
 package edu.duke.ece651.risk_game.client;
 
-import edu.duke.ece651.risk_game.shared.InitResponse;
 import edu.duke.ece651.risk_game.shared.Response;
 import edu.duke.ece651.risk_game.shared.Territory;
 
@@ -8,6 +7,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This class is used to display the game to the user.
@@ -33,14 +33,44 @@ public class TextView implements Viewer {
         out.println("Welcome to RISC Game!");
     }
 
+    @Override
+    public void usernamePrompt() {
+        out.println("Please enter your username:");
+    }
+
+    @Override
+    public void passwordPrompt() {
+        out.println("Please enter your password:");
+    }
+
+    @Override
+    public void loginFailedPrompt() {
+        out.println("Login failed. Please try again.");
+    }
+
+    @Override
+    public void roomSelectPrompt(Set<Integer> roomIDs) {
+        out.println("Please select a room to join:");
+        int i = 1;
+        for (Integer roomID : roomIDs) {
+            out.println(i + ". " + roomID);
+            i++;
+        }
+    }
+
+    @Override
+    public void roomSelectFailedPrompt() {
+        out.println("Room selection failed. Please try again.");
+    }
+
     /**
      * This method is used to display the game to the user.
      * @param initResponse the InitResponse object used to display the game to the user.
      * @param territoryNameMap the HashMap object used to display the game to the user.
      */
     @Override
-    public void placePrompt(InitResponse initResponse, HashMap<Integer, String> territoryNameMap) {
-        Integer id = initResponse.getPlayerID();
+    public void placePrompt(Response initResponse, HashMap<Integer, String> territoryNameMap) {
+        Integer id = initResponse.getPlayerInfo().getPlayerID();
         StringBuilder territoryNames = new StringBuilder();
         for (Territory territory : initResponse.getTerritories()) {
             if (territory.getOwner() == id) {
@@ -50,7 +80,7 @@ public class TextView implements Viewer {
         out.println("You have been connected to the server successfully!\n" +
                 "You are Player" + id + ".\n" +
                 "Your territories are: \n" +
-                territoryNames.toString() + "\n" +
+                territoryNames + "\n" +
                 "You have " + initResponse.getUnitAvailable() + " units available.\n" +
                 "Please place your units on the map.");
     }
@@ -77,13 +107,18 @@ public class TextView implements Viewer {
      * @param failTheGame the boolean object used to display the game to the user.
      */
     @Override
-    public void resultPrompt(boolean failTheGame){ //, Integer winner) {
+    public void resultPrompt(Integer roomID, boolean failTheGame){ //, Integer winner) {
         if (failTheGame) {
             //out.println("Winner is Player" + winner + ".");
-            out.println("You lose!");
+            out.println("You lose this game in Room" + roomID + "!");
         } else {
-            out.println("You win!");
+            out.println("You win this game in Room" + roomID + "!");
         }
+    }
+
+    @Override
+    public void exitPrompt() {
+        out.println("Type Y if you want to exit the game, or N if you want to join another game.");
     }
 
     /**
@@ -111,7 +146,7 @@ public class TextView implements Viewer {
                 s.append(printInfo(t, territoryNameMap)).append("\n");
             }
         }
-        System.out.println(s.toString());
+        System.out.println(s);
     }
 
     /**

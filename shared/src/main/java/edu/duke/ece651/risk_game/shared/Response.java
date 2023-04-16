@@ -1,7 +1,6 @@
 package edu.duke.ece651.risk_game.shared;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.boot.jackson.JsonComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +9,11 @@ import java.util.List;
  * This class is used to create a message that contains the information of response from the server.
  */
 public class Response extends Message {
-    //private final String playerName;
-
     private final List<Territory> territories;
     private final Boolean lose;
     private final Boolean end;
     private final List<String> playerList;
+    private final Integer unitAvailable;
 
     /**
      * This constructor is used to create a message that contains the information of the player's response.
@@ -32,13 +30,24 @@ public class Response extends Message {
                     @JsonProperty("territories") List<Territory> territories,
                     @JsonProperty("lose") Boolean lose,
                     @JsonProperty("end") Boolean end,
-                    @JsonProperty("playerList") List<String> playerList) {
+                    @JsonProperty("playerList") List<String> playerList,
+                    @JsonProperty("unitAvailable") Integer unitAvailable) {
         super(playerInfo);
         this.territories = new ArrayList<>();
         this.territories.addAll(territories);
         this.lose = lose;
         this.end = end;
         this.playerList = playerList;
+        this.unitAvailable = unitAvailable;
+    }
+
+    @JsonCreator
+    public Response(@JsonProperty("playerInfo") PlayerInfo playerInfo,
+                    @JsonProperty("territories") List<Territory> territories,
+                    @JsonProperty("lose") Boolean lose,
+                    @JsonProperty("end") Boolean end,
+                    @JsonProperty("playerList") List<String> playerList) {
+        this(playerInfo, territories, lose, end, playerList, -1);
     }
 
     // This method is used to get the list of territories that the player owns.
@@ -58,5 +67,9 @@ public class Response extends Message {
 
     public List<String> getPlayerList() {
         return playerList;
+    }
+
+    public Integer getUnitAvailable() {
+        return unitAvailable;
     }
 }

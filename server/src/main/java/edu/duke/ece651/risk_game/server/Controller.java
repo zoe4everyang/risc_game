@@ -13,7 +13,7 @@ public class Controller {
     private final MapFactory mapFactory = new v1MapFactory();
     private int numPlayers;
     private WorldMap world;
-    private List<Player> players;
+    private List<Player> players = new ArrayList<>();
     private List<Territory> territories;
 
     private ArrayList<Action> moveCache = new ArrayList<>();
@@ -135,8 +135,8 @@ public class Controller {
      * Check if the game is over
      * @param playerId player id
      */
-    public int getPlayers() {
-        return numPlayers;
+    public List<Player> getPlayers() {
+        return players;
     }
     public Boolean checkWin(int playerId) {
         return playerId == getWinner();

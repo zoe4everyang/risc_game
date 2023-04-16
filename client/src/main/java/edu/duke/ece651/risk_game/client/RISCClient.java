@@ -3,10 +3,7 @@ package edu.duke.ece651.risk_game.client;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.duke.ece651.risk_game.shared.*;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
@@ -16,6 +13,9 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * This class is used to send requests to the server and receive responses from the server.
@@ -43,50 +43,14 @@ public class RISCClient {
                 .disableAuthCaching()
                 .disableAutomaticRetries()
                 .disableConnectionState()
-                .build();;
+                .build();
         jsonMapper = new ObjectMapper();
     }
 
-    /**
-     * This method is used to send a start request to the server.
-     *
-     * @return the response from the server
-     * @throws IOException if the request cannot be sent
-     */
-    public InitResponse sendStart() throws IOException {
-        HttpPost request = new HttpPost(serverURL + "/start");
-
-        // set request headers
+    private String sendRequest(HttpPost request, String json) throws IOException {
         request.setHeader("Content-Type", "application/json");
-
-        // execute the request
-        HttpResponse response = theClient.execute(request);
-
-        // fetch response content
-        String responseContent = EntityUtils.toString(response.getEntity());
-
-        // map into a response object
-        return jsonMapper.readValue(responseContent, InitResponse.class);
-    }
-
-    /**
-     * This method is used to send a placement request to the server.
-     *
-     * @param requestBody the request body
-     * @return the response from the server
-     * @throws IOException if the request cannot be sent
-     */
-    public Response sendCommand(HttpPost request, Message requestBody) throws IOException {
-        // set request headers
-        request.setHeader("Content-Type", "application/json");
-
-        // set request body
-        String json = jsonMapper.writeValueAsString(requestBody);
         request.setEntity(new StringEntity(json, ContentType.APPLICATION_JSON));
-        // execute the request
         CloseableHttpResponse response = theClient.execute(request);
-
-        // fetch response content
         String responseContent = "";
         try {
             HttpEntity entity = response.getEntity();
@@ -96,47 +60,94 @@ public class RISCClient {
         } finally {
             response.close();
         }
-
-        // map into a response object
-        return jsonMapper.readValue(responseContent, Response.class);
+        return responseContent;
     }
 
-    /**
-     * This method is used to send a placement request to the server.
-     *
-     * @param requestBody the request body
-     * @return the response from the server
-     * @throws IOException if the request cannot be sent
-     */
-    public Response sendPlacement(PlacementRequest requestBody) throws IOException {
-        HttpPost request = new HttpPost(serverURL + "/place");
-
-        return sendCommand(request, requestBody);
+    public ActionStatus sendLogin(String username, String password) throws IOException {
+        HttpPost request = new HttpPost(serverURL + "/login");
+        HashMap<String, Object> requestBody = new HashMap<>();
+        requestBody.put("username", username);
+        requestBody.put("password", password);
+        return jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), ActionStatus.class);
     }
 
-    /**
-     * This method is used to send an action request to the server.
-     *
-     * @param requestBody the request body
-     * @return the response from the server
-     * @throws IOException if the request cannot be sent
-     */
-    public Response sendAction(ActionRequest requestBody) throws IOException {
-        HttpPost request = new HttpPost(serverURL + "/act");
-
-        return sendCommand(request, requestBody);
+    public HashSet<Integer> getRoomList(String username) throws IOException {
+        HttpPost request = new HttpPost(serverURL + "/roomid");
+        HashMap<String, Object> requestBody = new HashMap<>();
+        requestBody.put("username", username);
+        return new HashSet<>(Arrays.asList(jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), Integer[].class)));
     }
 
-    public String sendEnd() throws IOException {
-        RequestConfig config = RequestConfig.custom()
-                    .setConnectTimeout(1)
-                    .setSocketTimeout(1)
-                    .build();
-
-        HttpGet request = new HttpGet(serverURL + "/gameover");
-        request.setConfig(config);
-        request.setHeader("Content-Type", "application/json");
-        theClient.execute(request);
-        return "success";
+    public Response joinRoom(String username, Integer roomID) throws IOException {
+        HttpPost request = new HttpPost(serverURL + "/join/{" + roomID + "}");
+        HashMap<String, Object> requestBody = new HashMap<>();
+        requestBody.put("username", username);
+        return jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), Response.class);
     }
+
+    public Response sendPlacement(Integer roomID, PlacementRequest requestBody) throws IOException {
+        HttpPost request = new HttpPost(serverURL + "/place/{" + roomID + "}");
+        return jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), Response.class);
+    }
+
+    public ActionStatus sendUpgradeTech(Integer roomID, Integer playerID, boolean upgradeTech) throws IOException {
+        HttpPost request = new HttpPost(serverURL + "/act/upgrade_tech/{" + roomID + "}");
+        HashMap<String, Object> requestBody = new HashMap<>();
+        requestBody.put("playerID", playerID);
+        requestBody.put("upgradeTech", upgradeTech);
+        return jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), ActionStatus.class);
+    }
+
+    public ActionStatus sendUpgradeUnit(Integer roomID, UpgradeUnitRequest requestBody) throws IOException {
+        HttpPost request = new HttpPost(serverURL + "/act/upgrade_unit/{" + roomID + "}");
+        return jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), ActionStatus.class);
+    }
+
+    public ActionStatus sendMove(Integer roomID, ActionRequest requestBody) {
+        HttpPost request = new HttpPost(serverURL + "/act/move/{" + roomID + "}");
+        ActionStatus status = null;
+        try {
+            status = jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), ActionStatus.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return status;
+    }
+
+    public ActionStatus sendAttack(Integer roomID, ActionRequest requestBody) {
+        HttpPost request = new HttpPost(serverURL + "/act/attack/{" + roomID + "}");
+        ActionStatus status = null;
+        try {
+            status = jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), ActionStatus.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return status;
+    }
+
+    public ActionStatus sendClean(Integer roomID, Integer playerID) throws IOException {
+        HttpPost request = new HttpPost(serverURL + "/act/clean/{" + roomID + "}");
+        HashMap<String, Object> requestBody = new HashMap<>();
+        requestBody.put("playerID", playerID);
+        return jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), ActionStatus.class);
+    }
+
+    public Response sendCommit(Integer roomID) throws IOException {
+        HttpPost request = new HttpPost(serverURL + "/act/commit/{" + roomID + "}");
+        return jsonMapper.readValue(sendRequest(request, ""), Response.class);
+    }
+
+//    public String sendEnd() throws IOException {
+//        RequestConfig config = RequestConfig.custom()
+//                    .setConnectTimeout(1)
+//                    .setSocketTimeout(1)
+//                    .build();
+//
+//        HttpGet request = new HttpGet(serverURL + "/gameover");
+//        request.setConfig(config);
+//        request.setHeader("Content-Type", "application/json");
+//        theClient.execute(request);
+//        return "success";
+//    }
+
 }

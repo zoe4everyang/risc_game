@@ -60,6 +60,12 @@ public class v1Territory implements Territory{
         // remove unit from territory
         this.troop.removeTroop(troop);
     }
+
+    @Override
+    public int getTroopSize() {
+        return this.troop.getUnits().size();
+    }
+
     @Override
     public void defence(Troop attackTroop) {
         // defend against attacker
@@ -113,6 +119,24 @@ public class v1Territory implements Territory{
     public void upgradeUnit(int UnitId, int amount) {
         // upgrade unit
         this.troop.upgrade(UnitId, amount);
+    }
+
+    @Override
+    public int getTechProduction() {
+        // return tech production
+        return tech_production;
+    }
+
+    @Override
+    public int getFoodProduction() {
+        // return food production
+        return food_production;
+    }
+
+    @Override
+    public Troop getTroop() {
+        // return list of troops
+        return this.troop;
     }
 
 

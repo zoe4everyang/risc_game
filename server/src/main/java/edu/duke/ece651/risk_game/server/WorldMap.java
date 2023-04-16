@@ -8,7 +8,7 @@ import java.util.List;
 public interface WorldMap {
     public int getNumTerritories();
 
-    int shortestPath(int id1, int id2, int playerId);
+    public int shortestPath(int id1, int id2, int playerId);
 
     public Boolean isConnected(int id1, int id2, int playerId);
     public Boolean isNeighbour(int id1, int id2);
@@ -17,10 +17,17 @@ public interface WorldMap {
     public Boolean checkEnd();
     public List<Territory> getTerritories();
     public void setUnits(List<Integer> palcement);
-    public void makeAttack(int playerId, int from, int to, int num);
-    public void makeMove(int playerId, int from, int to, int num);
-    public void resolveAttack(List<Integer> playerIds, List<Integer> fromIds, List<Integer> toIds, List<Integer> unitNums);
-    public void resolveMove(List<Integer> playerIds, List<Integer> fromIds, List<Integer> toIds, List<Integer> unitNums);
+
+    // attack given territory by troop t, return true if attack success
+    public Boolean makeAttack(int to, Troop t);
+
+    // move troop from one territory to another
+    // return false if cannot remove troop from from
+    public Boolean makeMove(int from, int to, Troop t);
+
+    // upgrade unit by given amount
+    public void upgradeUnit(int territoryId, int UnitId, int amount);
+
     public int getUnitAvailable();
     public Boolean checkOnMap(int id);
 }

@@ -17,9 +17,11 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 public interface Territory {
     public void defence(Troop troop);
 
-    void addTroop(Troop troop);
+    public void addTroop(Troop troop);
 
-    void removeTroop(Troop troop);
+    public void removeTroop(Troop troop);
+
+    public int getTroopSize();
 
     public List<Integer> getDistances(); // returns a list of distances to other territories'
     public int getID();
@@ -31,4 +33,11 @@ public interface Territory {
     public int getCost();
 
     public void upgradeUnit(int UnitId, int amount);
+
+    public int getTechProduction();
+
+    public int getFoodProduction();
+
+
+    public Troop getTroop();
 }

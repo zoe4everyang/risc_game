@@ -15,10 +15,10 @@ public class Player {
     private int tech_level;
     private Boolean pendingUpdate;
 
-    public Player(int playerId, String playerName, List<Integer> territories, Resource resource) {
+    public Player(int playerId, String playerName, Resource resource) {
         this.playerId = playerId;
         this.playerName = playerName;
-        this.territories = territories;
+
         this.resource = resource;
         this.tech_level = 1;
         this.pendingUpdate = false;
@@ -26,8 +26,9 @@ public class Player {
 
     public Boolean upgradeTechLevel(Map<Integer, Integer> updateRequirement){
         //upgrade tech level
-        if (resource.getTechPoint() > updateRequirement.get(tech_level)){
+        if (resource.getTechPoint() >= updateRequirement.get(tech_level)){
             pendingUpdate = true;
+            resource.reduceTechPoint(updateRequirement.get(tech_level));
             return true;
         }
         return false;
@@ -41,4 +42,32 @@ public class Player {
         }
     }
 
+    public int getTechLevel() {
+        return tech_level;
+    }
+
+    public int getFoodPoint() {
+        return resource.getFoodPoint();
+    }
+
+    public int getTechPoint() {
+        return resource.getTechPoint();
+    }
+
+    public void addFoodPoint(int foodPoint) {
+        resource.addFoodPoint(foodPoint);
+    }
+
+    public void addTechPoint(int techPoint) {
+        resource.addTechPoint(techPoint);
+    }
+
+
+    public Boolean reduceFoodPoint(int foodPoint) {
+        return resource.reduceFoodPoint(foodPoint);
+    }
+
+    public Boolean reduceTechPoint(int techPoint) {
+        return resource.reduceTechPoint(techPoint);
+    }
 }

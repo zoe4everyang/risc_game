@@ -9,7 +9,7 @@ import java.util.*;
 public class v1WorldMap implements WorldMap{
     private List<Territory> map;
 
-    private List<Player> players;
+    private int numPlayers;
     private Checker checker;
     private int unitAvailable;
     /**
@@ -18,9 +18,9 @@ public class v1WorldMap implements WorldMap{
      * @param map map
      * @param unitAvailable number of units available
      */
-    public v1WorldMap(List<Player> Players, List<Territory> map, int unitAvailable) {
+    public v1WorldMap(int numPlayers, List<Territory> map, int unitAvailable) {
         this.map = map;
-        this.players = Players;
+        this.numPlayers = numPlayers;   // number of players
         this.checker = new Checker();
         this.unitAvailable = unitAvailable;
     }
@@ -189,50 +189,18 @@ public class v1WorldMap implements WorldMap{
         // set units for each territory
         for (int i = 0; i < map.size(); i++) {
             if (placement.get(i) > 0) {
-                if (map.get(i).getUnits() != 0) {
+                if (map.get(i).getTroopSize() != 0) {
                     throw new IllegalArgumentException("Cannot set units for territories that already have units");
                 }
-                map.get(i).addUnit(placement.get(i));
+                Troop tmpTroop = new unitTroop(map.get(i).getOwner());
+                for (int j = 0; j < placement.get(i); j++) {
+                    tmpTroop.addUnit(new Unit("unit"));
+                }
+                map.get(i).addTroop(tmpTroop);
             }
         }
     }
 
-    /**
-     * Get the map
-     * @param playerId player id
-     * @param from from
-     * @param to to
-     * @param num num
-     * @return map
-     */
-    @Override
-    public void makeAttack(int playerId, int from, int to, int num) {
-        // if the target it already belongs to the player, move units to the target
-        if (!checker.checkAttackTarget(playerId, from, to, num, this)) {
-            map.get(to).addUnit(num);
-            return;
-        }
-
-
-        map.get(to).defence(playerId, num);
-    }
-
-    /**
-     * Get the map
-     * @param playerId player id
-     * @param from from
-     * @param to to
-     * @param num num
-     * @return map
-     */
-    @Override
-    public void makeMove(int playerId, int from, int to, int num) {
-        if (!checker.checkMove(playerId, from, to, num, this)) {
-            return;
-        }
-        map.get(from).removeUnit(num);
-        map.get(to).addUnit(num);
-    }
 
     /**
      * Get the map
@@ -249,54 +217,34 @@ public class v1WorldMap implements WorldMap{
         return false;
     }
 
-    /**
-     * Get the map
-     * @param playerIds
-     * @param fromIds
-     * @param toIds
-     * @param unitNums
-     */
+    // attack given territory by troop t
     @Override
-    public void resolveAttack(List<Integer> playerIds, 
-    List<Integer> fromIds, 
-    List<Integer> toIds, 
-    List<Integer> unitNums) {
-        // get attack units
-        HashSet<Integer> verified = new HashSet<>();
-        for (int i = 0; i < playerIds.size(); i++) {
-            if (checker.checkAttackTarget(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i), this) &&
-            checker.checkAttackNumber(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i), this) &&
-            checker.checkNeighbour(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i), this)) {
-                map.get(fromIds.get(i)).removeUnit(unitNums.get(i));
-                verified.add(i);
-            }
-        }
-        // resolve attack
-        for (int i = 0; i < playerIds.size(); i++) {
-            if (verified.contains(i)) {
-                makeAttack(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i));
-            }
-        }
+    public void makeAttack(int to, Troop t) {
+        map.get(to).defence(t);
     }
 
-    /**
-     * Get the map
-     * @param playerIds
-     * @param fromIds
-     * @param toIds
-     * @param unitNums
-     */
+    // move troop from one territory to another
+    // return false if cannot remove troop from from
     @Override
-    public void resolveMove(List<Integer> playerIds, 
-            List<Integer> fromIds, 
-            List<Integer> toIds, 
-            List<Integer> unitNums
-            ) {
-        // resolve move
-        for (int i = 0; i < playerIds.size(); i++) {
-            makeMove(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i));
+    public Boolean makeMove(int from, int to, Troop t) {
+        try {
+            map.get(from).removeTroop(t);
+            map.get(to).addTroop(t);
+        } catch (Exception e) {
+            return false;
         }
+        return true;
     }
+
+    // upgrade unit by given amount
+    @Override
+    public void upgradeUnit(int territoryId, int UnitId, int amount) {
+        map.get(territoryId).upgradeUnit(UnitId, amount);
+
+    }
+
+
+
     @Override
     public int getUnitAvailable() {
         return unitAvailable;

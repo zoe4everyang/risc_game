@@ -60,6 +60,12 @@ public class v1Territory implements Territory{
         // remove unit from territory
         this.troop.removeTroop(troop);
     }
+
+    @Override
+    public int getTroopSize() {
+        return this.troop.getUnits().size();
+    }
+
     @Override
     public void defence(Troop attackTroop) {
         // defend against attacker

@@ -55,10 +55,22 @@ public class unitTroop implements Troop{
         addUnits(troop.getUnits());
     }
 
+    private boolean unitIsSubsetOfTroop(Unit unit, Troop troop) {
+        for (Unit troopUnit : troop.getUnits()) {
+            if (troopUnit.getUnitId() == unit.getUnitId()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     public void removeTroop(Troop troop) {
-        // TODO: need some error handling if the given troop is not a subset of this troop
+        for (Unit unit : troop.getUnits()) {
+            if (!unitIsSubsetOfTroop(unit, this)) {
+                throw new IllegalArgumentException("unit is not a subset of this troop");
+            }
+        }
         for (Unit unit : troop.getUnits()) {
             deleteUnit(unit.getUnitId());
         }

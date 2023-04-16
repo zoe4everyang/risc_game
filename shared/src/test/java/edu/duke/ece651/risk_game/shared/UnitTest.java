@@ -8,9 +8,9 @@ public class UnitTest {
     @Test
     public void test_unit() {
         Unit unit = new Unit("test", 0);
-        unit.upgrade();
-        unit.upgrade();
-        assertEquals(unit.getLevel(), 2);
+        unit.upgrade(1);
+        unit.upgrade(2);
+        assertEquals(unit.getLevel(), 3);
         assertEquals(unit.getName(), "test");
         assertEquals(unit.getUnitId(), 0);
 

@@ -1,6 +1,8 @@
 package edu.duke.ece651.risk_game.shared;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class v1Territory implements Territory{
@@ -8,56 +10,65 @@ public class v1Territory implements Territory{
     private int id;
     private String name;
     private int owner;
-    private int units;
+    private Troop troop;
     private List<Integer> distances;
     private CombatResolver combatResolver;
 
-    public v1Territory(int id, String name, int owner, List<Integer> distances, CombatResolver combatResolver) {
+    private int cost;
+
+    private int tech_production;
+    private int food_production;
+
+    public v1Territory(int id, String name,
+                       int owner, List<Integer> distances,
+                       int cost, int tech_prod, int food_prod,
+                       CombatResolver combatResolver) {
         // constructor
         this.id = id;
         this.name = name;
         this.owner = owner;
-        this.units = 0;
+        this.troop = new unitTroop(owner);
         this.distances = distances;
         this.combatResolver = combatResolver;
+        this.cost = cost;
+        this.tech_production = tech_prod;
+        this.food_production = food_prod;
     }
 
     @JsonCreator
     public v1Territory(@JsonProperty("id") int id,
                        @JsonProperty("name") String name,
                        @JsonProperty("owner") int owner,
-                       @JsonProperty("units") int units,
+                       @JsonProperty("troop") Troop units,
                        @JsonProperty("distances") List<Integer> distances) {
         // constructor
         this.id = id;
         this.name = name;
         this.owner = owner;
-        this.units = units;
+        this.troop = units;
         this.distances = distances;
         this.combatResolver = new v1CombatResolver();
     }
 
-
-    public void addUnit(int unit) {
+    @Override
+    public void addTroop(Troop troop) {
         // add unit to territory
-        this.units += unit;
+        this.troop.addTroop(troop);
     }
-
-    public void removeUnit(int unit) {
+    @Override
+    public void removeTroop(Troop troop) {
         // remove unit from territory
-        this.units -= unit;
+        this.troop.removeTroop(troop);
     }
-    
-    public void defence(int attacker, int unit) {
+    @Override
+    public void defence(Troop attackTroop) {
         // defend against attacker
-        int result = combatResolver.resolveCombat(unit, this.units);
-        if (result > 0) {
-            // attacker wins
-            this.owner = attacker;
-            this.units = result;
-        } else if (result < 0) {
-            // defender wins
-            this.units = -result;
+        Troop winner = combatResolver.resolveCombat(attackTroop, this.troop);
+        if (winner.getOwner() != this.owner) {
+            // attacker winner
+            this.troop = attackTroop;
+            this.owner = this.troop.getOwner();
+
         }
     }
     
@@ -81,9 +92,28 @@ public class v1Territory implements Territory{
         return owner;
     }
 
-    public int getUnits() {
-        // return number of units in territory
-        return units;
+    @Override
+    public List<Integer> getNeighbours() {
+        // return list of neighbours
+        ArrayList<Integer> neighbours = new ArrayList<>();
+        for (int i = 0; i < distances.size(); i++) {
+            if (distances.get(i) == 1) {
+                neighbours.add(i);
+            }
+        }
+        return neighbours;
     }
+
+    @Override
+    public int getCost() {
+        return cost;
+    }
+
+    @Override
+    public void upgradeUnit(int UnitId, int amount) {
+        // upgrade unit
+        this.troop.upgrade(UnitId, amount);
+    }
+
 
 }

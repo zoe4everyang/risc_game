@@ -1,6 +1,9 @@
 package edu.duke.ece651.risk_game.server;
 import edu.duke.ece651.risk_game.shared.*;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Controller class
@@ -9,7 +12,16 @@ public class Controller {
     private final MapFactory mapFactory = new v1MapFactory();
     private int numPlayers;
     private WorldMap world;
+    private List<Player> players;
     private List<Territory> territories;
+
+    private final Map<Integer, Integer> updateRequirement = new HashMap<Integer, Integer>() {{
+        put(1, 50);
+        put(2, 75);
+        put(3, 125);
+        put(4, 200);
+        put(5, 300);
+    }};
 
     /**
      * Constructor
@@ -131,5 +143,17 @@ public class Controller {
         return world.getUnitAvailable();
     }
 
+    // TODO: Test this shit upgrade unit
+    public void upgradeUnit(int playerId, int territoryId, int unitId, int amount) {
+        if (territories.get(territoryId).getOwner() == playerId) {
+            territories.get(territoryId).upgradeUnit(unitId, amount);
+        }
+    }
+
+    // TODO: Test this shit upgrade max technology
+    public void upgradeMaxTechnology(int playerId) {
+        players.get(playerId).upgradeTechLevel(updateRequirement);
+        return;
+    }
 
 }

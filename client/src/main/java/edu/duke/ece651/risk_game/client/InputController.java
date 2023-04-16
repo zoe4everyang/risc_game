@@ -23,8 +23,10 @@ public class InputController {
     private final HashMap<Integer, HashMap<String, Integer>> territoryIDMaps;
     private final HashMap<String, BiFunction<Integer, ActionRequest, ActionStatus>> actionFns;
 
-    /* Constructor for InputController
-     * @param input: the input stream
+    /**
+     * Constructor for InputController
+     *
+     * @param input:  the input stream
      * @param output: the output stream
      */
     public InputController(BufferedReader input, PrintStream output) {
@@ -44,6 +46,7 @@ public class InputController {
         actionFns.put("A", httpClient::sendAttack);
         actionFns.put("M", httpClient::sendMove);
     }
+
     /* This method is responsible for the whole game.
      * It will call the initPhase, placementPhase, and gamePhase methods.
      */
@@ -51,16 +54,16 @@ public class InputController {
         loginPhase();
         while (true) {
             Response response = roomSelectPhase();
-            if (response.getUnitAvailable() >= 0) {
+            if (response == null) {
+                break;
+            } else if (response.getUnitAvailable() >= 0) {
                 placementPhase(response);
             }
             if (gamePhase()) {
                 break;
             }
         }
-
     }
-
 
     /**
      * This method reads the user's account information.
@@ -109,12 +112,15 @@ public class InputController {
         }
         assert roomIDs != null;
 
-
         // room ID input
         Integer roomID;
         while (true) {
             riscViewer.roomSelectPrompt(roomIDs);
-            roomID = Integer.parseInt(input.readLine());
+            String inputContent = input.readLine();
+            if (Objects.equals(inputContent, "exit")) {
+                return null;
+            }
+            roomID = Integer.parseInt(inputContent);
             if (roomIDs.contains(roomID)) {
                 break;
             } else {
@@ -258,10 +264,18 @@ public class InputController {
         Response response;
         Boolean gameEnd = false, failTheGame = false;
         while (!gameEnd && !failTheGame) {
-            if(!upgradeTechPhase()) {return false;}
-            if (!upgradeUnitPhase()) {return false;}
-            if (actionPhase("M")) {return false;}
-            if (actionPhase("A")) {return false;}
+            if (!upgradeTechPhase()) {
+                return false;
+            }
+            if (!upgradeUnitPhase()) {
+                return false;
+            }
+            if (actionPhase("M")) {
+                return false;
+            }
+            if (actionPhase("A")) {
+                return false;
+            }
             response = httpClient.sendCommit(currentRoomID);
             gameEnd = response.isEnd();
             failTheGame = response.isLose();
@@ -308,7 +322,7 @@ public class InputController {
 
     private boolean upgradeUnitPhase() {
         String[] command;
-        while(true) {
+        while (true) {
             boolean error;
             do {
                 error = false;
@@ -342,7 +356,7 @@ public class InputController {
 
     private boolean actionPhase(String type) {
         String[] command;
-        while(true) {
+        while (true) {
             boolean error;
             do {
                 error = false;
@@ -376,164 +390,4 @@ public class InputController {
             } while (error);
         }
     }
-
-//    private boolean movePhase() {
-//        String[] command = null;
-//        while(true) {
-//            boolean error;
-//            do {
-//                error = false;
-//                try {
-//                    command = readCommand();
-//                    String commandType = command[0];
-//                    if (Objects.equals(commandType, "S") && command.length == 1) {
-//                        return false;
-//                    } else if (Objects.equals(commandType, "D") && command.length == 1) {
-//                        return true;
-//                    } else if (Objects.equals(commandType, "M") && command.length == 4) {
-//                        int from = territoryIDMaps.get(currentRoomID).get(command[1]);
-//                        int to = territoryIDMaps.get(currentRoomID).get(command[2]);
-//                        int num = Integer.parseInt(command[3]);
-//                        ActionRequest request = new ActionRequest(playerIDMap.get(currentRoomID), from, to, num);
-//                        ActionStatus status = httpClient.sendMove(currentRoomID, request);
-//                        if (!status.isSuccess()) {
-//                            throw new IllegalArgumentException(status.getErrorMessage());
-//                        }
-//                    } else {
-//                        throw new IllegalArgumentException("You can only input 'M' 'from' 'to' and units info to move!");
-//                    }
-//                } catch (IllegalArgumentException | IOException e) {
-//                    System.out.println(e.getMessage());
-//                    System.out.println("Please input again!");
-//                    error = true;
-//                }
-//            } while (error);
-//        }
-//    }
-//
-//    private boolean attackPhase() {
-//        String[] command = null;
-//        while(true) {
-//            boolean error;
-//            do {
-//                error = false;
-//                try {
-//                    command = readCommand();
-//                    String commandType = command[0];
-//                    if (Objects.equals(commandType, "S") && command.length == 1) {
-//                        return false;
-//                    } else if (Objects.equals(commandType, "D") && command.length == 1) {
-//                        return true;
-//                    } else if (Objects.equals(commandType, "A") && command.length == 4) {
-//                        int from = territoryIDMaps.get(currentRoomID).get(command[1]);
-//                        int to = territoryIDMaps.get(currentRoomID).get(command[2]);
-//                        ArrayList<Integer> unitIDs = new ArrayList<>();
-//                        for (int i = 3; i < command.length; i++) {
-//                            unitIDs.add(Integer.parseInt(command[i]));
-//                        }
-//                        ActionRequest request = new ActionRequest(playerIDMap.get(currentRoomID), from, to, unitIDs);
-//                        ActionStatus status = httpClient.sendAttack(currentRoomID, request);
-//                        if (!status.isSuccess()) {
-//                            throw new IllegalArgumentException(status.getErrorMessage());
-//                        }
-//                    } else {
-//                        throw new IllegalArgumentException("You can only input 'A' 'from' 'to' 'num' to attack!");
-//                    }
-//                } catch (IllegalArgumentException | IOException e) {
-//                    System.out.println(e.getMessage());
-//                    System.out.println("Please input again!");
-//                    error = true;
-//                }
-//            } while (error);
-//        }
-//    }
-
-
-
-//    /**
-//     * This method is responsible for the game phase.
-//     * It will send the game request to the server and get the response.
-//     * It will also display the game prompt to the user.
-//     *
-//     * @param command: the command input by the user
-//     */
-//    private void simpleCommandCheck(String[] command) throws IllegalArgumentException {
-//        if (command.length == 0) {
-//            throw new IllegalArgumentException("No Input read!");
-//        } else {
-//            String commandType = command[0];
-//            HashSet<String> commandCollection = new HashSet<>(Arrays.asList("M", "A", "D", "U", "S"));
-//            if (commandType.equals("D") && command.length != 1) {
-//                throw new IllegalArgumentException("You can only input 'D' to end your turn!");
-//            } else if (commandType.equals("M") && command.length != 4) {
-//                throw new IllegalArgumentException("You can only input 'M' 'from' 'to' 'num' to move!");
-//            } else if (commandType.equals("A") && command.length != 4) {
-//                throw new IllegalArgumentException("You can only input 'A' 'from' 'to' 'num' to attack!");
-//            } else if (commandType.equals("U") && command.length != 4) {
-//                throw new IllegalArgumentException("You can only input 'U' 'territory' 'unit' 'level' to upgrade!");
-//            } else if (commandType.equals("S") && command.length != 1) {
-//                throw new IllegalArgumentException("You can only input 'S' to switch to another game!");
-//            } else if (!commandCollection.contains(commandType)) {
-//                throw new IllegalArgumentException("you can only input 'M' 'A' 'D' 'U' and 'S' to play the game!");
-//            }
-//        }
-//    }
-
-//    /**
-//     * This method is responsible for get the input of one turn.
-//     *
-//     * @param moveFrom             the list of territories to move from
-//     * @param moveTo               the list of territories to move to
-//     * @param moveTroop            the list of troops to move
-//     * @param attackFrom           the list of territories to attack from
-//     * @param attackTo             the list of territories to attack to
-//     * @param attackTroop          the list of troops to attack
-//     * @param upgradeUnitTerritory the list of territories to upgrade
-//     * @param upgradeUnitId        the list of units to upgrade
-//     * @param upgradeUnitLevel     the list of levels to upgrade
-//     * @param upgradeTech          the list of techs to upgrade
-//     */
-//    private void getOneTurnInput(ArrayList<Integer> moveFrom, ArrayList<Integer> moveTo, ArrayList<Troop> moveTroop,
-//                                 ArrayList<Integer> attackFrom, ArrayList<Integer> attackTo, ArrayList<Troop> attackTroop,
-//                                 ArrayList<Integer> upgradeUnitTerritory, ArrayList<Integer> upgradeUnitId,
-//                                 ArrayList<Integer> upgradeUnitLevel, Boolean upgradeTech) throws IOException {
-//        System.out.println("Player " + playerIDMap.get(currentRoomID) + ", what would you like to do?\n"
-//                + "(M)ove\n"
-//                + "(A)ttack\n"
-//                + "(U)pgrade\n"
-//                + "(S)witch\n"
-//                + "(D)one");
-//
-//        while (true) {
-//            String[] command = null;
-//            boolean error;
-//            do {
-//                error = false;
-//                try {
-//                    command = readCommand();
-//                } catch (IllegalArgumentException e) {
-//                    System.out.println(e.getMessage());
-//                    System.out.println("Please input again!");
-//                    error = true;
-//                }
-//            } while (error);
-//            String commandType = command[0];
-//            if (commandType.equals("D")) {
-//                break;
-//            } else {
-//                int from = territoryIDMap.get(command[1]);
-//                int to = territoryIDMap.get(command[2]);
-//                int num = Integer.parseInt(command[3]);
-//                if (command[0].equals("M")) {
-//                    MoveFrom.add(from);
-//                    MoveTo.add(to);
-//                    MoveNums.add(num);
-//                } else if (command[0].equals("A")) {
-//                    AttackFrom.add(from);
-//                    AttackTo.add(to);
-//                    AttackNums.add(num);
-//                }
-//            }
-//        }
-//    }
 }

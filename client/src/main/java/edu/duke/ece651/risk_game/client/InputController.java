@@ -87,12 +87,12 @@ public class InputController {
         riscViewer.initPrompt();
         while (true) {
             String[] accountInfo = readAccountInfo();
-            String status = httpClient.sendLogin(accountInfo[0], accountInfo[1]);
-            if (Objects.equals(status, "success")) {
+            ActionStatus status = httpClient.sendLogin(accountInfo[0], accountInfo[1]);
+            if (status.isSuccess()) {
                 this.username = accountInfo[0];
                 break;
             } else {
-                riscViewer.loginFailedPrompt();
+                System.out.println(status.getErrorMessage());
             }
         }
     }

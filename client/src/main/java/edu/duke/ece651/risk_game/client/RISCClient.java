@@ -63,12 +63,12 @@ public class RISCClient {
         return responseContent;
     }
 
-    public String sendLogin(String username, String password) throws IOException {
+    public ActionStatus sendLogin(String username, String password) throws IOException {
         HttpPost request = new HttpPost(serverURL + "/login");
         HashMap<String, Object> requestBody = new HashMap<>();
         requestBody.put("username", username);
         requestBody.put("password", password);
-        return sendRequest(request, jsonMapper.writeValueAsString(requestBody));
+        return jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), ActionStatus.class);
     }
 
     public HashSet<Integer> getRoomList(String username) throws IOException {

@@ -219,8 +219,10 @@ public class v1WorldMap implements WorldMap{
 
     // attack given territory by troop t
     @Override
-    public void makeAttack(int to, Troop t) {
+    public Boolean makeAttack(int to, Troop t) {
+        int originalOwner = map.get(to).getOwner();
         map.get(to).defence(t);
+        return map.get(to).getOwner() != originalOwner;
     }
 
     // move troop from one territory to another

@@ -26,7 +26,7 @@ public class Player {
 
     public Boolean upgradeTechLevel(Map<Integer, Integer> updateRequirement){
         //upgrade tech level
-        if (resource.getTechPoint() > updateRequirement.get(tech_level)){
+        if (resource.getTechPoint() >= updateRequirement.get(tech_level)){
             pendingUpdate = true;
             return true;
         }
@@ -39,6 +39,10 @@ public class Player {
             tech_level++;
             pendingUpdate = false;
         }
+    }
+
+    public int getTechLevel() {
+        return tech_level;
     }
 
 }

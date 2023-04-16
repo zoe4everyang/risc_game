@@ -18,15 +18,15 @@ public interface WorldMap {
     public List<Territory> getTerritories();
     public void setUnits(List<Integer> palcement);
 
-    // attack given territory by troop t
-    void makeAttack(int to, Troop t);
+    // attack given territory by troop t, return true if attack success
+    public Boolean makeAttack(int to, Troop t);
 
     // move troop from one territory to another
     // return false if cannot remove troop from from
-    Boolean makeMove(int from, int to, Troop t);
+    public Boolean makeMove(int from, int to, Troop t);
 
     // upgrade unit by given amount
-    void upgradeUnit(int territoryId, int UnitId, int amount);
+    public void upgradeUnit(int territoryId, int UnitId, int amount);
 
     public int getUnitAvailable();
     public Boolean checkOnMap(int id);

@@ -80,19 +80,19 @@ public class v1WorldMapTest {
         map.makeAttack(0, attackTroop);
         attackTroop = createTroop(1, 50);
         map.makeAttack(1, attackTroop);
-        attackTroop = createTroop(1, 50);
-        map.makeAttack(2, attackTroop);
+        attackTroop = createTroop(1, 1);
+        assertFalse(map.makeAttack(2, attackTroop));
 
         assertEquals(map.getTerritories().get(0).getOwner(), 1);
         assertEquals(map.getTerritories().get(1).getOwner(), 1);
-        assertEquals(map.getTerritories().get(2).getOwner(), 1);
+        assertEquals(map.getTerritories().get(2).getOwner(), 0);
 
         attackTroop = createTroop(0, 50);
-        map.makeAttack(5, attackTroop);
+        assertFalse(map.makeAttack(5, attackTroop));
         attackTroop = createTroop(0, 50);
         map.makeAttack(5, attackTroop);
         attackTroop = createTroop(0, 50);
-        map.makeAttack(5, attackTroop);
+        assertTrue(map.makeAttack(5, attackTroop));
 
         assertEquals(map.getTerritories().get(3).getOwner(), 1);
         assertEquals(map.getTerritories().get(4).getOwner(), 1);

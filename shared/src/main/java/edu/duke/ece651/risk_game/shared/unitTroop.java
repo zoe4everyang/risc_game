@@ -63,14 +63,19 @@ public class unitTroop implements Troop{
         }
         return false;
     }
+    @Override
+    public void isSubsetOfThis(Troop troop) {
+        for (Unit unit : troop.getUnits()) {
+            if (!unitIsSubsetOfTroop(unit, this)) {
+                throw new IllegalArgumentException("unit is not a subset of troop");
+            }
+        }
+        return;
+    }
 
     @Override
     public void removeTroop(Troop troop) {
-        for (Unit unit : troop.getUnits()) {
-            if (!unitIsSubsetOfTroop(unit, this)) {
-                throw new IllegalArgumentException("unit is not a subset of this troop");
-            }
-        }
+        isSubsetOfThis(troop);
         for (Unit unit : troop.getUnits()) {
             deleteUnit(unit.getUnitId());
         }
@@ -90,5 +95,15 @@ public class unitTroop implements Troop{
             }
         }
         return false;
+    }
+
+    @Override
+    public Unit getUnit(int UnitId) {
+        for (Unit unit : units) {
+            if (unit.getUnitId() == UnitId) {
+                return unit;
+            }
+        }
+        return null;
     }
 }

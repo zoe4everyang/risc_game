@@ -11,11 +11,17 @@ public interface Troop {
     public void addUnits(List<Unit> units);
 
     public void addTroop(Troop troop);
+
+    void isSubsetOfThis(Troop troop);
+
     public void removeTroop(Troop troop);
 
     public void setOwner(int owner);
 
     public List<Unit> getUnits();
 
-    boolean upgrade(int unitId, int amount);
+    public boolean upgrade(int unitId, int amount);
+
+
+    public Unit getUnit(int UnitId);
 }

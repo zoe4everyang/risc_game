@@ -1,6 +1,7 @@
 package edu.duke.ece651.risk_game.server;
 import edu.duke.ece651.risk_game.shared.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,9 @@ public class Controller {
     private List<Player> players;
     private List<Territory> territories;
 
+    private ArrayList<Action> moveCache = new ArrayList<>();
+    private ArrayList<Action> attackCache = new ArrayList<>();
+
     private final Map<Integer, Integer> updateRequirement = new HashMap<Integer, Integer>() {{
         put(1, 50);
         put(2, 75);
@@ -22,7 +26,14 @@ public class Controller {
         put(4, 200);
         put(5, 300);
     }};
-
+    private final Map<Integer, Integer> unitRequirement = new HashMap<Integer, Integer>() {{
+        put(0, 3);
+        put(1, 8);
+        put(2, 19);
+        put(3, 25);
+        put(4, 35);
+        put(5, 50);
+    }};
     /**
      * Constructor
      * @param numPlayers number of players
@@ -62,30 +73,30 @@ public class Controller {
         world.setUnits(unitPlacement);
     }
 
-    /**
-     * Check if the game is over
-     * @param attackFrom list of attack from
-     * @param attackTo list of attack to
-     * @param attackNum list of attack number
-     * @param moveFrom list of move from
-     * @param moveTo list of move to
-     * @param moveNum list of move number
-     */
-
-    public Boolean step (List<Integer> attackerIds, 
-            List<Integer> attackFrom, 
-            List<Integer> attackTo, 
-            List<Integer> attackNum, 
-            List<Integer> moverIds, 
-            List<Integer> moveFrom, 
-            List<Integer> moveTo, 
-            List<Integer> moveNum
-    ) {
-        // make a step
-        world.resolveMove(moverIds, moveFrom, moveTo, moveNum);
-        world.resolveAttack(attackerIds, attackFrom, attackTo, attackNum);
-        return checkEnd();
-    }
+//    /**
+//     * Check if the game is over
+//     * @param attackFrom list of attack from
+//     * @param attackTo list of attack to
+//     * @param attackNum list of attack number
+//     * @param moveFrom list of move from
+//     * @param moveTo list of move to
+//     * @param moveNum list of move number
+//     */
+//
+//    public Boolean step (List<Integer> attackerIds,
+//            List<Integer> attackFrom,
+//            List<Integer> attackTo,
+//            List<Integer> attackNum,
+//            List<Integer> moverIds,
+//            List<Integer> moveFrom,
+//            List<Integer> moveTo,
+//            List<Integer> moveNum
+//    ) {
+//        // make a step
+//        world.resolveMove(moverIds, moveFrom, moveTo, moveNum);
+//        world.resolveAttack(attackerIds, attackFrom, attackTo, attackNum);
+//        return checkEnd();
+//    }
 
     /**
      * Check if the game is over
@@ -155,5 +166,98 @@ public class Controller {
         players.get(playerId).upgradeTechLevel(updateRequirement);
         return;
     }
+
+    public Boolean cacheAttack(int playerId, int from, int to, List<Unit> units) {
+        Troop t = new unitTroop(playerId, units);
+        // if have sufficient resources and units
+        // if from and to are neightbouts
+        world.getTerritories().get(from).getTroop().isSubsetOfThis(t);
+        if (players.get(playerId).getFoodPoint() >= units.size() &&
+            world.isNeighbour(from, to) &&
+            world.getTerritories().get(from).getOwner() == playerId &&
+            world.getTerritories().get(to).getOwner() != playerId) {
+            // cache attack operation to cache
+            attackCache.add(new Action(from, to, t));
+            // reduce the number of units in from territory
+            world.getTerritories().get(from).removeTroop(t);
+            // reduce resources
+            players.get(playerId).reduceFoodPoint(units.size());
+            return true;
+        }
+
+        return false;
+
+    }
+
+    public Boolean cacheMove(int playerId, int from, int to, List<Unit> units) {
+        Troop t = new unitTroop(playerId, units);
+
+        world.getTerritories().get(from).getTroop().isSubsetOfThis(t);
+        // check if the move is valid
+        if (world.getTerritories().get(from).getOwner() == playerId &&
+                world.getTerritories().get(to).getOwner() == playerId &&
+                world.isConnected(from, to, playerId) &&
+                world.shortestPath(from, to, playerId) <= players.get(playerId).getFoodPoint()
+            ) {
+            // add movement to cache
+            Action move = new Action(from, to, t);
+            moveCache.add(move);
+            // reduce the number of units in from territory
+            this.world.makeMove(from, to, t);
+            return true;
+        }
+        return false;
+    }
+    public Boolean cacheUpgradeUnit(int playerId, int territoryId, int unitId, int amount) {
+        // check if the upgrade is valid
+        // check if the resources is sufficient
+        // get current level of the unit
+        int currentLevel = territories.get(territoryId).getTroop().getUnit(unitId).getLevel();
+        int totalCost = 0;
+        for (int i = 0; i < amount; i++) {
+            totalCost += unitRequirement.get(currentLevel + i);
+        }
+        if (players.get(playerId).getFoodPoint() >= totalCost) {
+            // upgrade unit
+            upgradeUnit(playerId, territoryId, unitId, amount);
+            // reduce resources
+            players.get(playerId).reduceFoodPoint(totalCost);
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean cacheUpgradeTechnology(int playerId) {
+        if (players.get(playerId).getTechLevel() < 6) {
+            upgradeMaxTechnology(playerId);
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean commit() {
+        // resolve attacks
+        for (Action a : attackCache) {
+            if (world.getTerritories().get(a.from).getOwner() !=
+                    world.getTerritories().get(a.to).getOwner()) {
+                world.makeAttack(a.to, a.units);
+            } else {
+                world.getTerritories().get(a.to).addTroop(a.units);
+            }
+        }
+        // resolve moves
+        for (Player p : players) {
+            p.commitUpgrade();
+        }
+        attackCache.clear();
+        moveCache.clear();
+        return false;
+    }
+
+
+
+
+
+
 
 }

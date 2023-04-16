@@ -12,7 +12,7 @@ public class PlayerTest {
     @Test
     public void testUpdateGrade() {
         Player p = new Player(0, "tenki",
-                List.of(0), new Resource(90, 100));
+                new Resource(90, 100));
         assertEquals(1, p.getTechLevel());
         assertFalse(p.upgradeTechLevel(new HashMap<>() {{
             put(1, 100);

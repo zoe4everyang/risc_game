@@ -106,7 +106,7 @@ public class v1WorldMap implements WorldMap{
         for (int i = 0; i < map.size(); i++) {
             visited.add(false);
         }
-        return shortestPath(id1, id2, playerId) > 0;
+        return shortestPath(id1, id2, playerId) >= 0;
     }
 
     /**

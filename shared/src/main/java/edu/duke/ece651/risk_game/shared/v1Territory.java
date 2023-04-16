@@ -121,5 +121,23 @@ public class v1Territory implements Territory{
         this.troop.upgrade(UnitId, amount);
     }
 
+    @Override
+    public int getTechProduction() {
+        // return tech production
+        return tech_production;
+    }
+
+    @Override
+    public int getFoodProduction() {
+        // return food production
+        return food_production;
+    }
+
+    @Override
+    public Troop getTroop() {
+        // return list of troops
+        return this.troop;
+    }
+
 
 }

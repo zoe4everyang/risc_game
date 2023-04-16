@@ -33,4 +33,11 @@ public interface Territory {
     public int getCost();
 
     public void upgradeUnit(int UnitId, int amount);
+
+    public int getTechProduction();
+
+    public int getFoodProduction();
+
+
+    public Troop getTroop();
 }

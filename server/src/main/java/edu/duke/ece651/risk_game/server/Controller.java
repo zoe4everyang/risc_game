@@ -212,6 +212,7 @@ public class Controller {
         }
         return false;
     }
+
     public Boolean cacheUpgradeUnit(int playerId, int territoryId, int unitId, int amount) {
         // check if the upgrade is valid
         // check if the resources is sufficient
@@ -267,6 +268,13 @@ public class Controller {
         }
         // generate new units
         return true;
+    }
+
+    public PlayerInfo getPlayerInfo(int playerId) {
+        return new PlayerInfo(playerId,
+                new Resource(players.get(playerId).getTechPoint(),
+                        players.get(playerId).getFoodPoint()),
+                players.get(playerId).getTechLevel());
     }
 
 

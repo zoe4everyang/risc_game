@@ -53,7 +53,7 @@ public class Controller {
             throw new IllegalArgumentException("Invalid number of players");
         }
         for (int i = 0; i < numPlayers; i++) {
-            players.add(new Player(i, "p" + i, new Resource(0, 0)));
+            players.add(new Player(i, "p" + i, new Resource(100, 100)));
         }
         this.territories = world.getTerritories();
     }
@@ -200,13 +200,14 @@ public class Controller {
         if (world.getTerritories().get(from).getOwner() == playerId &&
                 world.getTerritories().get(to).getOwner() == playerId &&
                 world.isConnected(from, to, playerId) &&
-                world.shortestPath(from, to, playerId) <= players.get(playerId).getFoodPoint()
+                world.shortestPath(from, to, playerId) * units.size()<= players.get(playerId).getFoodPoint()
             ) {
             // add movement to cache
             Action move = new Action(from, to, t);
             moveCache.add(move);
             // reduce the number of units in from territory
             this.world.makeMove(from, to, t);
+            players.get(playerId).reduceFoodPoint(world.shortestPath(from, to, playerId) * units.size());
             return true;
         }
         return false;
@@ -220,11 +221,13 @@ public class Controller {
         for (int i = 0; i < amount; i++) {
             totalCost += unitRequirement.get(currentLevel + i);
         }
-        if (players.get(playerId).getFoodPoint() >= totalCost) {
+        if (players.get(playerId).getFoodPoint() >= totalCost &&
+                players.get(playerId).getTechLevel() >= currentLevel + amount &&
+                territories.get(territoryId).getOwner() == playerId) {
             // upgrade unit
             upgradeUnit(playerId, territoryId, unitId, amount);
             // reduce resources
-            players.get(playerId).reduceFoodPoint(totalCost);
+            players.get(playerId).reduceTechPoint(totalCost);
             return true;
         }
         return false;

@@ -66,5 +66,25 @@ public class ControllerTest {
         assertEquals(0, controller.getTerritories().get(2).getOwner());
         controller.commit();
         assertEquals(1, controller.getTerritories().get(2).getOwner());
+        controller.getTerritories().get(0).defence(new unitTroop(1, List.of(new Unit("Test", 0, 20),
+        new Unit("Test", 0, 21),    new Unit("Test", 0, 22),    new Unit("Test", 0, 23),
+        new Unit("Test", 0, 24),    new Unit("Test", 0, 25),    new Unit("Test", 0, 26),
+        new Unit("Test", 0, 27),    new Unit("Test", 0, 28),    new Unit("Test", 0, 29),
+        new Unit("Test", 0, 30),   new Unit("Test", 0, 31),   new Unit("Test", 0, 32),
+        new Unit("Test", 0, 33),   new Unit("Test", 0, 34),   new Unit("Test", 0, 35),
+        new Unit("Test", 0, 36),   new Unit("Test", 0, 37),   new Unit("Test", 0, 38),
+        new Unit("Test", 0, 39))));
+        controller.getTerritories().get(1).defence(new unitTroop(1, List.of(new Unit("Test", 0, 20),
+        new Unit("Test", 0, 21),    new Unit("Test", 0, 22),    new Unit("Test", 0, 23),
+        new Unit("Test", 0, 24),    new Unit("Test", 0, 25),    new Unit("Test", 0, 26),
+        new Unit("Test", 0, 27),    new Unit("Test", 0, 28),    new Unit("Test", 0, 29),
+        new Unit("Test", 0, 30),   new Unit("Test", 0, 31),   new Unit("Test", 0, 32),
+        new Unit("Test", 0, 33),   new Unit("Test", 0, 34),   new Unit("Test", 0, 35),
+        new Unit("Test", 0, 36),   new Unit("Test", 0, 37),   new Unit("Test", 0, 38),
+        new Unit("Test", 0, 39))));
+        assertTrue(controller.checkEnd());
+        assertEquals(1, controller.getWinner());
+        assertEquals(0, controller.getLosers().get(0));
+        assertEquals(1, controller.getLosers().size());
     }
 }

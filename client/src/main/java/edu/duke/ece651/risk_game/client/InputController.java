@@ -103,49 +103,54 @@ public class InputController {
      * It will also initialize the playerIDMap.
      */
     public Response roomSelectPhase() throws IOException {
-        // get room ID list
+        Response response = null;
         Set<Integer> roomIDs = null;
-        try {
-            roomIDs = httpClient.getRoomList(this.username);
-        } catch (IOException e) {
-            System.out.println("Error while requesting room ID list: " + e.getMessage());
-        }
-        assert roomIDs != null;
-
-        // room ID input
         Integer roomID;
+        // get room ID list
         while (true) {
-            riscViewer.roomSelectPrompt(roomIDs);
-            String inputContent = input.readLine();
-            if (Objects.equals(inputContent, "exit")) {
-                return null;
+            try {
+                roomIDs = httpClient.getRoomList(this.username);
+            } catch (IOException e) {
+                System.out.println("Error while requesting room ID list: " + e.getMessage());
             }
-            roomID = Integer.parseInt(inputContent);
-            if (roomIDs.contains(roomID)) {
+            assert roomIDs != null;
+
+            // room ID input
+            while (true) {
+                riscViewer.roomSelectPrompt(roomIDs);
+                String inputContent = input.readLine();
+                if (Objects.equals(inputContent, "exit")) {
+                    return null;
+                }
+                roomID = Integer.parseInt(inputContent);
+                if (roomIDs.contains(roomID)) {
+                    break;
+                } else {
+                    riscViewer.roomSelectFailedPrompt();
+                }
+            }
+
+            // join room
+            try {
+                response = httpClient.joinRoom(username, roomID);
+            } catch (IOException e) {
+                System.out.println("Error while sending join room request: " + e.getMessage());
+            }
+            if (response != null) {
                 break;
             } else {
                 riscViewer.roomSelectFailedPrompt();
             }
         }
 
-        // join room
-        Response response = null;
-        try {
-            response = httpClient.joinRoom(username, roomID);
-        } catch (IOException e) {
-            System.out.println("Error while sending join room request: " + e.getMessage());
-        }
-
         // update room Info
         currentRoomID = roomID;
         if (!playerIDMap.containsKey(roomID)) {
-            assert response != null;
             playerIDMap.put(roomID, response.getPlayerInfo().getPlayerID());
         }
         if (!territoryNameMaps.containsKey(roomID)) {
             HashMap<Integer, String> territoryNameMap = new HashMap<>();
             HashMap<String, Integer> territoryIDMap = new HashMap<>();
-            assert response != null;
             List<Territory> territories = response.getTerritories();
             for (Territory territory : territories) {
                 territoryNameMap.put(territory.getID(), territory.getName());

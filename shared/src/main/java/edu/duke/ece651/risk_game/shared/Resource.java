@@ -11,6 +11,7 @@ public class Resource {
      * @param techPoint the tech point of the player
      * @param foodPoint the food point of the player
      */
+    @JsonCreator
     public Resource(@JsonProperty("techPoint") Integer techPoint,
                     @JsonProperty("foodPoint") Integer foodPoint) {
         this.techPoint = techPoint;

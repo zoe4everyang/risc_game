@@ -12,76 +12,79 @@ public class ControllerTest {
     public void test_isEnd() {
         // write test cases for this class
         Controller controller = new Controller(2);
+        controller.initGame(List.of(5, 5, 5, 5, 100, 10));
         assertTrue(!controller.checkEnd());
         assertTrue(controller.getLosers().size() == 0);
         assertEquals(controller.getWinner(), -1);
-        controller.initGame(List.of(10, 20, 50, 3000, 2000, 1000));
-        assertEquals(controller.getTerritories().get(0).getUnits(), 10);
-        assertEquals(controller.getTerritories().get(1).getUnits(), 20);
-        assertEquals(controller.getTerritories().get(2).getUnits(), 50);
-        assertEquals(controller.getTerritories().get(3).getUnits(), 3000);
-        assertEquals(controller.getTerritories().get(4).getUnits(), 2000);
-        assertEquals(controller.getTerritories().get(5).getUnits(), 1000);
-        assertEquals(controller.getTerritories().get(1).getOwner(), 0);
-        assertEquals(controller.getTerritories().get(2).getOwner(), 0);
-        assertEquals(controller.getTerritories().get(0).getOwner(), 0);
-        Boolean end = controller.step(List.of(1, 1), List.of(3, 4), List.of(1, 2), List.of(1000, 1000, 1000), List.of(), List.of(), List.of(), List.of());
-        assertFalse(end);
-        assertEquals(controller.getTerritories().get(1).getOwner(), 1);
-        assertEquals(controller.getTerritories().get(2).getOwner(), 1);
-        assertEquals(controller.getTerritories().get(0).getOwner(), 0);
-        end = controller.step(List.of(1), List.of(2), List.of(0), List.of(500), List.of(), List.of(), List.of(), List.of());
-        assertTrue(end);
-        assertEquals(controller.getWinner(), 1);
-        assertEquals(controller.getLosers().size(), 1);
-        assertEquals(controller.getLosers().get(0), 0);
-        assertEquals(controller.getTerritories().get(1).getOwner(), 1);
-        assertEquals(controller.getTerritories().get(2).getOwner(), 1);
-        assertEquals(controller.getTerritories().get(0).getOwner(), 1);
+        // assert resources
+        assertEquals(100, controller.getPlayers().get(0).getFoodPoint());
+        assertEquals(100, controller.getPlayers().get(0).getTechPoint());
+        assertEquals(100, controller.getPlayers().get(1).getFoodPoint());
+        assertEquals(100, controller.getPlayers().get(1).getTechPoint());
+        controller.cacheMove(0, 1, 2, List.of(new Unit("test", 0, 5), new Unit("test", 0, 6)));
+        assertEquals(60, controller.getPlayers().get(0).getFoodPoint());
+        assertEquals(3, controller.getTerritories().get(1).getTroopSize());
+        assertEquals(7, controller.getTerritories().get(2).getTroopSize());
+        // after commit each territory should generate a new unit and new resources
+        controller.commit();
+        assertEquals(90, controller.getPlayers().get(0).getFoodPoint());
+        assertEquals(190, controller.getPlayers().get(1).getTechPoint());
+        assertEquals(4, controller.getTerritories().get(1).getTroopSize());
+        assertEquals(8, controller.getTerritories().get(2).getTroopSize());
+        // test upgrade unit fail
+        assertFalse(controller.cacheUpgradeUnit(0, 0, 0, 2));
+        assertFalse(controller.cacheUpgradeUnit(1, 0, 0, 0));
+        // test upgrade technology
+        controller.cacheUpgradeTechnology(1);
+        assertEquals(140, controller.getPlayers().get(1).getTechPoint());
+        assertEquals(1, controller.getPlayers().get(1).getTechLevel());
+        controller.commit();
+        assertEquals(2, controller.getPlayers().get(1).getTechLevel());
+        assertEquals(230, controller.getPlayers().get(1).getTechPoint());
+        // test upgrade unit success
+        assertEquals(0, controller.getTerritories().get(3).getTroop().getUnit(16).getLevel());
+        assertTrue(controller.cacheUpgradeUnit(1, 3, 16, 2));
+        assertEquals(219, controller.getPlayers().get(1).getTechPoint());
+        assertEquals(2, controller.getTerritories().get(3).getTroop().getUnit(16).getLevel());
+
+        assertFalse(controller.cacheUpgradeUnit(1, 3, 16, 1));
+        assertEquals(2, controller.getTerritories().get(3).getTroop().getUnit(16).getLevel());
+        assertEquals(219, controller.getPlayers().get(1).getTechPoint());
 
 
-        // second test case
-        Controller controller2 = new Controller(3);
-        assertTrue(!controller2.checkEnd());
-        assertTrue(controller2.getLosers().size() == 0);
-        assertEquals(controller2.getWinner(), -1);
-        controller2.initGame(List.of(10, 20, 500, 3000, 500, 3000));
-        assertEquals(controller2.getTerritories().get(0).getUnits(), 10);
-        assertEquals(controller2.getTerritories().get(1).getUnits(), 20);
-        assertEquals(controller2.getTerritories().get(2).getUnits(), 500);
-        assertEquals(controller2.getTerritories().get(3).getUnits(), 3000);
-        assertEquals(controller2.getTerritories().get(4).getUnits(), 500);
-        assertEquals(controller2.getTerritories().get(5).getUnits(), 3000);
-        assertEquals(controller2.getTerritories().get(1).getOwner(), 0);
-        assertEquals(controller2.getTerritories().get(3).getOwner(), 2);
-        assertEquals(controller2.getTerritories().get(4).getOwner(), 1);
-        end = controller2.step(List.of(2, 1), List.of(3, 2), List.of(1, 0), List.of(1500, 300), List.of(), List.of(), List.of(), List.of());
-        assertFalse(end);
-        assertEquals(controller2.getTerritories().get(1).getOwner(), 2);
-        assertEquals(controller2.getTerritories().get(3).getOwner(), 2);
-        assertEquals(controller2.getTerritories().get(0).getOwner(), 1);
-        assertEquals(controller2.getTerritories().get(4).getOwner(), 1);
-        assertEquals(controller2.getLosers().size(), 1);
-        assertEquals(controller2.getLosers().get(0), 0);
-        assertEquals(controller2.getWinner(), -1);
-        assertFalse(controller2.checkEnd());
-        end = controller2.step(List.of(2, 2), List.of(1, 5), List.of(0, 4), List.of(1400, 2990), List.of(), List.of(), List.of(), List.of()); 
-        assertFalse(end);
-        assertEquals(controller2.getTerritories().get(1).getOwner(), 2);
-        assertEquals(controller2.getTerritories().get(3).getOwner(), 2);
-        assertEquals(controller2.getTerritories().get(0).getOwner(), 2);
-        assertEquals(controller2.getTerritories().get(4).getOwner(), 2);
-        assertEquals(controller2.getLosers().size(), 1);
-        assertEquals(controller2.getLosers().get(0), 0);
-        assertEquals(controller2.getWinner(), -1);
-        assertFalse(controller2.checkEnd());
-
-        end = controller2.step(List.of(2), List.of(4), List.of(2), List.of(2000), List.of(), List.of(), List.of(), List.of()); 
-        assertTrue(end);
-        assertEquals(controller2.getLosers().size(), 2);
-        assertEquals(controller2.getLosers().get(0), 0);
-        assertEquals(controller2.getLosers().get(1), 1);
-        assertEquals(controller2.getWinner(), 2);
-        assertTrue(controller2.checkEnd());
+        // test attack with 20 units
+        assertEquals(160, controller.getPlayers().get(1).getFoodPoint());
+        controller.cacheAttack(1, 4, 2, List.of(new Unit("Test", 0, 20),
+                new Unit("Test", 0, 21),    new Unit("Test", 0, 22),    new Unit("Test", 0, 23),
+                new Unit("Test", 0, 24),    new Unit("Test", 0, 25),    new Unit("Test", 0, 26),
+                new Unit("Test", 0, 27),    new Unit("Test", 0, 28),    new Unit("Test", 0, 29),
+                new Unit("Test", 0, 30),   new Unit("Test", 0, 31),   new Unit("Test", 0, 32),
+                new Unit("Test", 0, 33),   new Unit("Test", 0, 34),   new Unit("Test", 0, 35),
+                new Unit("Test", 0, 36),   new Unit("Test", 0, 37),   new Unit("Test", 0, 38),
+                new Unit("Test", 0, 39)));
+        assertEquals(140, controller.getPlayers().get(1).getFoodPoint());
+        assertEquals(0, controller.getTerritories().get(2).getOwner());
+        controller.commit();
+        assertEquals(1, controller.getTerritories().get(2).getOwner());
+        controller.getTerritories().get(0).defence(new unitTroop(1, List.of(new Unit("Test", 0, 20),
+        new Unit("Test", 0, 21),    new Unit("Test", 0, 22),    new Unit("Test", 0, 23),
+        new Unit("Test", 0, 24),    new Unit("Test", 0, 25),    new Unit("Test", 0, 26),
+        new Unit("Test", 0, 27),    new Unit("Test", 0, 28),    new Unit("Test", 0, 29),
+        new Unit("Test", 0, 30),   new Unit("Test", 0, 31),   new Unit("Test", 0, 32),
+        new Unit("Test", 0, 33),   new Unit("Test", 0, 34),   new Unit("Test", 0, 35),
+        new Unit("Test", 0, 36),   new Unit("Test", 0, 37),   new Unit("Test", 0, 38),
+        new Unit("Test", 0, 39))));
+        controller.getTerritories().get(1).defence(new unitTroop(1, List.of(new Unit("Test", 0, 20),
+        new Unit("Test", 0, 21),    new Unit("Test", 0, 22),    new Unit("Test", 0, 23),
+        new Unit("Test", 0, 24),    new Unit("Test", 0, 25),    new Unit("Test", 0, 26),
+        new Unit("Test", 0, 27),    new Unit("Test", 0, 28),    new Unit("Test", 0, 29),
+        new Unit("Test", 0, 30),   new Unit("Test", 0, 31),   new Unit("Test", 0, 32),
+        new Unit("Test", 0, 33),   new Unit("Test", 0, 34),   new Unit("Test", 0, 35),
+        new Unit("Test", 0, 36),   new Unit("Test", 0, 37),   new Unit("Test", 0, 38),
+        new Unit("Test", 0, 39))));
+        assertTrue(controller.checkEnd());
+        assertEquals(1, controller.getWinner());
+        assertEquals(0, controller.getLosers().get(0));
+        assertEquals(1, controller.getLosers().size());
     }
 }

@@ -30,6 +30,8 @@ public class Controller {
     }
 
 
+
+
     public void initGame(List<Integer> unitPlacement) {
         // init game
         world.setUnits(unitPlacement);
@@ -51,7 +53,7 @@ public class Controller {
     }
 
     public List<Integer> getLosers() {
-        return world.getLosers();
+        return world.getLosers(); 
     }
 
     public int getWinner() {

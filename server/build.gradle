@@ -10,6 +10,9 @@ sourceCompatibility = '11'
 repositories {
     mavenCentral()
 }
+configurations.configureEach {
+    exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+}
 
 dependencies {
     // rely on shared library
@@ -21,11 +24,11 @@ dependencies {
 //    implementation 'org.springframework.data:spring-data-redis'
 
     // This dependency is used by the application.
-    implementation 'com.google.guava:guava:30.1.1-jre'
+    implementation 'com.google.guava:guava:31.1-jre'
 
     // json parser
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
-    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.14.2'
 
     // spring boot
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -33,11 +36,12 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     // testing
-    testImplementation 'org.junit.platform:junit-platform-launcher:1.6.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
+    testImplementation 'org.junit.platform:junit-platform-launcher:1.9.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+
 }
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
 }
 

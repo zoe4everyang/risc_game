@@ -20,11 +20,14 @@ public class v1MapFactoryTest {
         assertEquals(territories.get(3).getOwner(), 1);
         assertEquals(territories.get(4).getOwner(), 1);
         assertEquals(territories.get(5).getOwner(), 1);
-        assertEquals(territories.get(0).getUnits(), 0);
-        assertEquals(territories.get(1).getUnits(), 0);
-        assertEquals(territories.get(2).getUnits(), 0);
-        assertEquals(territories.get(3).getUnits(), 0);
-        assertEquals(territories.get(4).getUnits(), 0);
-        assertEquals(territories.get(5).getUnits(), 0);
+        assertEquals(territories.get(0).getTroopSize(), 0);
+        assertEquals(territories.get(1).getTroopSize(), 0);
+        assertEquals(territories.get(2).getTroopSize(), 0);
+        assertEquals(territories.get(3).getTroopSize(), 0);
+        assertEquals(territories.get(4).getTroopSize(), 0);
+        assertEquals(territories.get(5).getTroopSize(), 0);
+        assertEquals(10, territories.get(0).getTechProduction());
+        assertEquals(10, territories.get(1).getTechProduction());
+        assertEquals(10, territories.get(2).getFoodProduction());
     }
 }

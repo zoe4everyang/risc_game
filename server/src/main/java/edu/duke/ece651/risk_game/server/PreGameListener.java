@@ -1,6 +1,7 @@
 package edu.duke.ece651.risk_game.server;
 
 
+import edu.duke.ece651.risk_game.shared.ActionStatus;
 import edu.duke.ece651.risk_game.shared.Message;
 import edu.duke.ece651.risk_game.shared.PlacementRequest;
 import org.springframework.web.bind.annotation.*;
@@ -10,15 +11,9 @@ import java.util.HashMap;
 @RestController
 public class PreGameListener extends RISCServer {
 
-    protected final RoomSelectionHandler roomSelectionHandler;
-
-    public PreGameListener(Integer playerNum, RoomSelectionHandler roomSelectionHandler) {
-        super(playerNum);
-        this.roomSelectionHandler = roomSelectionHandler;
-    }
 
     @PostMapping("/login")
-    public Message playerLoginListen(@RequestBody HashMap<String, Object> requestBody) {
+    public ActionStatus playerLoginListen(@RequestBody HashMap<String, Object> requestBody) {
         try{
             return roomSelectionHandler.loginHandler(requestBody);
         }catch(InterruptedException e) {
@@ -31,7 +26,6 @@ public class PreGameListener extends RISCServer {
     public Iterable<Integer> getRoomListListen(@RequestBody String username) {
         return roomSelectionHandler.getRoomList(username);
     }
-
     @PostMapping("/join/{roomId}")
     public Message joinRoomListen(@PathVariable("roomId") int roomId, @RequestBody String username) {
         try{
@@ -43,12 +37,12 @@ public class PreGameListener extends RISCServer {
     }
 
 
-    @PostMapping("/place")
-    public Message placeUnitListen(@RequestBody PlacementRequest requestBody) {
+    @PostMapping("/place/{roomId}")
+    public Message placeUnitListen(@PathVariable("roomId") int roomId, @RequestBody PlacementRequest requestBody) {
         try{
-            return requestHandler.placeUnitHandler(requestBody);
+            return roomSelectionHandler.inGamePlace(roomId, requestBody);
         }catch(InterruptedException e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
         return null;
 

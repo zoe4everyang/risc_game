@@ -1,51 +1,95 @@
 package edu.duke.ece651.risk_game.server;
 import edu.duke.ece651.risk_game.shared.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 
+import java.util.*;
 
+/**
+ * This class is used to represent the world map
+ */
 public class v1WorldMap implements WorldMap{
     private List<Territory> map;
+
     private int numPlayers;
     private Checker checker;
     private int unitAvailable;
+    /**
+     * Constructor
+     * @param Players players of the game
+     * @param map map
+     * @param unitAvailable number of units available
+     */
     public v1WorldMap(int numPlayers, List<Territory> map, int unitAvailable) {
         this.map = map;
-        this.numPlayers = numPlayers;
+        this.numPlayers = numPlayers;   // number of players
         this.checker = new Checker();
         this.unitAvailable = unitAvailable;
     }
 
 
-
+    /**
+     * Get the map
+     * @return map
+     */
     @Override
     public int getNumTerritories() {
         return map.size();
     }
 
-
-    private Boolean dfs(int id1, int id2, List<Boolean> visited, int playerId) {
-        // if id1 is visited, return false
+    /**
+     * Get the map
+     * @param id1 id1
+     * @param id2 id2
+     * @param playerId player id
+     * @return return the cost of the shortest path from id1 to id2 if such path exists,
+     * otherwise return -1
+     */
+    @Override
+    public int shortestPath(int id1, int id2, int playerId) {
+        // TODO: test dijkstra
         if (id1 == id2) {
-            return true;
+            return 0;
         }
-        if (visited.get(id1)) {
-            return false;
-        }
-        // if id1 is not visited, mark it as visited
-        visited.set(id1, true);
-        // if id1 is not connected to id2, dfs on all its neighbours
+        // use dijkstra to find the shortest path and return the cost
+        // initialize the distance
+        List<Integer> distance = new ArrayList<>();
         for (int i = 0; i < map.size(); i++) {
-            if (isNeighbour(id1, i) && !visited.get(i) && map.get(i).getOwner() == playerId) {
-                if (dfs(i, id2, visited, playerId)) {
-                    return true;
+            distance.add(Integer.MAX_VALUE);
+        }
+        distance.set(id1, 0);
+        // initialize the visited
+        List<Boolean> visited = new ArrayList<>();
+        for (int i = 0; i < map.size(); i++) {
+            visited.add(false);
+        }
+        // initialize the queue
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(id1);
+        while (!queue.isEmpty()) {
+            int cur = queue.poll();
+            visited.set(cur, true);
+            for (int i = 0; i < map.get(cur).getNeighbours().size(); i++) {
+                int neighbour = map.get(cur).getNeighbours().get(i);
+                if (map.get(neighbour).getOwner() == playerId && !visited.get(neighbour)) {
+                    if ( distance.get(neighbour) > distance.get(cur) + map.get(neighbour).getCost()) {
+                        distance.set(neighbour, distance.get(cur) + map.get(neighbour).getCost());
+                        queue.add(neighbour);
+                    }
                 }
             }
         }
-        return false;
+        if (distance.get(id2) == Integer.MAX_VALUE) {
+            return -1;
+        }
+        return distance.get(id2) - map.get(id2).getCost();
     }
 
+    /**
+     * Get the map
+     * @param id1 id1
+     * @param id2 id2
+     * @param playerId player id
+     * @return map
+     */
     @Override
     public Boolean isConnected(int id1, int id2, int playerId) {
         // dfs to check if id1 is connected to id2
@@ -62,14 +106,23 @@ public class v1WorldMap implements WorldMap{
         for (int i = 0; i < map.size(); i++) {
             visited.add(false);
         }
-        return dfs(id1, id2, visited, playerId);
+        return shortestPath(id1, id2, playerId) >= 0;
     }
 
+    /**
+     * Get the map
+     * @param id1 id1
+     * @param id2 id2
+     * @return map
+     */
     @Override
     public Boolean isNeighbour(int id1, int id2) {
         return map.get(id1).getDistances().get(id2) == 1;
     }
 
+    /**
+     * Get the map
+     */
     @Override
     public List<Integer> getLosers() {
         // return list of losers
@@ -89,6 +142,10 @@ public class v1WorldMap implements WorldMap{
         return losers;
     }
 
+    /**
+     * Get the map
+     * @return map
+     */
     @Override
     public int getWinner() {
         // return winner
@@ -98,6 +155,10 @@ public class v1WorldMap implements WorldMap{
         return -1;
     }
 
+    /**
+     * Get the map
+     * @return map
+     */
     @Override
     public Boolean checkEnd() {
         // check if game ends
@@ -108,47 +169,44 @@ public class v1WorldMap implements WorldMap{
         return owners.size() == 1;
     }
 
+    /**
+     * Get the map
+     * @return map
+     */
     @Override
     public List<Territory> getTerritories() {
         // return list of territories
         return map;
     }
 
+    /**
+     * Get the map
+     * @param placement placement
+     * @return map
+     */
     @Override
     public void setUnits(List<Integer> placement) {
         // set units for each territory
         for (int i = 0; i < map.size(); i++) {
             if (placement.get(i) > 0) {
-                if (map.get(i).getUnits() != 0) {
+                if (map.get(i).getTroopSize() != 0) {
                     throw new IllegalArgumentException("Cannot set units for territories that already have units");
                 }
-                map.get(i).addUnit(placement.get(i));
+                Troop tmpTroop = new unitTroop(map.get(i).getOwner());
+                for (int j = 0; j < placement.get(i); j++) {
+                    tmpTroop.addUnit(new Unit("unit"));
+                }
+                map.get(i).addTroop(tmpTroop);
             }
         }
     }
 
-    @Override
-    public void makeAttack(int playerId, int from, int to, int num) {
-        // if the target it already belongs to the player, move units to the target
-        if (!checker.checkAttackTarget(playerId, from, to, num, this)) {
-            map.get(to).addUnit(num);
-            return;
-        }
 
-
-        map.get(to).defence(playerId, num);
-    }
-
-    @Override
-    public void makeMove(int playerId, int from, int to, int num) {
-        if (!checker.checkMove(playerId, from, to, num, this)) {
-            return;
-        }
-        map.get(from).removeUnit(num);
-        map.get(to).addUnit(num);
-    }
-
-    // TODO: check if one id is on the map (used in checker)
+    /**
+     * Get the map
+     * @param id id
+     * @return map
+     */
     @Override
     public Boolean checkOnMap(int id){
         for(Territory T : map){
@@ -159,40 +217,36 @@ public class v1WorldMap implements WorldMap{
         return false;
     }
 
+    // attack given territory by troop t
     @Override
-    public void resolveAttack(List<Integer> playerIds, 
-    List<Integer> fromIds, 
-    List<Integer> toIds, 
-    List<Integer> unitNums) {
-    // get attack units
-    HashSet<Integer> verified = new HashSet<>();
-    for (int i = 0; i < playerIds.size(); i++) {
-        if (checker.checkAttackTarget(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i), this) &&
-        checker.checkAttackNumber(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i), this) &&
-        checker.checkNeighbour(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i), this)) {
-            map.get(fromIds.get(i)).removeUnit(unitNums.get(i));
-            verified.add(i);
-        }
-    }
-    // resolve attack
-    for (int i = 0; i < playerIds.size(); i++) {
-        if (verified.contains(i)) {
-            makeAttack(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i));
-        }
-    }
+    public Boolean makeAttack(int to, Troop t) {
+        int originalOwner = map.get(to).getOwner();
+        map.get(to).defence(t);
+        return map.get(to).getOwner() != originalOwner;
     }
 
+    // move troop from one territory to another
+    // return false if cannot remove troop from from
     @Override
-    public void resolveMove(List<Integer> playerIds, 
-            List<Integer> fromIds, 
-            List<Integer> toIds, 
-            List<Integer> unitNums
-            ) {
-        // resolve move
-        for (int i = 0; i < playerIds.size(); i++) {
-            makeMove(playerIds.get(i), fromIds.get(i), toIds.get(i), unitNums.get(i));
+    public Boolean makeMove(int from, int to, Troop t) {
+        try {
+            map.get(from).removeTroop(t);
+            map.get(to).addTroop(t);
+        } catch (Exception e) {
+            return false;
         }
+        return true;
     }
+
+    // upgrade unit by given amount
+    @Override
+    public void upgradeUnit(int territoryId, int UnitId, int amount) {
+        map.get(territoryId).upgradeUnit(UnitId, amount);
+
+    }
+
+
+
     @Override
     public int getUnitAvailable() {
         return unitAvailable;

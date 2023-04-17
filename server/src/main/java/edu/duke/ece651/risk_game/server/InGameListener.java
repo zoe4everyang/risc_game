@@ -1,67 +1,68 @@
 package edu.duke.ece651.risk_game.server;
 
 import edu.duke.ece651.risk_game.shared.ActionRequest;
+import edu.duke.ece651.risk_game.shared.ActionStatus;
 import edu.duke.ece651.risk_game.shared.Message;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import edu.duke.ece651.risk_game.shared.Response;
+import org.checkerframework.checker.units.qual.A;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @RequestMapping("/act")
 public class InGameListener extends RISCServer {
 
-    @PostMapping("/move")
-    public Message moveActionListen(@RequestBody ActionRequest requestBody) {
+
+    @PostMapping("/move/{roomId}")
+    public ActionStatus moveActionListen(@PathVariable("roomId") int roomId, @RequestBody ActionRequest requestBody) {
         try{
-            return requestHandler.moveHandler(requestBody);
+            return roomSelectionHandler.inGameAct(roomId, requestBody, "move");
         }catch(InterruptedException e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
         return null;
 
     }
 
-    @PostMapping("/attack")
-    public Message attackActionListen(@RequestBody ActionRequest requestBody) {
+    @PostMapping("/attack/{roomId}")
+    public ActionStatus attackActionListen(@PathVariable("roomId") int roomId, @RequestBody ActionRequest requestBody) {
         try{
-            return requestHandler.attackHandler(requestBody);
+            return roomSelectionHandler.inGameAct(roomId, requestBody, "attack");
         }catch(InterruptedException e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
         return null;
 
     }
 
-    @PostMapping("/commit")
-    public Message commitActionListen(@RequestBody ActionRequest requestBody) {
+    @PostMapping("/commit/{roomId}")
+    public Response commitActionListen(@PathVariable("roomId") int roomId, @RequestBody ActionRequest requestBody) {
         try{
-            return requestHandler.commitHandler(requestBody);
+            return roomSelectionHandler.inGameCommit(roomId, requestBody);
         }catch(InterruptedException e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
         return null;
 
     }
 
-    @PostMapping("/upgradeUnit")
-    public Message upgradeUnitListen(@RequestBody ActionRequest requestBody) {
+    @PostMapping("/upgradeUnit/{roomId}")
+    public ActionStatus upgradeUnitListen(@PathVariable("roomId") int roomId, @RequestBody ActionRequest requestBody) {
         try{
-            return requestHandler.upgradeUnitHandler(requestBody);
+            return roomSelectionHandler.inGameAct(roomId, requestBody,"upgradeUnit");
         }catch(InterruptedException e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
         return null;
 
     }
 
-    @PostMapping("/upgradeTech")
-    public Message upgradeTechListen(@RequestBody ActionRequest requestBody) {
+    @PostMapping("/upgradeTech/{roomId}")
+    public ActionStatus upgradeTechListen(@PathVariable("roomId") int roomId, @RequestBody ActionRequest requestBody) {
         try{
-            return requestHandler.upgradeTechHandler(requestBody);
+            return roomSelectionHandler.inGameAct(roomId, requestBody, "upgradeTech");
         }catch(InterruptedException e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
         return null;
     }

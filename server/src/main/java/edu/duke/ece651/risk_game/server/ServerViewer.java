@@ -7,6 +7,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is used to display the game state
+ */
 public class ServerViewer {
     Controller game;
     private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -14,11 +17,20 @@ public class ServerViewer {
         this.game = game;
     }
 
+    /**
+     * Print the player id
+     */
     public void display() {
-        for (int i = 0; i < game.getPlayers(); ++i) {
+        for (int i = 0; i < game.getPlayers().size(); ++i) {
+            printPlayer(i);
             printPlayerId(i);
         }
     }
+
+    /**
+     * Print the player id
+     * @param s player id
+     */
     public List<Integer> parseString(String s){
         List<Integer> list = new ArrayList<Integer>();
         String[] split = s.split(" ");
@@ -28,6 +40,9 @@ public class ServerViewer {
         return list;
     }
 
+    /**
+     * Read the operations
+     */
     public void run() throws IOException{
         System.out.println("There are" + game.getPlayers() + " players");
         game.initGame(List.of(100, 100, 200, 200, 300, 300));
@@ -43,19 +58,23 @@ public class ServerViewer {
             List<List<Integer>> moveOperations = readOperations();
             System.out.println("Please input attack operations");
             List<List<Integer>> attackOperations = readOperations();
+            System.out.println("Please input upgrade operations");
 
             // operations[0] playerId
             // operations[1] fromId
             // operations[2] toId
             // operations[3] units
-            game.step(attackOperations.get(0), attackOperations.get(1), attackOperations.get(2), attackOperations.get(3),
-                    moveOperations.get(0), moveOperations.get(1), moveOperations.get(2), moveOperations.get(3));
+
             display();
         }
 
         System.out.println("Game Over, the winner is " + game.getWinner() + "!!");
     }
-    public List<List<Integer>> readOperations() {
+
+    /**
+     * Read the operations
+     */
+    public void readOperations() {
         List<List<Integer>> operations = new ArrayList<List<Integer>>();
         for(int i = 0; i < 4; ++i) {
             if (i == 0) {
@@ -75,11 +94,17 @@ public class ServerViewer {
                 e.printStackTrace();
             }
         }
-        return operations;
     }
-    public void printTerritory(Territory t) {
-        System.out.println("Territory " + t.getName() + " has " + t.getUnits() + " units.");
 
+    /**
+     * Print the territory
+     * @param t territory
+     */
+    public void printTerritory(Territory t) {
+        System.out.println("Territory " + t.getName() + " belongs to " + t.getOwner() + " need cost " + t.getCost());
+        for (Unit u : t.getTroop().getUnits()) {
+            System.out.println(u.getUnitId() + " lv" + u.getLevel());
+        }
         System.out.print("Neighbours: ");
         for (int i = 0; i < t.getDistances().size(); ++i) {
             if (t.getDistances().get(i) == 1) {
@@ -89,6 +114,19 @@ public class ServerViewer {
         System.out.println();
     }
 
+
+    public void printPlayer(int playerId) {
+        Player p = game.getPlayers().get(playerId);
+        System.out.println("Player" + playerId + " has resources food: " + p.getFoodPoint());
+        System.out.println("Player" + playerId + " has resources tech: " + p.getTechPoint());
+        System.out.println("Player" + playerId + " has tech level: " + p.getTechLevel());
+        System.out.println();
+    }
+
+    /**
+     * Print the player id
+     * @param playerId player id
+     */
     public void printPlayerId(int playerId) {
         System.out.println("Player " + playerId + " has territories: ");
         for (Territory t : game.getTerritories()) {

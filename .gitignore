@@ -1,2 +1,4 @@
 .gradle
 .idea
+logfile.log
+mylogfile.log

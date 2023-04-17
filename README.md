@@ -710,6 +710,7 @@ POST /act/commit/
         "end": false,
         "playerList": ["Tenki", "Quanzhi", "Yiheng", "Zoe", "Guowang"]
 }
+
 ```
 Territory
 

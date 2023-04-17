@@ -8,17 +8,18 @@ import java.util.Map;
 import java.util.Queue;
 
 public class Player {
-    private List<Integer> territories;
     private Resource resource;
     private int playerId;
     private String playerName;
     private int tech_level;
     private Boolean pendingUpdate;
 
+    private int spyPosition;
+
     public Player(int playerId, String playerName, Resource resource) {
         this.playerId = playerId;
         this.playerName = playerName;
-
+        this.spyPosition = -1;
         this.resource = resource;
         this.tech_level = 1;
         this.pendingUpdate = false;
@@ -26,7 +27,8 @@ public class Player {
 
     public Boolean upgradeTechLevel(Map<Integer, Integer> updateRequirement){
         //upgrade tech level
-        if (resource.getTechPoint() >= updateRequirement.get(tech_level)){
+        if (resource.getTechPoint() >= updateRequirement.get(tech_level) &&
+                pendingUpdate == false){
             pendingUpdate = true;
             resource.reduceTechPoint(updateRequirement.get(tech_level));
             return true;

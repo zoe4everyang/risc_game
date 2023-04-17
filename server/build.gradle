@@ -32,21 +32,16 @@ dependencies {
 
     // spring boot
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
-    implementation 'org.apache.logging.log4j:log4j-core:2.17.1'
-    implementation 'org.apache.logging.log4j:log4j-core:2.14.1'
-    implementation 'org.apache.logging.log4j:log4j-core-its:2.8.2'
-    implementation 'org.apache.logging.log4j:log4j-core-test:2.20.0'
-    implementation 'org.apache.logging.log4j:log4j:2.17.1'
     testImplementation project(path: ':')
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     // testing
     testImplementation 'org.junit.platform:junit-platform-launcher:1.9.2'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+
 }
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
 }
 

@@ -332,6 +332,7 @@ public class InputController {
             do {
                 error = false;
                 try {
+                    System.out.println("Please input action command:");
                     command = readCommand();
                     String commandType = command[0];
                     if (Objects.equals(commandType, "S") && command.length == 1) {
@@ -366,18 +367,19 @@ public class InputController {
             do {
                 error = false;
                 try {
+                    System.out.println("Please input action command:");
                     command = readCommand();
                     String commandType = command[0];
                     if (Objects.equals(commandType, "S") && command.length == 1) {
                         return true;
                     } else if (Objects.equals(commandType, "D") && command.length == 1) {
                         return false;
-                    } else if (Objects.equals(commandType, type) && command.length == 4) {
+                    } else if (Objects.equals(commandType, type) && command.length == 9) {
                         int from = territoryIDMaps.get(currentRoomID).get(command[1]);
                         int to = territoryIDMaps.get(currentRoomID).get(command[2]);
                         ArrayList<Integer> unitIDs = new ArrayList<>();
-                        for (int i = 3; i < command.length; i++) {
-                            unitIDs.add(Integer.parseInt(command[i]));
+                        for (int i = 3; i < 9; i++) {
+                            unitIDs.add(Integer.parseInt(command[i])); //TODO
                         }
                         ActionRequest request = new ActionRequest(playerIDMap.get(currentRoomID), from, to, unitIDs);
                         ActionStatus status = actionFns.get(type).apply(currentRoomID, request);

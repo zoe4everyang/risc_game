@@ -37,7 +37,7 @@ public bool step(Iterable<int> attackPlayer, Iterable<int> attackFrom, Iterable<
 
 **resolveAttack**
 
-Takes four iterables player, from, to, nums, in which (player[i], from[i], to[i], nums[i]) forms a attack operation. The function has no return value. Invalid operation will not be executed. The order of execution will not be guaranteed. Attack from and end at same territory will be merged and executed as a single attack.
+Takes four iterables player, from, to, nums, in which (player[i], from[i], to[i], nums[i]) forms a attack operation. The function has no return value. Invalid operation will not be executed. The order of execution will not be guaranteed. Attack from and List at same territory will be merged and executed as a single attack.
 
 Example: 
 
@@ -92,7 +92,7 @@ public bool checkEnd()
 Return the list of player id who is defeated. 
 
 ```java
-public List<int> getLosers()
+public List<int> getListrs()
 ```
 
 #### getWinner

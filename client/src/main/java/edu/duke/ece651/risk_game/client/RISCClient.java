@@ -47,6 +47,7 @@ public class RISCClient {
         jsonMapper = new ObjectMapper();
     }
 
+
     private String sendRequest(HttpPost request, String json) throws IOException {
         request.setHeader("Content-Type", "application/json");
         request.setEntity(new StringEntity(json, ContentType.APPLICATION_JSON));
@@ -75,7 +76,10 @@ public class RISCClient {
         HttpPost request = new HttpPost(serverURL + "/roomid");
         HashMap<String, Object> requestBody = new HashMap<>();
         requestBody.put("username", username);
-        return new HashSet<>(Arrays.asList(jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), Integer[].class)));
+        IntValues intValues = jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), IntValues.class);
+        HashSet<Integer> set = new HashSet<>(Arrays.asList(intValues.getIntValues()));
+        return set;
+        //return new HashSet<>(Arrays.asList(jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), IntValues.class)));
     }
 
     public Response joinRoom(String username, Integer roomID) throws IOException {
@@ -151,3 +155,6 @@ public class RISCClient {
 //    }
 
 }
+
+
+

@@ -48,7 +48,7 @@
 //
 //    }
 //
-//    // check List/winner
+//    // check end/winner
 //    @Test
 //    public void test_checkEnd() {
 //        MapFactory mapFactory = new v1MapFactory();

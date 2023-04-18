@@ -8,9 +8,9 @@
 //    public void test_CombatResolver() {
 //        CombatResolver combatResolver = new v1CombatResolver();
 //        int attackNum = 3;
-//        int defListNum = 2;
+//        int defendNum = 2;
 //        combatResolver.setSeed(0);
-//        int result = combatResolver.resolveCombat(attackNum, defListNum);
+//        int result = combatResolver.resolveCombat(attackNum, defendNum);
 //        assertEquals(result, 3);
 //
 //        // write more test cases for this class

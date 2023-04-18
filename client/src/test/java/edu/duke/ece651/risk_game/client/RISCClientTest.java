@@ -2,7 +2,7 @@ package edu.duke.ece651.risk_game.client;
 
 public class RISCClientTest {
 //    private static final String SERVER_URL = "http://localhost:8080";
-//    private CListableHttpClient httpClient;
+//    private CloseableHttpClient httpClient;
 //
 //    @BeforeEach
 //    public void setUp() {
@@ -11,7 +11,7 @@ public class RISCClientTest {
 //
 //    @AfterEach
 //    public void tearDown() throws IOException {
-//        httpClient.cList();
+//        httpClient.close();
 //    }
 //
 //    @Test

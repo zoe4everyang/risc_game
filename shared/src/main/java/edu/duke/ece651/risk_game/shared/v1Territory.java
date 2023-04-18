@@ -19,6 +19,8 @@ public class v1Territory implements Territory{
     private int tech_production;
     private int food_production;
 
+    private int cloaked;
+
     public v1Territory(int id, String name,
                        int owner, List<Integer> distances,
                        int cost, int tech_prod, int food_prod,
@@ -33,6 +35,7 @@ public class v1Territory implements Territory{
         this.cost = cost;
         this.tech_production = tech_prod;
         this.food_production = food_prod;
+        this.cloaked = -1;
     }
 
     @JsonCreator

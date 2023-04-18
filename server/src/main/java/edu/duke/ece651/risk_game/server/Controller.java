@@ -1,5 +1,6 @@
 package edu.duke.ece651.risk_game.server;
 import edu.duke.ece651.risk_game.shared.*;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -170,7 +171,7 @@ public class Controller {
         return;
     }
 
-    public Boolean cacheAttack(int playerId, int from, int to, List<Unit> units) {
+    public Boolean cAttack(int playerId, int from, int to, List<Unit> units) {
         Troop t = new unitTroop(playerId, units);
         // if have sufficient resources and units
         // if from and to are neightbouts
@@ -189,10 +190,35 @@ public class Controller {
         }
 
         return false;
-
+    }
+    private List<Unit> getUnitsByLevel(int territoryId, int level, int amount) {
+        List<Unit> units = new ArrayList<>();
+        for (Unit u : territories.get(territoryId).getTroop().getUnits()) {
+            if (u.getLevel() == level && units.size() < amount) {
+                units.add(u);
+            }
+        }
+        return units;
+    }
+    private List<Unit> selectUnitsByLevel(int territoryId, List<Integer> levels) {
+        List<Unit> units = new ArrayList<>();
+        for (int l = 0; l < levels.size(); ++l) {
+            units.addAll(getUnitsByLevel(territoryId, l, levels.get(l)));
+        }
+        return units;
     }
 
-    public Boolean cacheMove(int playerId, int from, int to, List<Unit> units) {
+    public Boolean cacheAttack(int playerId, int from, int to, List<Integer> levels) {
+        List<Unit> units = selectUnitsByLevel(from, levels);
+        return cAttack(playerId, from, to, units);
+    }
+
+    public Boolean cacheMove(int playerId, int from, int to, List<Integer> levels) {
+        List<Unit> units = selectUnitsByLevel(from, levels);
+        return cMove(playerId, from, to, units);
+    }
+
+    public Boolean cMove(int playerId, int from, int to, List<Unit> units) {
         Troop t = new unitTroop(playerId, units);
 
         world.getTerritories().get(from).getTroop().isSubsetOfThis(t);
@@ -213,7 +239,7 @@ public class Controller {
         return false;
     }
 
-    public Boolean cacheUpgradeUnit(int playerId, int territoryId, int unitId, int amount) {
+    public Boolean cUpgradeUnit(int playerId, int territoryId, int unitId, int amount) {
         // check if the upgrade is valid
         // check if the resources is sufficient
         // get current level of the unit
@@ -232,6 +258,11 @@ public class Controller {
             return true;
         }
         return false;
+    }
+
+    public Boolean cacheUpgradeUnit(int playerId, int territoryId, int level, int amount) {
+        List<Unit> units = getUnitsByLevel(territoryId, level, 1);
+        return cUpgradeUnit(playerId, territoryId, units.get(0).getUnitId(), amount);
     }
 
     public Boolean cacheUpgradeTechnology(int playerId) {
@@ -275,6 +306,14 @@ public class Controller {
                 new Resource(players.get(playerId).getTechPoint(),
                         players.get(playerId).getFoodPoint()),
                 players.get(playerId).getTechLevel());
+    }
+
+    public List<Integer> getTroopInfo(int territoryId) {
+        List<Integer> troopInfo = new ArrayList<>();
+        for (Unit u : territories.get(territoryId).getTroop().getUnits()) {
+            troopInfo.add(u.getLevel());
+        }
+        return troopInfo;
     }
 
 

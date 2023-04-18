@@ -55,16 +55,46 @@ public class v1MapFactory implements MapFactory{
      */
     @Override
     public WorldMap make4PlayerMap() {
-//        Territory t1 = new v1Territory(0, "t1", 0, List.of(0, 1, 1, 2, 2, 3, 3, 4), new evo2CombatResolver());
-//        Territory t2 = new v1Territory(1, "t2", 0, List.of(1, 0, 2, 1, 3, 2, 4, 3), new evo2CombatResolver());
-//        Territory t3 = new v1Territory(2, "t3", 1, List.of(1, 2, 0, 1, 1, 2, 2, 3), new evo2CombatResolver());
-//        Territory t4 = new v1Territory(3, "t4", 2, List.of(2, 1, 1, 0, 2, 1, 3, 2), new evo2CombatResolver());
-//        Territory t5 = new v1Territory(4, "t5", 1, List.of(2, 3, 1, 2, 0, 1, 1, 2), new evo2CombatResolver());
-//        Territory t6 = new v1Territory(5, "t6", 2, List.of(3, 2, 2, 1, 1, 0, 2, 1), new evo2CombatResolver());
-//        Territory t7 = new v1Territory(6, "t7", 3, List.of(3, 4, 2, 3, 1, 2, 0, 1), new evo2CombatResolver());
-//        Territory t8 = new v1Territory(7, "t8", 3, List.of(4, 3, 3, 2, 2, 1, 1, 0), new evo2CombatResolver());
-//        return new v1WorldMap(3, List.of(t1, t2, t3, t4, t5, t6, t7, t8), 200);
-         throw new UnsupportedOperationException("Unimplemented method 'make4PlayerMap'");
+        Territory t0 = new v1Territory(0, "t0", 0,
+                List.of(0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 5),
+                10, 15, 5, new evo2CombatResolver());
+        Territory t1 = new v1Territory(1, "t1", 0,
+                List.of(1, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4),
+                5, 5, 15, new evo2CombatResolver());
+        Territory t2 = new v1Territory(2, "t2", 1,
+                List.of(1, 1, 0, 2, 1, 2, 1, 2, 2, 3, 3, 4),
+                20, 5, 5, new evo2CombatResolver());
+        Territory t3 = new v1Territory(3, "t3", 2,
+                List.of(2, 1, 2, 0, 1, 1, 3, 2, 3, 2, 3, 3),
+                20, 15, 15, new evo2CombatResolver());
+        Territory t4 = new v1Territory(4, "t4", 1,
+                List.of(2, 1, 1, 1, 0, 1, 1, 1, 2, 2, 2, 3),
+                5, 50, 50, new evo2CombatResolver());
+        Territory t5 = new v1Territory(5, "t5", 2,
+                List.of(3, 2, 2, 1, 1, 0, 2, 1, 2, 1, 2, 2),
+                30, 20, 5, new evo2CombatResolver());
+        Territory t6 = new v1Territory(6, "t6", 3,
+                List.of(2, 2, 1, 2, 1, 2, 0, 1, 1, 2, 2, 3),
+                30, 20, 5, new evo2CombatResolver());
+        Territory t7 = new v1Territory(7, "t7", 3,
+                List.of(3, 2, 2, 2, 1, 1, 1, 0, 1, 1, 1, 2),
+                30, 20, 5, new evo2CombatResolver());
+        Territory t8 = new v1Territory(8, "t8", 3,
+                List.of(3, 3, 2, 3, 2, 2, 1, 1, 0, 2, 1, 2),
+                30, 20, 5, new evo2CombatResolver());
+        Territory t9 = new v1Territory(9, "t9", 3,
+                List.of(4, 3, 3, 2, 2, 1, 2, 1, 2, 0, 1, 1),
+                30, 20, 5, new evo2CombatResolver());
+        Territory t10 = new v1Territory(10, "t10", 3,
+                List.of(4, 3, 3, 3, 2, 2, 2, 1, 1, 1, 0, 1),
+                30, 20, 5, new evo2CombatResolver());
+        Territory t11 = new v1Territory(11, "t11", 3,
+                List.of(5, 4, 4, 3, 3, 3, 2, 2, 2, 1, 1, 0),
+                30, 20, 5, new evo2CombatResolver());
+        return new v1WorldMap(3,
+                List.of(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11),
+                200);
+//         throw new UnsupportedOperationException("Unimplemented method 'make4PlayerMap'");
     }
 
     /**

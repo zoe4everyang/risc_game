@@ -1,12 +1,6 @@
 package edu.duke.ece651.risk_game.server;
-
 import edu.duke.ece651.risk_game.shared.*;
-import org.apache.coyote.Request;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.context.annotation.Scope;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import java.net.CacheRequest;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -42,7 +36,7 @@ public class RoomSelectionHandler {
                 loginStatus = false;
             }
         }
-        ActionStatus response = new ActionStatus(loginStatus, 0, null);
+        ActionStatus response = new ActionStatus(loginStatus, 0, null);  //TODO ???
         return response;
     }
 
@@ -103,7 +97,7 @@ public class RoomSelectionHandler {
                     wait();
                 }
             }else{
-                requestHandlerList.put(roomId, new RequestHandler(playerNum, roomId));
+                requestHandlerList.put(roomId, new RequestHandler(playerNum));
                 notifyAll();  //TODO
             }
         }
@@ -121,7 +115,7 @@ public class RoomSelectionHandler {
         return requestHandlerList.get(roomID).placeUnitHandler(request, getAllUsersInRoom(roomID));
     }
 
-    public ActionStatus inGameAct(int roomID, ActionRequest request, String actionType) throws InterruptedException{
+    public ActionStatus inGameMoveAttack(int roomID, ActionRequest request, String actionType) throws InterruptedException{
         //int playerID = request.getPlayerInfo().getPlayerID();
         RequestHandler requestHandler = requestHandlerList.get(roomID);
         switch (actionType){
@@ -129,18 +123,23 @@ public class RoomSelectionHandler {
                 return requestHandler.moveHandler(request);
             case "attack":
                 return requestHandler.attackHandler(request);
-            case "upgradeUnit":
-                return requestHandler.upgradeUnitHandler(request);
-            case "upgradeTech":
-                return requestHandler.upgradeTechHandler(request);
         }
         return null;
+    }
 
+    public ActionStatus inGameUpgradeUnit(int roomID, UpgradeUnitRequest request) throws InterruptedException {
+        RequestHandler requestHandler = requestHandlerList.get(roomID);
+        return requestHandler.upgradeUnitHandler(request);
+    }
+
+    public ActionStatus inGameUpgradeTech(int roomID, HashMap<String, Object> request) throws InterruptedException {
+        RequestHandler requestHandler = requestHandlerList.get(roomID);
+        return requestHandler.upgradeTechHandler(request);
     }
 
     public Response inGameCommit(int roomID, ActionRequest request) throws InterruptedException{
         RequestHandler requestHandler = requestHandlerList.get(roomID);
-        return requestHandler.commitHandler(request);
+        return requestHandler.commitHandler(request, getAllUsersInRoom(roomID));
     }
 
     private List<String> getAllUsersInRoom(int targetRoomID){

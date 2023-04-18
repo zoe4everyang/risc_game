@@ -1,11 +1,8 @@
 package edu.duke.ece651.risk_game.server;
-
-import edu.duke.ece651.risk_game.shared.ActionRequest;
-import edu.duke.ece651.risk_game.shared.ActionStatus;
-import edu.duke.ece651.risk_game.shared.Message;
-import edu.duke.ece651.risk_game.shared.Response;
-import org.checkerframework.checker.units.qual.A;
+import edu.duke.ece651.risk_game.shared.*;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 
 
 @RestController
@@ -16,7 +13,7 @@ public class InGameListener extends RISCServer {
     @PostMapping("/move/{roomId}")
     public ActionStatus moveActionListen(@PathVariable("roomId") int roomId, @RequestBody ActionRequest requestBody) {
         try{
-            return roomSelectionHandler.inGameAct(roomId, requestBody, "move");
+            return roomSelectionHandler.inGameMoveAttack(roomId, requestBody, "move");
         }catch(InterruptedException e) {
             System.out.println(e);
         }
@@ -27,7 +24,7 @@ public class InGameListener extends RISCServer {
     @PostMapping("/attack/{roomId}")
     public ActionStatus attackActionListen(@PathVariable("roomId") int roomId, @RequestBody ActionRequest requestBody) {
         try{
-            return roomSelectionHandler.inGameAct(roomId, requestBody, "attack");
+            return roomSelectionHandler.inGameMoveAttack(roomId, requestBody, "attack");
         }catch(InterruptedException e) {
             System.out.println(e);
         }
@@ -47,9 +44,9 @@ public class InGameListener extends RISCServer {
     }
 
     @PostMapping("/upgradeUnit/{roomId}")
-    public ActionStatus upgradeUnitListen(@PathVariable("roomId") int roomId, @RequestBody ActionRequest requestBody) {
+    public ActionStatus upgradeUnitListen(@PathVariable("roomId") int roomId, @RequestBody UpgradeUnitRequest requestBody) {
         try{
-            return roomSelectionHandler.inGameAct(roomId, requestBody,"upgradeUnit");
+            return roomSelectionHandler.inGameUpgradeUnit(roomId, requestBody);
         }catch(InterruptedException e) {
             System.out.println(e);
         }
@@ -58,9 +55,9 @@ public class InGameListener extends RISCServer {
     }
 
     @PostMapping("/upgradeTech/{roomId}")
-    public ActionStatus upgradeTechListen(@PathVariable("roomId") int roomId, @RequestBody ActionRequest requestBody) {
+    public ActionStatus upgradeTechListen(@PathVariable("roomId") int roomId, @RequestBody HashMap<String, Object> requestBody) {
         try{
-            return roomSelectionHandler.inGameAct(roomId, requestBody, "upgradeTech");
+            return roomSelectionHandler.inGameUpgradeTech(roomId, requestBody);
         }catch(InterruptedException e) {
             System.out.println(e);
         }

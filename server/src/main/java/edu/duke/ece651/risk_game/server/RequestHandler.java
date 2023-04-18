@@ -4,45 +4,29 @@ import edu.duke.ece651.risk_game.shared.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
+/**
+ * This class is used to handle the request from the client
+ */
 public class RequestHandler {
     private Controller controller;
-    private int roomID;
+    //private int roomID;
     private AtomicInteger count;
-    private AtomicInteger exit;
     private int playerNum;
-    //private Queue<Message> msgList;
-    //private int registerID;
-//    List<Integer> attackPlayers;
-//    List<Integer> movePlayers;
-//    List<Integer> attackFrom;
-//    List<Integer> attackTo;
-//    List<Integer> attackNum;
-//    List<Integer> moveFrom;
-//    List<Integer> moveTo;
-//    List<Integer> moveNum;
 
-
-    public RequestHandler(int playerNum, int roomID) {
+    /**
+     * Constructor
+     * @param playerNum number of players
+     */
+    public RequestHandler(int playerNum) {
         this.playerNum = playerNum;
         this.controller = new Controller(playerNum);
         this.count = new AtomicInteger(0);
-        this.exit = new AtomicInteger(0);
-        this.roomID = roomID;
-//        registerID = -1;
-//        attackPlayers = new ArrayList<>();
-//        attackFrom = new ArrayList<>();
-//        attackTo = new ArrayList<>();
-//        attackNum = new ArrayList<>();
-//        movePlayers = new ArrayList<>();
-//        moveFrom = new ArrayList<>();
-//        moveTo = new ArrayList<>();
-//        moveNum = new ArrayList<>();
+        //this.roomID = roomID;
     }
 
 
     // place unit on all territories based on user input
-    public Message placeUnitHandler(PlacementRequest msg) throws InterruptedException{
+    public Message placeUnitHandler(PlacementRequest msg, List<String> usernameList) throws InterruptedException{
         synchronized (this) {
             List<Integer> unitPlacement = msg.getPlacement();
             controller.initGame(unitPlacement);
@@ -59,33 +43,72 @@ public class RequestHandler {
             }
         }
         List<Territory> territories = controller.getTerritories();
-        Message response = new Response(msg.getPlayerID(), territories, false, false);
+        Message response = new Response(msg.getPlayerInfo(), territories, false, false, usernameList);
         return response;
     }
 
-    public Message moveHandler(ActionRequest msg) throws InterruptedException{
 
+    public ActionStatus moveHandler(ActionRequest msg) throws InterruptedException{
+        synchronized (this){
+            Boolean status = controller.cacheMove(msg.getPlayerInfo().getPlayerID(), msg.getFrom(), msg.getTo(), msg.getUnitIDs());
+            return new ActionStatus(status, ); // TODO ????
+        }
     }
 
-    public Message attackHandler(ActionRequest msg) throws InterruptedException{
-
+    public ActionStatus attackHandler(ActionRequest msg) throws InterruptedException{
+        synchronized (this){
+            Boolean status = controller.cacheAttack(msg.getPlayerInfo().getPlayerID(), msg.getFrom(), msg.getTo(), msg.getUnitIDs());
+            return new ActionStatus(status, ); // TODO ????
+        }
     }
 
-    public Message commitHandler(ActionRequest msg) throws InterruptedException{
 
+    public ActionStatus upgradeUnitHandler(UpgradeUnitRequest msg) throws InterruptedException{
+        synchronized (this) {
+            controller.cacheUpgradeUnit(msg.getPlayerInfo().getPlayerID(), msg.getTerritoryID(), msg.getUnitID(), msg.getLevelUpgraded());
+            return new ActionStatus(true, ); //TODO
+        }
     }
 
-    public Message upgradeUnitHandler(ActionRequest msg) throws InterruptedException{
-
+    public ActionStatus upgradeTechHandler(HashMap<String, Object> msg) throws InterruptedException{
+        synchronized (this) {
+            // TODO  change client inputController? -> remove upgrade Boolean, only send playerID
+            if((Boolean)msg.get("upgradeTech")){
+                controller.cacheUpgradeTechnology((int)msg.get("playerID"));
+            }
+            return new ActionStatus(true, ); //TODO
+        }
     }
 
-    public Message upgradeTechHandler(ActionRequest msg) throws InterruptedException{
-
+    public Response commitHandler(ActionRequest msg, List<String> usernameList) throws InterruptedException{
+        Boolean status;
+        PlayerInfo playerInfo = msg.getPlayerInfo();
+        int playerID = playerInfo.getPlayerID();
+        synchronized (this){
+            if(count.get() == playerNum) {
+                count.set(0);
+            }
+            count.incrementAndGet();
+            if (count.get() < playerNum) {
+                while (count.get() < playerNum) {
+                    wait();
+                }
+            } else {
+                status = controller.commit();
+                notifyAll();
+            }
+        }
+        List<Territory> territories = controller.getTerritories();
+        Boolean isPlayerLose = controller.checkLose(playerID);
+        Boolean isGameEnd = controller.checkEnd();
+        return new Response(playerInfo, territories, isPlayerLose, isGameEnd, usernameList);
     }
 
     public Controller getController(){
         return controller;
     }
+
+    // TODO remove room from list if game is over?
 }
 
 

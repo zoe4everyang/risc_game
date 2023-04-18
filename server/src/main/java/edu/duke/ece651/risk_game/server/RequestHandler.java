@@ -50,40 +50,51 @@ public class RequestHandler {
 
     public ActionStatus moveHandler(ActionRequest msg) throws InterruptedException{
         synchronized (this){
-            Boolean status = controller.cacheMove(msg.getPlayerInfo().getPlayerID(), msg.getFrom(), msg.getTo(), msg.getUnitIDs());
-            return new ActionStatus(status, ); // TODO ????
+            Boolean status = controller.cacheMove(msg.getPlayerInfo().getPlayerID(), msg.getFrom(), msg.getTo(), msg.getLevelUnits());
+            if(status){
+                return new ActionStatus(true, null);
+            }else{
+                return new ActionStatus(false, "Move failed.");
+            }
         }
     }
 
     public ActionStatus attackHandler(ActionRequest msg) throws InterruptedException{
         synchronized (this){
-            Boolean status = controller.cacheAttack(msg.getPlayerInfo().getPlayerID(), msg.getFrom(), msg.getTo(), msg.getUnitIDs());
-            return new ActionStatus(status, ); // TODO ????
+            Boolean status = controller.cacheAttack(msg.getPlayerInfo().getPlayerID(), msg.getFrom(), msg.getTo(), msg.getLevelUnits());
+            if(status){
+                return new ActionStatus(true, null);
+            }else{
+                return new ActionStatus(false, "Attack failed.");
+            }
         }
     }
 
 
     public ActionStatus upgradeUnitHandler(UpgradeUnitRequest msg) throws InterruptedException{
         synchronized (this) {
-            controller.cacheUpgradeUnit(msg.getPlayerInfo().getPlayerID(), msg.getTerritoryID(), msg.getUnitID(), msg.getLevelUpgraded());
-            return new ActionStatus(true, ); //TODO
+            Boolean status = controller.cacheUpgradeUnit(msg.getPlayerInfo().getPlayerID(), msg.getTerritoryID(), msg.getLevel(), msg.getLevelUpgraded());
+            if(status){
+                return new ActionStatus(true, null);
+            }else{
+                return new ActionStatus(false, "Upgrade unit failed.");
+            }
         }
     }
 
     public ActionStatus upgradeTechHandler(HashMap<String, Object> msg) throws InterruptedException{
         synchronized (this) {
-            // TODO  change client inputController? -> remove upgrade Boolean, only send playerID
-            if((Boolean)msg.get("upgradeTech")){
-                controller.cacheUpgradeTechnology((int)msg.get("playerID"));
+            Boolean status = controller.cacheUpgradeTechnology((int)msg.get("playerID"));
+            if(status){
+                return new ActionStatus(true, null);
+            }else{
+                return new ActionStatus(false, "Upgrade Technology failed.");
             }
-            return new ActionStatus(true, ); //TODO
         }
     }
 
     public Response commitHandler(ActionRequest msg, List<String> usernameList) throws InterruptedException{
-        Boolean status;
-        PlayerInfo playerInfo = msg.getPlayerInfo();
-        int playerID = playerInfo.getPlayerID();
+        int playerID = msg.getPlayerInfo().getPlayerID();
         synchronized (this){
             if(count.get() == playerNum) {
                 count.set(0);
@@ -94,10 +105,11 @@ public class RequestHandler {
                     wait();
                 }
             } else {
-                status = controller.commit();
+                controller.commit();
                 notifyAll();
             }
         }
+        PlayerInfo playerInfo = controller.getPlayerInfo(playerID);
         List<Territory> territories = controller.getTerritories();
         Boolean isPlayerLose = controller.checkLose(playerID);
         Boolean isGameEnd = controller.checkEnd();
@@ -108,7 +120,6 @@ public class RequestHandler {
         return controller;
     }
 
-    // TODO remove room from list if game is over?
 }
 
 

@@ -9,13 +9,13 @@ public class RoomSelectionHandler {
 
     private HashMap<Integer, RequestHandler> requestHandlerList;   // <roomID, requestHandler>
     private HashMap<String, HashMap<Integer, Integer>> allUserRoomList;  // <username, <roomID, playerID>>
-
     private int maxRoomID;
     private AtomicInteger joinNum;
     private AtomicInteger count;
     private int playerNum;
     private HashMap<String, String> loginCredentials;
     private List<String> playerList;
+    private HashMap<Integer, List<Thread>> threadsListForAll;
 
 
     public RoomSelectionHandler(int playerNum) {
@@ -27,16 +27,20 @@ public class RoomSelectionHandler {
         this.playerNum = playerNum;
         this.allUserRoomList = new HashMap<>();
         this.playerList = new ArrayList<>();
+        this.threadsListForAll = new HashMap<>();
     }
 
     public ActionStatus loginHandler(HashMap<String, Object> loginInfo) throws InterruptedException{
         Boolean loginStatus = true;
+        String errMsg = "";
         if(loginCredentials.containsKey(loginInfo.get("username"))){
             if(loginCredentials.get(loginInfo.get("username")) != loginInfo.get("password")){
                 loginStatus = false;
+                errMsg = "Log in failed: password does not match.";
             }
         }
-        ActionStatus response = new ActionStatus(loginStatus, 0, null);  //TODO ???
+
+        ActionStatus response = new ActionStatus(loginStatus, errMsg);
         return response;
     }
 
@@ -50,35 +54,44 @@ public class RoomSelectionHandler {
 
     public Message joinRoomHandler(String username, int roomId) throws InterruptedException {
         // join existing room
-        if(allUserRoomList.get(username).containsKey(roomId)){
+        if(allUserRoomList.get(username).containsKey(roomId)) {
             int playerID = allUserRoomList.get(username).get(roomId);
+            //TODO requestHandlerList.getController().commit();
             return new Response(playerID,
-                                requestHandlerList.get(roomId).getController().getTerritories(),
-                                false, false,
-                                getAllUsersInRoom(roomId));
+                    requestHandlerList.get(roomId).getController().getTerritories(),
+                    false, false,
+                    getAllUsersInRoom(roomId));
+        }
         // join new room
-        }else if(roomId == maxRoomID){
-            synchronized(this){
-                if(joinNum.get() == playerNum) {
+        //TODO ensure thread-safe
+        synchronized (this){
+            if(roomId == maxRoomID && joinNum.get() < playerNum - 1) {
+                if (!threadsListForAll.containsKey(roomId)) {
+                    threadsListForAll.put(roomId, new ArrayList<>(playerNum));
+                }
+                threadsListForAll.get(roomId).add(Thread.currentThread());
+                if (joinNum.get() == playerNum) {
                     joinNum.set(0);
                 }
                 joinNum.incrementAndGet();
-                if(joinNum.get() < playerNum){
-                    while(joinNum.get() < playerNum){
+                if (joinNum.get() < playerNum) {
+                    while (joinNum.get() < playerNum) {
                         wait();
                     }
-                }else{
+                } else {
                     maxRoomID++;
-                    notifyAll();  //TODO change later: only notify players in this room
+                    // only notify players in this room
+                    for (Thread thread : threadsListForAll.get(roomId)) {
+                        thread.notify();
+                    }
                 }
                 Message response = newGame(roomId, username);
                 allUserRoomList.get(username).put(roomId, response.getPlayerInfo().getPlayerID());
                 return response;
             }
-        // room full, need rejoin
-        }else{
-            return null;
         }
+        // room full, need rejoin
+        return null;
     }
 
 
@@ -98,7 +111,11 @@ public class RoomSelectionHandler {
                 }
             }else{
                 requestHandlerList.put(roomId, new RequestHandler(playerNum));
-                notifyAll();  //TODO
+                // only notify players in this room
+                for(Thread thread : threadsListForAll.get(roomId)){
+                    thread.notify();
+                }
+                threadsListForAll.remove(roomId); // clear threads in this room
             }
         }
         Controller newController = requestHandlerList.get(roomId).getController();
@@ -139,7 +156,17 @@ public class RoomSelectionHandler {
 
     public Response inGameCommit(int roomID, ActionRequest request) throws InterruptedException{
         RequestHandler requestHandler = requestHandlerList.get(roomID);
-        return requestHandler.commitHandler(request, getAllUsersInRoom(roomID));
+        checkRoomEnd(roomID);
+        List<String> usernameList = getAllUsersInRoom(roomID);
+        for(String username : usernameList){
+            int playerID = allUserRoomList.get(username).get(roomID);
+            if(requestHandlerList.get(roomID).getController().checkLose(playerID)){
+                allUserRoomList.get(username).remove(roomID);
+            }
+        }
+        Response response = requestHandler.commitHandler(request, getAllUsersInRoom(roomID));
+        if(response.isLose()){}
+        return response;
     }
 
     private List<String> getAllUsersInRoom(int targetRoomID){
@@ -154,5 +181,17 @@ public class RoomSelectionHandler {
             }
         }
         return usernameList;
+    }
+
+    private void checkRoomEnd(int roomID){
+        if(requestHandlerList.get(roomID).getController().checkEnd()){
+            List<String> userList = getAllUsersInRoom(roomID);
+            for(String username : userList){
+                if(allUserRoomList.get(username).containsKey(roomID)){
+                    allUserRoomList.get(username).remove(roomID);
+                }
+            }
+            requestHandlerList.remove(roomID);
+        }
     }
 }

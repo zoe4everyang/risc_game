@@ -377,7 +377,7 @@ public class InputController {
                         int to = territoryIDMaps.get(currentRoomID).get(command[2]);
                         ArrayList<Integer> unitIDs = new ArrayList<>();
                         for (int i = 3; i < command.length; i++) {
-                            unitIDs.add(Integer.parseInt(command[i]));
+                            unitIDs.add(Integer.parseInt(command[i])); //TODO
                         }
                         ActionRequest request = new ActionRequest(playerIDMap.get(currentRoomID), from, to, unitIDs);
                         ActionStatus status = actionFns.get(type).apply(currentRoomID, request);

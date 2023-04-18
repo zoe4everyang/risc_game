@@ -3,13 +3,13 @@ package edu.duke.ece651.risk_game.shared;
 public class UpgradeUnitRequest extends Message{
 
     Integer territoryID;
-    Integer unitID;
+    Integer level;
     Integer levelUpgraded;
 
-    public UpgradeUnitRequest(int playerID, int territoryID, int unitID, int levelUpgraded) {
+    public UpgradeUnitRequest(int playerID, int territoryID, int level, int levelUpgraded) {
         super(playerID);
         this.territoryID = territoryID;
-        this.unitID = unitID;
+        this.level = level;
         this.levelUpgraded = levelUpgraded;
     }
 
@@ -17,8 +17,8 @@ public class UpgradeUnitRequest extends Message{
         return territoryID;
     }
 
-    public Integer getUnitID() {
-        return unitID;
+    public Integer getLevel() {
+        return level;
     }
 
     public Integer getLevelUpgraded() {

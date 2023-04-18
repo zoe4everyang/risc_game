@@ -3,15 +3,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 public class ActionStatus {
     private final boolean success;
-    private final Integer errorCode;
+    //private final Integer errorCode;
     private final String errorMessage;
 
     @JsonCreator
     public ActionStatus(@JsonProperty("success") boolean success,
-                        @JsonProperty("errorCode") Integer errorCode,
+                        //@JsonProperty("errorCode") Integer errorCode,
                         @JsonProperty("errorMessage") String errorMessage) {
         this.success = success;
-        this.errorCode = errorCode;
+        //this.errorCode = errorCode;
         this.errorMessage = errorMessage;
     }
 
@@ -19,9 +19,9 @@ public class ActionStatus {
         return success;
     }
 
-    public Integer getErrorCode() {
-        return errorCode;
-    }
+   // public Integer getErrorCode() {
+   //     return errorCode;
+    //}
 
     public String getErrorMessage() {
         return errorMessage;

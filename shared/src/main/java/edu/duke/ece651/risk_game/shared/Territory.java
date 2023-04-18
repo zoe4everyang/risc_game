@@ -39,5 +39,5 @@ public interface Territory {
     public int getFoodProduction();
 
 
-    public Troop getTroop() ;
+    public Troop getTroop();
 }

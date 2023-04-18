@@ -39,7 +39,6 @@ public class RoomSelectionHandler {
                 errMsg = "Log in failed: password does not match.";
             }
         }
-
         ActionStatus response = new ActionStatus(loginStatus, errMsg);
         return response;
     }

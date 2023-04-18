@@ -15,8 +15,8 @@ public class RISCBack {
      * @param args command line arguments
      */
     public static void main(String[] args) {
-        ConfigurableApplicationContext context = SpringApplication.run(RISCBack.class, args);
-        RISCServer.setContext(context);
+        SpringApplication.run(RISCBack.class, args);
+        //RISCServer.setContext(context);
     }
 
 }

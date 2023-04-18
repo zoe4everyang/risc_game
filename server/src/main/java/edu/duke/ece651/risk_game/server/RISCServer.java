@@ -24,13 +24,13 @@ public class RISCServer {
         roomSelectionHandler = new RoomSelectionHandler(playerNum);
     }
 
-    /**
-     * Set the context
-     * @param context the context
-     */
-    public static void setContext(ConfigurableApplicationContext context) {
-        RISCServer.context = context;
-    }
+//    /**
+//     * Set the context
+//     * @param context the context
+//     */
+//    public static void setContext(ConfigurableApplicationContext context) {
+//        RISCServer.context = context;
+//    }
 
     /**
      * Constructor
@@ -86,13 +86,14 @@ public class RISCServer {
 //        return null;
 //    }
 
-    /**
-     * Listen to the game over request
-     */
-    @GetMapping("/gameover")
-    public void gameover() {
-        System.out.println("Game Over");
-        context.close();
-    }
+//    /**
+//     * Listen to the game over request
+//     */
+//    @GetMapping("/gameover")
+//    public void gameover() {
+//        System.out.println("Game Over");
+//        context.close();
+//    }
 }
+
 

@@ -64,7 +64,7 @@ public class RoomSelectionHandler {
         if(allUserRoomList.get(username) != null && allUserRoomList.get(username).containsKey(roomId)) {
             int playerID = allUserRoomList.get(username).get(roomId);
             //TODO requestHandlerList.getController().commit();
-            return new Response(playerID,
+            return new Response(requestHandlerList.get(roomId).getController().getPlayerInfo(playerID),
                     requestHandlerList.get(roomId).getController().getTerritories(),
                     false, false,
                     getAllUsersInRoom(roomId));
@@ -118,14 +118,14 @@ public class RoomSelectionHandler {
         if(!requestHandlerList.containsKey(roomId)){
             requestHandlerList.put(roomId, new RequestHandler(playerNum));
         }
-        playerID = count.get();
-        count.incrementAndGet();
+//        playerID = count.get();
+//        count.incrementAndGet();
 //        if(count.get() < playerNum) {
 //            while (count.get() < playerNum) {
 //                wait();
 //            }
 //        }else{
-        requestHandlerList.put(roomId, new RequestHandler(playerNum));
+//        requestHandlerList.put(roomId, new RequestHandler(playerNum));
             // only notify players in this room
 //            for(Thread thread : threadsListForAll.get(roomId)){
 //                thread.notify();
@@ -236,6 +236,7 @@ public class RoomSelectionHandler {
     }
 
     private void checkRoomEnd(int roomID){
+        // TODO
         if(requestHandlerList.get(roomID).getController().checkEnd()){
             List<String> userList = getAllUsersInRoom(roomID);
             for(String username : userList){

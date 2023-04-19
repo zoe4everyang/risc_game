@@ -16,7 +16,7 @@ public interface WorldMap {
     public int getWinner();
     public Boolean checkEnd();
     public List<Territory> getTerritories();
-    public void setUnits(List<Integer> palcement);
+    public void setUnits(List<Integer> placement);
 
     // attack given territory by troop t, return true if attack success
     public Boolean makeAttack(int to, Troop t);

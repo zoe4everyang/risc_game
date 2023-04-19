@@ -33,9 +33,9 @@ public class InGameListener extends RISCServer {
     }
 
     @PostMapping("/commit/{roomId}")
-    public Response commitActionListen(@PathVariable("roomId") int roomId, @RequestBody ActionRequest requestBody) {
+    public Response commitActionListen(@PathVariable("roomId") int roomId, @RequestBody HashMap<String, Integer> playerID) {
         try{
-            return roomSelectionHandler.inGameCommit(roomId, requestBody);
+            return roomSelectionHandler.inGameCommit(roomId, playerID.get("playerID"));
         }catch(InterruptedException e) {
             System.out.println(e);
         }

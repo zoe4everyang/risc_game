@@ -2,3 +2,5 @@
 .idea
 logfile.log
 mylogfile.log
+.DS_Store
+./gradle/.DS_Store

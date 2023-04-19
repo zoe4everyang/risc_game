@@ -10,7 +10,7 @@ public class v1WorldMap implements WorldMap{
     private List<Territory> map;
 
     private int numPlayers;
-    private Checker checker;
+    //private Checker checker;
     private int unitAvailable;
     /**
      * Constructor
@@ -21,7 +21,7 @@ public class v1WorldMap implements WorldMap{
     public v1WorldMap(int numPlayers, List<Territory> map, int unitAvailable) {
         this.map = map;
         this.numPlayers = numPlayers;   // number of players
-        this.checker = new Checker();
+        //this.checker = new Checker();
         this.unitAvailable = unitAvailable;
     }
 

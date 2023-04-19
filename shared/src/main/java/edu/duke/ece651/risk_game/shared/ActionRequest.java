@@ -11,13 +11,13 @@ public class ActionRequest extends Message {
 
     Integer from;
     Integer to;
-    List<Integer> unitIDs;
+    List<Integer> levelUnits;
 
-    public ActionRequest(Integer playerID, Integer from, Integer to, List<Integer> unitIDs) {
+    public ActionRequest(Integer playerID, Integer from, Integer to, List<Integer> levelUnits) {
         super(playerID);
         this.from = from;
         this.to = to;
-        this.unitIDs = unitIDs;
+        this.levelUnits = levelUnits;
     }
 
     public Integer getFrom() {
@@ -28,8 +28,8 @@ public class ActionRequest extends Message {
         return to;
     }
 
-    public List<Integer> getUnitIDs() {
-        return unitIDs;
+    public List<Integer> getLevelUnits() {
+        return levelUnits;
     }
 
 //    List<Integer> moveFrom;

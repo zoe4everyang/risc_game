@@ -2,12 +2,11 @@ package edu.duke.ece651.risk_game.client;
 
 import edu.duke.ece651.risk_game.shared.Response;
 import edu.duke.ece651.risk_game.shared.Territory;
+import edu.duke.ece651.risk_game.shared.Troop;
+import edu.duke.ece651.risk_game.shared.Unit;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * This class is used to display the game to the user.
@@ -93,14 +92,16 @@ public class TextView implements Viewer {
     public void placeOneTerritoryPrompt(String territoryName) {
         out.println("Type in the number of units you want to place on " + territoryName + ":");
     }
-
     /**
      * This method is used to display the game to the user.
      */
     @Override
     public void losePrompt() {
         out.println("You lose!");
+
     }
+
+
 
     /**
      * This method is used to display the game to the user.
@@ -158,7 +159,7 @@ public class TextView implements Viewer {
     public String printInfo(Territory t, HashMap<Integer, String> territoryNameMap) {
         StringBuilder s = new StringBuilder();
         List<Integer> distances = t.getDistances();
-        s.append(t.getUnits()).append(" units in ").append(t.getName()).append(" (next to:");
+        s.append(t.getTroopSize()).append(" units in ").append(t.getName()).append(" (next to:");
         for (int i = 0; i < distances.size(); i++) {
             if (distances.get(i) == 1) {
                 s.append(" ").append(territoryNameMap.get(i));
@@ -167,4 +168,12 @@ public class TextView implements Viewer {
         s.append(")");
         return s.toString();
     }
+
+//    private List<Integer> countTroopUnits(Troop t) {
+//        List<Integer> ans = new ArrayList<>(Collections.nCopies(6, 0));
+//        for (Unit u : t.getUnits()) {
+//            ans.set(u.getLevel(), ans.get(u.getLevel()) + 1);
+//        }
+//        return ans;
+//    }
 }

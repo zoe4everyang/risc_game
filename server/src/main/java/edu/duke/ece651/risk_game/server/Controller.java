@@ -132,10 +132,7 @@ public class Controller {
         return world.checkEnd();
     }
 
-    /**
-     * Check if the game is over
-     * @param playerId player id
-     */
+
     public List<Player> getPlayers() {
         return players;
     }

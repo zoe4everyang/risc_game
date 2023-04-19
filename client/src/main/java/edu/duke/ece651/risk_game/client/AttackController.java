@@ -2,33 +2,55 @@ package edu.duke.ece651.risk_game.client;
 
 import edu.duke.ece651.risk_game.shared.ActionRequest;
 import edu.duke.ece651.risk_game.shared.ActionStatus;
+import edu.duke.ece651.risk_game.shared.Territory;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class AttackController extends GameController{
-    public void initialize() {
+    @FXML
+    ComboBox<String> fromComboBox;
+    @FXML
+    ComboBox<String> toComboBox;
+    @FXML
+    ComboBox<String> unitLevelComboBox;
+    @FXML
+    TextField unitNumTextField;
 
+    public void initialize() {
+        super.initialize();
+        for (Territory territory : gameContext.territories) {
+            if (territory.getOwner() == gameContext.playerIDMap.get(gameContext.currentRoomID)) {
+                fromComboBox.getItems().add(territory.getName());
+            } else {
+                toComboBox.getItems().add(territory.getName());
+            }
+        }
+        for (int i = 1; i <= 6; i++) {
+            unitLevelComboBox.getItems().add("Level " + String.valueOf(i));
+        }
+        unitNumTextField.setTextFormatter(integerFormatter);
     }
 
     @FXML
     public void handleAttackButton() {
-        // TODO: get the input from the text field
-        String[] command = {"1", "2", "3", "4"};
         HashMap<String, Integer> territoryIDMap = gameContext.territoryIDMaps.get(gameContext.currentRoomID);
-        int from = territoryIDMap.get(command[0]);
-        int to = territoryIDMap.get(command[1]);
-        ArrayList<Integer> unitIDs = new ArrayList<>();
-        for (int i = 3; i < command.length; i++) {
-            unitIDs.add(Integer.parseInt(command[i]));
-        }
-        ActionRequest request = new ActionRequest(gameContext.playerIDMap.get(gameContext.currentRoomID), from, to, unitIDs);
+        int from = Integer.parseInt(fromComboBox.getValue());
+        int to = Integer.parseInt(toComboBox.getValue());
+        int unitNum = Integer.parseInt(unitNumTextField.getText());
+        int unitLevel = Integer.parseInt(unitLevelComboBox.getValue());
+        ArrayList<Integer> units = new ArrayList<>(Collections.nCopies(6,0));
+        units.set(unitLevel - 1, unitNum);
+        ActionRequest request = new ActionRequest(gameContext.playerIDMap.get(gameContext.currentRoomID), from, to, units);
         ActionStatus status = gameContext.httpClient.sendAttack(gameContext.currentRoomID, request);
         if (!status.isSuccess()) {
-            throw new IllegalArgumentException(status.getErrorMessage());
+            gameContext.showErrorAlert("Your attack command is invalid.",status.getErrorMessage());
         } else {
-            sceneManager.switchTo("Game.fxml");
+            sceneManager.switchTo("GameMain.fxml");
         }
     }
 }

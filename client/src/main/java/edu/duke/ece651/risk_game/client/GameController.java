@@ -1,6 +1,6 @@
 package edu.duke.ece651.risk_game.client;
 
-import javafx.beans.property.SimpleIntegerProperty;
+import edu.duke.ece651.risk_game.shared.Territory;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -28,7 +28,7 @@ public abstract class GameController extends UIController{
     @FXML
     TableColumn<Entry, String> nameColumn;
     @FXML
-    TableColumn<Entry, Integer> valueColumn;
+    TableColumn<Entry, String> valueColumn;
     @FXML
     Polygon territory0;
     @FXML
@@ -54,6 +54,7 @@ public abstract class GameController extends UIController{
     @FXML
     Polygon territory11;
     List<Polygon> territoryList;
+
     public void initialize(){
         territoryList = new ArrayList<>();
         territoryList.add(territory0);
@@ -80,6 +81,7 @@ public abstract class GameController extends UIController{
         roomIDTextFlow.getChildren().add(foodPointText);
         territoryInfo.setStyle("-fx-table-header-visible: false;");
 
+        Entry territoryNameEntry = new Entry("Territory Name", null);
         Entry ownerEntry = new Entry("Owner", null);
         Entry levelOneEntry = new Entry("Level1 Unit", null);
         Entry levelTwoEntry = new Entry("Level2 Unit", null);
@@ -90,36 +92,119 @@ public abstract class GameController extends UIController{
         Entry techProductionEntry = new Entry("Tech Production", null);
         Entry foodProductionEntry = new Entry("Food Production", null);
         Entry territorySizeEntry = new Entry("Territory Size", null);
-        territoryInfo.getItems().addAll(ownerEntry, levelOneEntry, levelTwoEntry, levelThreeEntry,
+        territoryInfo.getItems().addAll(territoryNameEntry, ownerEntry, levelOneEntry, levelTwoEntry, levelThreeEntry,
                 levelFourEntry, levelFiveEntry, levelSixEntry, techProductionEntry, foodProductionEntry,
                 territorySizeEntry);
 
         nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
-        valueColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getValue()).asObject());
+        valueColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getValue()));
 
     }
 
     public static class Entry {
         private final String name;
-        private Integer value;
-        public Entry(String name, Integer value) {
+        private String value;
+        public Entry(String name, String value) {
             this.name = name;
             this.value = value;
         }
         public String getName() {
             return name;
         }
-        public Integer getValue() {
+        public String getValue() {
             return value;
         }
-        public void setValue(Integer value) {
+        public void setValue(String value) {
             this.value = value;
         }
     }
 
+    public void updateTableView(Territory territory) {
+        ArrayList<String> updateList = new ArrayList<>();
+        //Troop troop = territory.getTroop();
+        updateList.add(territory.getName());
+        updateList.add(gameContext.playerList.get(territory.getOwner()));
+        //加上军队信息
+        updateList.add(Integer.toString(territory.getFoodProduction()));
+        updateList.add(Integer.toString(territory.getTechProduction()));
+        updateList.add(Integer.toString(territory.getCost()));
+        for (int i = 0; i < updateList.size(); i++) {
+            territoryInfo.getItems().get(i).setValue(updateList.get(i));
+        }
+        territoryInfo.refresh();
+    }
+
+
     @FXML
     public void handleTerritory0Button(){
+        Territory territory = gameContext.territories.get(0);
+        updateTableView(territory);
+    }
 
+    @FXML
+    public void handleTerritory1Button(){
+        Territory territory = gameContext.territories.get(1);
+        updateTableView(territory);
+    }
+
+    @FXML
+    public void handleTerritory2Button(){
+        Territory territory = gameContext.territories.get(2);
+        updateTableView(territory);
+    }
+
+    @FXML
+    public void handleTerritory3Button(){
+        Territory territory = gameContext.territories.get(3);
+        updateTableView(territory);
+    }
+
+    @FXML
+    public void handleTerritory4Button(){
+        Territory territory = gameContext.territories.get(4);
+        updateTableView(territory);
+    }
+
+    @FXML
+    public void handleTerritory5Button(){
+        Territory territory = gameContext.territories.get(5);
+        updateTableView(territory);
+    }
+
+    @FXML
+    public void handleTerritory6Button(){
+        Territory territory = gameContext.territories.get(6);
+        updateTableView(territory);
+    }
+
+    @FXML
+    public void handleTerritory7Button(){
+        Territory territory = gameContext.territories.get(7);
+        updateTableView(territory);
+    }
+
+    @FXML
+    public void handleTerritory8Button(){
+        Territory territory = gameContext.territories.get(8);
+        updateTableView(territory);
+    }
+
+    @FXML
+    public void handleTerritory9Button(){
+        Territory territory = gameContext.territories.get(9);
+        updateTableView(territory);
+    }
+
+    @FXML
+    public void handleTerritory10Button(){
+        Territory territory = gameContext.territories.get(10);
+        updateTableView(territory);
+    }
+
+    @FXML
+    public void handleTerritory11Button() {
+        Territory territory = gameContext.territories.get(11);
+        updateTableView(territory);
     }
 
 }

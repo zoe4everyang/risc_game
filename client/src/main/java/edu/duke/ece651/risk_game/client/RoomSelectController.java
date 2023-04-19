@@ -88,7 +88,7 @@ public class RoomSelectController extends UIController{
 
         // switch to next stage
         if (response.getUnitAvailable() == -1) {
-            sceneManager.switchTo("Move.fxml");
+            sceneManager.switchTo("GameMain.fxml");
         } else {
             sceneManager.switchTo("Place.fxml");
         }

@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 
 public class UpgradeController extends GameController{
     public void initialize() {
-        // TODO: update the map and other Info with gameContext
+        super.initialize();
     }
 
     @FXML

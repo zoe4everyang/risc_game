@@ -1,24 +1,42 @@
 package edu.duke.ece651.risk_game.client;
 
 import edu.duke.ece651.risk_game.shared.ActionStatus;
+import edu.duke.ece651.risk_game.shared.Territory;
 import edu.duke.ece651.risk_game.shared.UpgradeUnitRequest;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 
 import java.io.IOException;
 
-public class UpgradeUnitController extends GameController{
-    public void initialize() {
+import static java.lang.Math.max;
 
+public class UpgradeUnitController extends GameController{
+    @FXML
+    ComboBox<String> territoryComboBox;
+    @FXML
+    ComboBox<String> currentLevelComboBox;
+    @FXML
+    ComboBox<String> targetLevelComboBox;
+    public void initialize() {
+        super.initialize();
+        for (Territory territory : gameContext.territories) {
+            if (territory.getOwner() == gameContext.playerIDMap.get(gameContext.currentRoomID)) {
+                territoryComboBox.getItems().add(territory.getName());
+            }
+        }
+        for (int i = 1; i <= 6; i++) {
+            currentLevelComboBox.getItems().add("Level " + String.valueOf(i));
+            targetLevelComboBox.getItems().add("Level " + String.valueOf(i));
+        }
     }
 
     @FXML
     public void handleUpgradeButton() {
-        // TODO: get the input from the text field
-        String[] command = {"DKU", "1", "2"};
-        int territory = gameContext.territoryIDMaps.get(gameContext.currentRoomID).get(command[0]);
-        int unit = Integer.parseInt(command[1]);
-        int level = Integer.parseInt(command[2]);
-        UpgradeUnitRequest request = new UpgradeUnitRequest(gameContext.playerIDMap.get(gameContext.currentRoomID), territory, unit, level);
+        int territory = gameContext.territoryIDMaps.get(gameContext.currentRoomID).get(territoryComboBox.getValue());
+        int currentLevel = Integer.parseInt(currentLevelComboBox.getValue());
+        int targetLevel = Integer.parseInt(targetLevelComboBox.getValue());
+        UpgradeUnitRequest request = new UpgradeUnitRequest(gameContext.playerIDMap.get(gameContext.currentRoomID),
+                territory, currentLevel, max(targetLevel - currentLevel, 0));
         ActionStatus status;
         try {
             status = gameContext.httpClient.sendUpgradeUnit(gameContext.currentRoomID, request);
@@ -30,7 +48,7 @@ public class UpgradeUnitController extends GameController{
         if (!status.isSuccess()) {
             throw new IllegalArgumentException(status.getErrorMessage());
         } else {
-            sceneManager.switchTo("Game.fxml");
+            sceneManager.switchTo("GameMain.fxml");
         }
     }
 }

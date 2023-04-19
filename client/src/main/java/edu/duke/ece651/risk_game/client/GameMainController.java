@@ -27,7 +27,10 @@ public class GameMainController extends GameController{
     public void handleUpgradeButton(){
         sceneManager.switchTo("Upgrade.fxml");
     }
-
+    @FXML
+    public void handleSwitchButton(){
+        sceneManager.switchTo("RoomSelect.fxml");
+    }
     @FXML
     public void handleCommitButton() {
         Response response;
@@ -38,8 +41,10 @@ public class GameMainController extends GameController{
             return;
         }
         gameContext.update(response);
-        if (response.isEnd()) {
-            sceneManager.switchTo("Result.fxml");
+        if (response.isLose()) {
+            sceneManager.switchTo("Defeat.fxml");
+        } else if (response.isEnd()) {
+            sceneManager.switchTo("Victory.fxml");
         } else {
             sceneManager.switchTo("Game.fxml");
         }

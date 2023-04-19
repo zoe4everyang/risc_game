@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class UpgradeTechController extends GameController{
     public void initialize() {
-        // TODO
+        super.initialize();
     }
 
     @FXML
@@ -28,6 +28,6 @@ public class UpgradeTechController extends GameController{
 
     @FXML
     public void handleNoButton() {
-        sceneManager.switchTo("Game.fxml");
+        sceneManager.switchTo("GameMain.fxml");
     }
 }

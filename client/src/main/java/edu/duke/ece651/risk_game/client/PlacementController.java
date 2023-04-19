@@ -53,7 +53,7 @@ public class PlacementController extends UIController {
         for (String territoryName : territoryNames) {
             territoryComboBox.getItems().add(territoryName);
         }
-
+        unitTextField.setTextFormatter(integerFormatter);
         gameContext.showInfoAlert("Placement Phase", "You have " + gameContext.unitAvailable + " units to place.");
     }
 
@@ -78,7 +78,7 @@ public class PlacementController extends UIController {
     public void handleFinishButton() {
         if (unitLeft != 0) {
             gameContext.showErrorAlert("Invalid Input", "You have not placed all your units.");
-            sceneManager.switchTo("Placement.fxml");
+            sceneManager.switchTo("Place.fxml");
         }
         PlacementRequest placementRequest = new PlacementRequest(gameContext.playerInfo.getPlayerID(), placement);
         Response response = null;
@@ -89,6 +89,6 @@ public class PlacementController extends UIController {
         }
         assert response != null;
         gameContext.update(response);
-        sceneManager.switchTo("Game.fxml");
+        sceneManager.switchTo("GameMain.fxml");
     }
 }

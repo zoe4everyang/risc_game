@@ -1,5 +1,6 @@
 package edu.duke.ece651.risk_game.client;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.duke.ece651.risk_game.shared.*;
 import org.apache.http.HttpEntity;
@@ -61,6 +62,7 @@ public class RISCClient {
         } finally {
             response.close();
         }
+        System.out.println("response" + responseContent);
         return responseContent;
     }
 
@@ -73,29 +75,33 @@ public class RISCClient {
     }
 
     public HashSet<Integer> getRoomList(String username) throws IOException {
-        HttpPost request = new HttpPost(serverURL + "/roomid");
+        HttpPost request = new HttpPost(serverURL + "/roomId");
         HashMap<String, Object> requestBody = new HashMap<>();
         requestBody.put("username", username);
-        IntValues intValues = jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), IntValues.class);
-        HashSet<Integer> set = new HashSet<>(Arrays.asList(intValues.getIntValues()));
+        String response = sendRequest(request, jsonMapper.writeValueAsString(requestBody));
+        HashSet<Integer> set = jsonMapper.readValue(response, new TypeReference<>(){});
         return set;
-        //return new HashSet<>(Arrays.asList(jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), IntValues.class)));
     }
 
     public Response joinRoom(String username, Integer roomID) throws IOException {
-        HttpPost request = new HttpPost(serverURL + "/join/{" + roomID + "}");
+        //HttpPost request = new HttpPost(serverURL + "/join/{" + roomID + "}");
+        HttpPost request = new HttpPost(serverURL + "/join/" + roomID);
         HashMap<String, Object> requestBody = new HashMap<>();
         requestBody.put("username", username);
-        return jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), Response.class);
+        String response = sendRequest(request, jsonMapper.writeValueAsString(requestBody));
+        System.out.println(response);
+        return jsonMapper.readValue(response, Response.class);
     }
 
     public Response sendPlacement(Integer roomID, PlacementRequest requestBody) throws IOException {
-        HttpPost request = new HttpPost(serverURL + "/place/{" + roomID + "}");
+        //HttpPost request = new HttpPost(serverURL + "/place/{" + roomID + "}");
+        HttpPost request = new HttpPost(serverURL + "/place/" + roomID);
         return jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), Response.class);
     }
 
     public ActionStatus sendUpgradeTech(Integer roomID, Integer playerID, boolean upgradeTech) throws IOException {
-        HttpPost request = new HttpPost(serverURL + "/act/upgrade_tech/{" + roomID + "}");
+        //HttpPost request = new HttpPost(serverURL + "/act/upgrade_tech/{" + roomID + "}");
+        HttpPost request = new HttpPost(serverURL + "/act/upgrade_tech/" + roomID);
         HashMap<String, Object> requestBody = new HashMap<>();
         requestBody.put("playerID", playerID);
         requestBody.put("upgradeTech", upgradeTech);
@@ -103,12 +109,14 @@ public class RISCClient {
     }
 
     public ActionStatus sendUpgradeUnit(Integer roomID, UpgradeUnitRequest requestBody) throws IOException {
-        HttpPost request = new HttpPost(serverURL + "/act/upgrade_unit/{" + roomID + "}");
+        //HttpPost request = new HttpPost(serverURL + "/act/upgrade_unit/{" + roomID + "}");
+        HttpPost request = new HttpPost(serverURL + "/act/upgrade_unit/" + roomID);
         return jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), ActionStatus.class);
     }
 
     public ActionStatus sendMove(Integer roomID, ActionRequest requestBody) {
-        HttpPost request = new HttpPost(serverURL + "/act/move/{" + roomID + "}");
+        //HttpPost request = new HttpPost(serverURL + "/act/move/{" + roomID + "}");
+        HttpPost request = new HttpPost(serverURL + "/act/move/" + roomID);
         ActionStatus status = null;
         try {
             status = jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), ActionStatus.class);
@@ -119,7 +127,8 @@ public class RISCClient {
     }
 
     public ActionStatus sendAttack(Integer roomID, ActionRequest requestBody) {
-        HttpPost request = new HttpPost(serverURL + "/act/attack/{" + roomID + "}");
+        //HttpPost request = new HttpPost(serverURL + "/act/attack/{" + roomID + "}");
+        HttpPost request = new HttpPost(serverURL + "/act/attack/" + roomID);
         ActionStatus status = null;
         try {
             status = jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), ActionStatus.class);
@@ -130,14 +139,16 @@ public class RISCClient {
     }
 
     public ActionStatus sendClean(Integer roomID, Integer playerID) throws IOException {
-        HttpPost request = new HttpPost(serverURL + "/act/clean/{" + roomID + "}");
+        //HttpPost request = new HttpPost(serverURL + "/act/clean/{" + roomID + "}");
+        HttpPost request = new HttpPost(serverURL + "/act/clean/" + roomID);
         HashMap<String, Object> requestBody = new HashMap<>();
         requestBody.put("playerID", playerID);
         return jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), ActionStatus.class);
     }
 
     public Response sendCommit(Integer roomID) throws IOException {
-        HttpPost request = new HttpPost(serverURL + "/act/commit/{" + roomID + "}");
+        //HttpPost request = new HttpPost(serverURL + "/act/commit/{" + roomID + "}");
+        HttpPost request = new HttpPost(serverURL + "/act/commit/" + roomID);
         return jsonMapper.readValue(sendRequest(request, ""), Response.class);
     }
 

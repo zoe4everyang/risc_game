@@ -8,7 +8,7 @@ public class evo2CombatResolver implements CombatResolver {
     public evo2CombatResolver() {
         this.levelBonus = new HashMap<>();
         this.levelBonus.put(0, 0);
-        this.levelBonus.put(1, 1);
+        this.levelBonus.put(1, 50);
         this.levelBonus.put(2, 3);
         this.levelBonus.put(3, 5);
         this.levelBonus.put(4, 8);

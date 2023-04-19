@@ -209,7 +209,7 @@ public class RoomSelectionHandler {
 
     public Response inGameCommit(int roomID, int playerID) throws InterruptedException{
         RequestHandler requestHandler = requestHandlerList.get(roomID);
-        checkRoomEnd(roomID);
+        Response response = requestHandler.commitHandler(playerID, getAllUsersInRoom(roomID));
         List<String> usernameList = getAllUsersInRoom(roomID);
         for(String username : usernameList){
             int PID = allUserRoomList.get(username).get(roomID);
@@ -217,7 +217,7 @@ public class RoomSelectionHandler {
                 allUserRoomList.get(username).remove(roomID);
             }
         }
-        Response response = requestHandler.commitHandler(playerID, getAllUsersInRoom(roomID));
+        checkRoomEnd(roomID);
         return response;
     }
 
@@ -236,7 +236,7 @@ public class RoomSelectionHandler {
     }
 
     private void checkRoomEnd(int roomID){
-        // TODO
+        //
         if(requestHandlerList.get(roomID).getController().checkEnd()){
             List<String> userList = getAllUsersInRoom(roomID);
             for(String username : userList){

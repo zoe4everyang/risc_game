@@ -56,4 +56,5 @@ bootJar {
     archiveFileName = 'RISC_server.jar'
     enabled = true
     mainClass = 'edu.duke.ece651.risk_game.server.RISCBack'
+    project.version = "2.0.0"
 }

@@ -75,12 +75,12 @@ public class RoomSelectionHandler {
             if (!threadsListForAll.containsKey(roomId)) {
                 threadsListForAll.put(roomId, new ArrayList<>(playerNum));
             }
+            if (joinNum.get() == playerNum) {
+                joinNum.set(0);
+            }
         }
         synchronized (threadsListForAll.get(roomId)){
             if(roomId == maxRoomID && joinNum.get() < playerNum) {
-                if (joinNum.get() == playerNum) {
-                    joinNum.set(0);
-                }
                 joinNum.incrementAndGet();
                 if (joinNum.get() < playerNum) {
                     threadsListForAll.get(roomId).add(Thread.currentThread());
@@ -109,7 +109,7 @@ public class RoomSelectionHandler {
         int playerID;
 
         playerList.add(username);
-        if(count.get() == playerNum){
+        if(count.get() >= playerNum){
             count.set(0);
             playerList.clear();
         }

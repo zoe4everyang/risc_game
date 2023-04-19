@@ -1,6 +1,8 @@
 package edu.duke.ece651.risk_game.shared;
 
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * This class is used to create a message that contains the information of the player's action.
@@ -15,6 +17,17 @@ public class ActionRequest extends Message {
 
     public ActionRequest(Integer playerID, Integer from, Integer to, List<Integer> levelUnits) {
         super(playerID);
+        this.from = from;
+        this.to = to;
+        this.levelUnits = levelUnits;
+    }
+
+    @JsonCreator
+    public ActionRequest(@JsonProperty("playerInfo") PlayerInfo playerInfo,
+                         @JsonProperty("from")Integer from,
+                         @JsonProperty("to")Integer to,
+                         @JsonProperty("levelUnits")List<Integer> levelUnits) {
+        super(playerInfo);
         this.from = from;
         this.to = to;
         this.levelUnits = levelUnits;

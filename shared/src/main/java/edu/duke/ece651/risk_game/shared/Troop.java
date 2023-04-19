@@ -1,6 +1,16 @@
 package edu.duke.ece651.risk_game.shared;
-
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.List;
+
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type"
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = unitTroop.class, name = "unitTroop")
+})
 
 public interface Troop {
     public int getOwner();

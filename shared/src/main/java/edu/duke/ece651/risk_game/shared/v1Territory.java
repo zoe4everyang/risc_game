@@ -43,14 +43,21 @@ public class v1Territory implements Territory{
                        @JsonProperty("name") String name,
                        @JsonProperty("owner") int owner,
                        @JsonProperty("troop") Troop units,
-                       @JsonProperty("distances") List<Integer> distances) {
-        // constructor
+                       @JsonProperty("distances") List<Integer> distances,
+                       @JsonProperty("cost") int cost,
+                       @JsonProperty("techProduction") int tech_prod,
+                       @JsonProperty("foodProduction") int food_prod){
+
         this.id = id;
         this.name = name;
         this.owner = owner;
         this.troop = units;
         this.distances = distances;
+        this.cost = cost;
+        this.tech_production = tech_prod;
+        this.food_production = food_prod;
         this.combatResolver = new v1CombatResolver();
+        this.cloaked = -1;
     }
 
     @Override

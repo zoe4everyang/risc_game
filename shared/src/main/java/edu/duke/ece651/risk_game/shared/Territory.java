@@ -2,6 +2,7 @@ package edu.duke.ece651.risk_game.shared;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * This interface is used to represent a territory.
@@ -20,7 +21,7 @@ public interface Territory {
     public void addTroop(Troop troop);
 
     public void removeTroop(Troop troop);
-
+    @JsonIgnore
     public int getTroopSize();
 
     public List<Integer> getDistances(); // returns a list of distances to other territories'
@@ -28,6 +29,7 @@ public interface Territory {
     public String getName();
     public int getOwner();
 
+    @JsonIgnore
     public List<Integer> getNeighbours();
 
     public int getCost();

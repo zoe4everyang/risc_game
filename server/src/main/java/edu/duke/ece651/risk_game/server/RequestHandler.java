@@ -93,10 +93,10 @@ public class RequestHandler {
         }
     }
 
-    public Response commitHandler(ActionRequest msg, List<String> usernameList) throws InterruptedException{
-        int playerID = msg.getPlayerInfo().getPlayerID();
+    public Response commitHandler(int playerID, List<String> usernameList) throws InterruptedException{
+        //int playerID = msg.getPlayerInfo().getPlayerID();
         synchronized (this){
-            if(count.get() == playerNum) {
+            if(count.get() >= playerNum) {
                 count.set(0);
             }
             count.incrementAndGet();
@@ -113,6 +113,10 @@ public class RequestHandler {
         List<Territory> territories = controller.getTerritories();
         Boolean isPlayerLose = controller.checkLose(playerID);
         Boolean isGameEnd = controller.checkEnd();
+        if(isPlayerLose){
+            this.playerNum--;
+            System.out.println("Player " + playerID + " you lose!");
+        }
         return new Response(playerInfo, territories, isPlayerLose, isGameEnd, usernameList);
     }
 

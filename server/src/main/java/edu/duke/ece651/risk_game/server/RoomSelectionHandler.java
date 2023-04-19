@@ -7,8 +7,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Scope("singleton")
 public class RoomSelectionHandler {
 
-    private HashMap<Integer, RequestHandler> requestHandlerList;   // <roomID, requestHandler>
-    private HashMap<String, HashMap<Integer, Integer>> allUserRoomList;  // <username, <roomID, playerID>>
+    private static HashMap<Integer, RequestHandler> requestHandlerList = new HashMap<>();;   // <roomID, requestHandler>
+    private static HashMap<String, HashMap<Integer, Integer>> allUserRoomList = new HashMap<>();;  // <username, <roomID, playerID>>
     private int maxRoomID;
     private AtomicInteger joinNum;
     private AtomicInteger count;
@@ -19,13 +19,13 @@ public class RoomSelectionHandler {
 
 
     public RoomSelectionHandler(int playerNum) {
-        this.requestHandlerList = new HashMap<>();
+        //this.requestHandlerList = new HashMap<>();
         this.maxRoomID = 0;
         this.loginCredentials = new HashMap<>();
         this.joinNum =  new AtomicInteger(0);
         this.count =  new AtomicInteger(0);
         this.playerNum = playerNum;
-        this.allUserRoomList = new HashMap<>();
+        //this.allUserRoomList = new HashMap<>();
         this.playerList = new ArrayList<>();
         this.threadsListForAll = new HashMap<>();
     }
@@ -71,31 +71,31 @@ public class RoomSelectionHandler {
         }
         // join new room
         //TODO ensure thread-safe
-        synchronized (this){
+        synchronized (this) {
+            if (!threadsListForAll.containsKey(roomId)) {
+                threadsListForAll.put(roomId, new ArrayList<>(playerNum));
+            }
+        }
+        synchronized (threadsListForAll.get(roomId)){
             if(roomId == maxRoomID && joinNum.get() < playerNum) {
-                if (!threadsListForAll.containsKey(roomId)) {
-                    threadsListForAll.put(roomId, new ArrayList<>(playerNum));
-                }
-                threadsListForAll.get(roomId).add(Thread.currentThread());
                 if (joinNum.get() == playerNum) {
                     joinNum.set(0);
                 }
                 joinNum.incrementAndGet();
                 if (joinNum.get() < playerNum) {
+                    threadsListForAll.get(roomId).add(Thread.currentThread());
                     while (joinNum.get() < playerNum) {
-                        wait();
+                        threadsListForAll.get(roomId).wait();
                     }
                 } else {
                     maxRoomID++;
                     // only notify players in this room
-                    for (Thread thread : threadsListForAll.get(roomId)) {
-                        thread.notify();
-                    }
+                    threadsListForAll.get(roomId).notifyAll();
                     threadsListForAll.remove(roomId); // clear threads in this room
                 }
-
                 Message response = newGame(roomId, username);
                 allUserRoomList.get(username).put(roomId, response.getPlayerInfo().getPlayerID());
+                System.out.println("after new game" + requestHandlerList.size());
                 return response;
             }
         }
@@ -114,23 +114,12 @@ public class RoomSelectionHandler {
         }
         playerID = count.get();
         count.incrementAndGet();
-//        if(count.get() < playerNum) {
-//            while (count.get() < playerNum) {
-//                wait();
-//            }
-//        }else{
-        requestHandlerList.put(roomId, new RequestHandler(playerNum));
-            // only notify players in this room
-//            for(Thread thread : threadsListForAll.get(roomId)){
-//                thread.notify();
-//            }
-        //threadsListForAll.remove(roomId); // clear threads in this room
-//        }
-        System.out.println("Here1");
+        if(!requestHandlerList.containsKey(roomId)){
+            requestHandlerList.put(roomId, new RequestHandler(playerNum));
+        }
         Controller newController = requestHandlerList.get(roomId).getController();
         int unitAvailable = newController.getUnitAvailable();
         List<Territory> territories = newController.getTerritories();
-        System.out.println("Here2");
         PlayerInfo playerInfo = newController.getPlayerInfo(playerID);
         Message response = new Response(playerInfo, territories, false, false, playerList, unitAvailable);
         return response;
@@ -168,11 +157,15 @@ public class RoomSelectionHandler {
 
     public Message inGamePlace(int roomID, PlacementRequest request) throws InterruptedException{
         //int playerID = request.getPlayerInfo().getPlayerID();
-        return requestHandlerList.get(roomID).placeUnitHandler(request, getAllUsersInRoom(roomID));
+        System.out.println("in game place before:" + requestHandlerList.size());
+        Message msg =  requestHandlerList.get(roomID).placeUnitHandler(request, getAllUsersInRoom(roomID));
+        System.out.println("in game place after:" + requestHandlerList.size());
+        return msg;
     }
 
     public ActionStatus inGameMoveAttack(int roomID, ActionRequest request, String actionType) throws InterruptedException{
         //int playerID = request.getPlayerInfo().getPlayerID();
+
         RequestHandler requestHandler = requestHandlerList.get(roomID);
         switch (actionType){
             case "move":
@@ -189,22 +182,25 @@ public class RoomSelectionHandler {
     }
 
     public ActionStatus inGameUpgradeTech(int roomID, HashMap<String, Object> request) throws InterruptedException {
+        System.out.println(requestHandlerList.size());
+        for(int i : requestHandlerList.keySet()){
+            System.out.println(i + " " + requestHandlerList.get(i).equals(null));
+        }
         RequestHandler requestHandler = requestHandlerList.get(roomID);
         return requestHandler.upgradeTechHandler(request);
     }
 
-    public Response inGameCommit(int roomID, ActionRequest request) throws InterruptedException{
+    public Response inGameCommit(int roomID, int playerID) throws InterruptedException{
         RequestHandler requestHandler = requestHandlerList.get(roomID);
         checkRoomEnd(roomID);
         List<String> usernameList = getAllUsersInRoom(roomID);
         for(String username : usernameList){
-            int playerID = allUserRoomList.get(username).get(roomID);
-            if(requestHandlerList.get(roomID).getController().checkLose(playerID)){
+            int PID = allUserRoomList.get(username).get(roomID);
+            if(requestHandlerList.get(roomID).getController().checkLose(PID)){
                 allUserRoomList.get(username).remove(roomID);
             }
         }
-        Response response = requestHandler.commitHandler(request, getAllUsersInRoom(roomID));
-        if(response.isLose()){}
+        Response response = requestHandler.commitHandler(playerID, getAllUsersInRoom(roomID));
         return response;
     }
 

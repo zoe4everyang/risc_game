@@ -1,16 +1,16 @@
 plugins {
     id 'java'
     id 'application'
-//    id 'org.springframework.boot' version '2.7.10'
-//    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-    id 'org.openjfx.javafxplugin' version '0.0.8'
+    id 'org.springframework.boot' version '2.7.10'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
 }
 
 group = 'edu.duke.ece651.risk_game'
 sourceCompatibility = '11'
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -48,10 +48,10 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
 
     // sprint boot
-//    implementation 'org.springframework.boot:spring-boot-starter-web'
-//    implementation 'org.springframework.boot:spring-boot-starter-logging'
-//    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-//    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 }
 
@@ -67,7 +67,7 @@ test {
 }
 
 javafx {
-    version = "11.0.2"
+    version = "19"
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 

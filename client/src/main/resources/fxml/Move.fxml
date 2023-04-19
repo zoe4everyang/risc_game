@@ -279,7 +279,6 @@
             <Text layoutX="167.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room id： " />
             <TextFlow fx:id="roomIDTextFlow" layoutX="226.0" layoutY="45.0" prefHeight="23.0" prefWidth="72.0" style="-fx-background-color: white; -fx-border-color: black;" />
             <Text layoutX="159.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your color:" />
-            <TextFlow fx:id="myColor" layoutX="226.0" layoutY="77.0" prefHeight="23.0" prefWidth="72.0" style="-fx-background-color: white; -fx-border-color: black;" />
             <Text layoutX="76.0" layoutY="384.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tech  Point" wrappingWidth="96.4599609375">
                <font>
                   <Font size="11.0" />
@@ -292,6 +291,7 @@
             </Text>
             <TextFlow fx:id="techPointTextFlow" layoutX="168.0" layoutY="366.0" prefHeight="30.0" prefWidth="118.0" style="-fx-background-color: white; -fx-border-color: black;" />
             <TextFlow fx:id="foodPointTextFlow" layoutX="168.0" layoutY="395.0" prefHeight="30.0" prefWidth="118.0" style="-fx-background-color: white; -fx-border-color: black;" />
+            <Rectangle fx:id="myColor" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="23.0" layoutX="226.0" layoutY="77.0" stroke="BLACK" strokeType="INSIDE" width="72.0" />
          </children>
       </AnchorPane>
       <Button layoutX="461.0" layoutY="332.0" mnemonicParsing="false" onMouseClicked="#handleMoveButton" prefHeight="52.0" prefWidth="111.0" text="Submit">

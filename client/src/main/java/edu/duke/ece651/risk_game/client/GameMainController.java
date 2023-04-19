@@ -28,14 +28,14 @@ public class GameMainController extends GameController{
         sceneManager.switchTo("Upgrade.fxml");
     }
     @FXML
-    public void c(){
+    public void handleSwitchButton(){
         sceneManager.switchTo("RoomSelect.fxml");
     }
     @FXML
     public void handleCommitButton() {
         Response response;
         try {
-            response = gameContext.httpClient.sendCommit(gameContext.currentRoomID);
+            response = gameContext.httpClient.sendCommit(gameContext.playerIDMap.get(gameContext.currentRoomID), gameContext.currentRoomID);
         } catch (IOException e) {
             e.printStackTrace();
             return;

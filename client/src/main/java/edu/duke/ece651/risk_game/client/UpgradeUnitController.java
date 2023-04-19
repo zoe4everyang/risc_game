@@ -24,17 +24,19 @@ public class UpgradeUnitController extends GameController{
                 territoryComboBox.getItems().add(territory.getName());
             }
         }
-        for (int i = 1; i <= 6; i++) {
+        for (int i = 0; i <= 6; i++) {
             currentLevelComboBox.getItems().add("Level " + i);
-            targetLevelComboBox.getItems().add("Level " + i);
+            if (i >= 1) {
+                targetLevelComboBox.getItems().add("Level " + i);
+            }
         }
     }
 
     @FXML
     public void handleUpgradeButton() {
         int territory = gameContext.territoryIDMaps.get(gameContext.currentRoomID).get(territoryComboBox.getValue());
-        int currentLevel = Integer.parseInt(currentLevelComboBox.getValue());
-        int targetLevel = Integer.parseInt(targetLevelComboBox.getValue());
+        int currentLevel = Integer.parseInt(currentLevelComboBox.getValue().substring(6));
+        int targetLevel = Integer.parseInt(targetLevelComboBox.getValue().substring(6));
         UpgradeUnitRequest request = new UpgradeUnitRequest(gameContext.playerIDMap.get(gameContext.currentRoomID),
                 territory, currentLevel, max(targetLevel - currentLevel, 0));
         ActionStatus status;
@@ -46,7 +48,7 @@ public class UpgradeUnitController extends GameController{
             return;
         }
         if (!status.isSuccess()) {
-            throw new IllegalArgumentException(status.getErrorMessage());
+            gameContext.showErrorAlert("Your Upgrade command is invalid.",status.getErrorMessage());
         } else {
             sceneManager.switchTo("GameMain.fxml");
         }

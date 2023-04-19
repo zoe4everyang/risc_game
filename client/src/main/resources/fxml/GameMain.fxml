@@ -313,7 +313,7 @@
             <Font name="Times New Roman Bold" size="14.0" />
          </font>
       </Button>
-      <Button layoutX="459.0" layoutY="250.0" mnemonicParsing="false" onMouseClicked="#handleUpgradeButton" prefHeight="52.0" prefWidth="111.0" text="Switch Room" textOverrun="CLIP">
+      <Button layoutX="459.0" layoutY="250.0" mnemonicParsing="false" onMouseClicked="#handleSwitchButton" prefHeight="52.0" prefWidth="111.0" text="Switch Room" textOverrun="CLIP">
          <font>
             <Font name="Times New Roman Bold" size="14.0" />
          </font>

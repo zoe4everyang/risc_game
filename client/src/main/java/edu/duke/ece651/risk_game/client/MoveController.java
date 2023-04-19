@@ -28,7 +28,7 @@ public class MoveController extends GameController{
                 toComboBox.getItems().add(territory.getName());
             }
         }
-        for (int i = 1; i <= 6; i++) {
+        for (int i = 0; i <= 6; i++) {
             unitLevelComboBox.getItems().add("Level " + i);
         }
         unitNumTextField.setTextFormatter(integerFormatter);
@@ -36,12 +36,12 @@ public class MoveController extends GameController{
 
     @FXML
     public void handleMoveButton() {
-        int from = Integer.parseInt(fromComboBox.getValue());
-        int to = Integer.parseInt(toComboBox.getValue());
+        int from = gameContext.territoryIDMaps.get(gameContext.currentRoomID).get(fromComboBox.getValue());
+        int to = gameContext.territoryIDMaps.get(gameContext.currentRoomID).get(toComboBox.getValue());
         int unitNum = Integer.parseInt(unitNumTextField.getText());
-        int unitLevel = Integer.parseInt(unitLevelComboBox.getValue());
+        int unitLevel = Integer.parseInt(unitLevelComboBox.getValue().substring(6));
         ArrayList<Integer> units = new ArrayList<>(Collections.nCopies(6,0));
-        units.set(unitLevel - 1, unitNum);
+        units.set(unitLevel, unitNum);
         ActionRequest request = new ActionRequest(gameContext.playerIDMap.get(gameContext.currentRoomID), from, to, units);
         ActionStatus status = gameContext.httpClient.sendMove(gameContext.currentRoomID, request);
         if (!status.isSuccess()) {

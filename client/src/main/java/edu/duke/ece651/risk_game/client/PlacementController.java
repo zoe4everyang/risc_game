@@ -14,11 +14,12 @@ import javafx.scene.text.TextFlow;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class PlacementController extends UIController {
     private ArrayList<Integer> placement;
-    private ArrayList<Integer> territoryIDs;
+    //private ArrayList<Integer> territoryIDs;
     private Integer unitLeft;
     @FXML
     TextFlow unitLeftText;
@@ -57,12 +58,12 @@ public class PlacementController extends UIController {
     }
 
     public void initialize() {
-        territoryIDs = new ArrayList<>();
+        //territoryIDs = new ArrayList<>();
         ArrayList<String> territoryNames = new ArrayList<>();
         placement = new ArrayList<>(Collections.nCopies(gameContext.territoryNameMaps.get(gameContext.currentRoomID).size(), -1));
         for (Territory territory : gameContext.territories) {
             if (territory.getOwner() == gameContext.playerInfo.getPlayerID()) {
-                territoryIDs.add(territory.getID());
+                //territoryIDs.add(territory.getID());
                 territoryNames.add(territory.getName());
                 placement.set(territory.getID(), 0);
             }
@@ -70,7 +71,7 @@ public class PlacementController extends UIController {
 
         unitLeft = gameContext.unitAvailable;
         Text text = new Text(unitLeft.toString());
-        text.setStyle("-fx-font-weight: bold;");
+        //text.setStyle("-fx-font-weight: bold;");
         unitLeftText.getChildren().add(text);
 
         for (String territoryName : territoryNames) {
@@ -109,12 +110,16 @@ public class PlacementController extends UIController {
         if (num > unitLeft) {
             gameContext.showErrorAlert("Invalid Input", "You do not have enough units to place.");
         } else {
-            int index = territoryIDs.get(gameContext.territoryIDMaps.get(gameContext.currentRoomID).get(territoryName));
-            int cur = placement.get(index);
-            placement.set(index, cur + num);
+            Text testText3 = new Text(Integer.toString(gameContext.currentRoomID));
+            unitLeftText.getChildren().add(testText3);
+            HashMap<String, Integer> index1 = gameContext.territoryIDMaps.get(gameContext.currentRoomID);
+            int index2 = index1.get(territoryName);
+            int cur = placement.get(index2);
+            placement.set(index2, cur + num);
             unitLeft -= num;
             Text text = new Text(unitLeft.toString());
-            text.setStyle("-fx-font-weight: bold;");
+            //text.setStyle("-fx-font-weight: bold;");
+            unitLeftText.getChildren().clear();
             unitLeftText.getChildren().add(text);
         }
     }

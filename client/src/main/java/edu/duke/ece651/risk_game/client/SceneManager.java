@@ -26,7 +26,7 @@ public class SceneManager {
 
     public void switchTo(String fxmlFile) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + fxmlFile));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             stage.setScene(scene);

@@ -91,7 +91,7 @@ public class v1MapFactory implements MapFactory{
         Territory t11 = new v1Territory(11, "t11", 3,
                 List.of(5, 4, 4, 3, 3, 3, 2, 2, 2, 1, 1, 0),
                 30, 20, 5, new evo2CombatResolver());
-        return new v1WorldMap(3,
+        return new v1WorldMap(4,
                 List.of(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11),
                 200);
 //         throw new UnsupportedOperationException("Unimplemented method 'make4PlayerMap'");

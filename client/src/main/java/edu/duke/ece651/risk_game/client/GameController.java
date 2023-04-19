@@ -1,6 +1,7 @@
 package edu.duke.ece651.risk_game.client;
 
 import edu.duke.ece651.risk_game.shared.Territory;
+import edu.duke.ece651.risk_game.shared.Unit;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -12,6 +13,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class GameController extends UIController{
@@ -73,7 +75,10 @@ public abstract class GameController extends UIController{
         territoryList.add(territory11);
         myColor.setFill(Color.web(gameContext.colorList.get(gameContext.playerIDMap.get(gameContext.currentRoomID))));
         for (int i = 0; i < territoryList.size(); i++) {
-            territoryList.get(i).setFill(Color.web(gameContext.colorList.get(gameContext.territories.get(i).getOwner())));
+            // TODO: DEBUG
+            int ownerId = gameContext.territories.get(i).getOwner();
+            String color = gameContext.colorList.get(ownerId);
+            territoryList.get(i).setFill(Color.web(color));
         }
         Text roomIDText = new Text(gameContext.currentRoomID.toString());
         roomIDTextFlow.getChildren().add(roomIDText);
@@ -85,8 +90,9 @@ public abstract class GameController extends UIController{
         foodPointTextFlow.getChildren().add(foodPointText);
         territoryInfo.setStyle("-fx-table-header-visible: false;");
 
-        Entry territoryNameEntry = new Entry("Territory Name", null);
+        Entry territoryNameEntry = new Entry("Name", null);
         Entry ownerEntry = new Entry("Owner", null);
+        Entry levelZeroEntry = new Entry("Level0 Unit", null);
         Entry levelOneEntry = new Entry("Level1 Unit", null);
         Entry levelTwoEntry = new Entry("Level2 Unit", null);
         Entry levelThreeEntry = new Entry("Level3 Unit", null);
@@ -96,7 +102,7 @@ public abstract class GameController extends UIController{
         Entry techProductionEntry = new Entry("Tech Production", null);
         Entry foodProductionEntry = new Entry("Food Production", null);
         Entry territorySizeEntry = new Entry("Territory Size", null);
-        territoryInfo.getItems().addAll(territoryNameEntry, ownerEntry, levelOneEntry, levelTwoEntry, levelThreeEntry,
+        territoryInfo.getItems().addAll(territoryNameEntry, ownerEntry, levelZeroEntry, levelOneEntry, levelTwoEntry, levelThreeEntry,
                 levelFourEntry, levelFiveEntry, levelSixEntry, techProductionEntry, foodProductionEntry,
                 territorySizeEntry);
 
@@ -128,7 +134,17 @@ public abstract class GameController extends UIController{
         //Troop troop = territory.getTroop();
         updateList.add(territory.getName());
         updateList.add(gameContext.playerList.get(territory.getOwner()));
-        //加上军队信息
+        List<Integer> levelList = new ArrayList<>(Collections.nCopies(7, 0));
+        for (Unit u : territory.getTroop().getUnits()) {
+            levelList.set(u.getLevel(), levelList.get(u.getLevel()) + 1);
+        }
+        updateList.add(Integer.toString(levelList.get(0)));
+        updateList.add(Integer.toString(levelList.get(1)));
+        updateList.add(Integer.toString(levelList.get(2)));
+        updateList.add(Integer.toString(levelList.get(3)));
+        updateList.add(Integer.toString(levelList.get(4)));
+        updateList.add(Integer.toString(levelList.get(5)));
+        updateList.add(Integer.toString(levelList.get(6)));
         updateList.add(Integer.toString(territory.getFoodProduction()));
         updateList.add(Integer.toString(territory.getTechProduction()));
         updateList.add(Integer.toString(territory.getCost()));

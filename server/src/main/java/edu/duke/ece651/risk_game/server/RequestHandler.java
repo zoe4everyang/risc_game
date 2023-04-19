@@ -43,7 +43,7 @@ public class RequestHandler {
             }
         }
         List<Territory> territories = controller.getTerritories();
-        Message response = new Response(msg.getPlayerInfo(), territories, false, false, usernameList);
+        Message response = new Response(controller.getPlayerInfo(msg.getPlayerInfo().getPlayerID()), territories, false, false, usernameList);
         return response;
     }
 

@@ -2,7 +2,6 @@ package edu.duke.ece651.risk_game.server;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -20,7 +19,7 @@ public class RISCServer {
      * Constructor
      */
     public RISCServer() {
-        this.playerNum = 3;
+        this.playerNum = 4;
         roomSelectionHandler = new RoomSelectionHandler(playerNum);
     }
 

@@ -201,8 +201,8 @@ public class InputController {
      */
     private void placementPhase(Response initResponse) throws IOException {
         HashMap<Integer, String> territoryNameMap = territoryNameMaps.get(currentRoomID);
-        Integer playerID = playerIDMap.get(currentRoomID);
-
+        int playerID = playerIDMap.get(currentRoomID);
+        //System.out.println("playerID" + playerID);
         riscViewer.placePrompt(initResponse, territoryNameMap);
         ArrayList<Integer> territoryIDs = new ArrayList<>();
         for (Territory territory : initResponse.getTerritories()) {
@@ -281,7 +281,7 @@ public class InputController {
             if (actionPhase("A")) {
                 return false;
             }
-            response = httpClient.sendCommit(currentRoomID);
+            response = httpClient.sendCommit(currentRoomID, playerIDMap.get(currentRoomID));
             gameEnd = response.isEnd();
             failTheGame = response.isLose();
             riscViewer.displayTheWorld(response, territoryNameMaps.get(currentRoomID));
@@ -322,7 +322,7 @@ public class InputController {
                 error = true;
             }
         } while (error);
-        return false;
+        return true;
     }
 
     private boolean upgradeUnitPhase() {
@@ -332,7 +332,7 @@ public class InputController {
             do {
                 error = false;
                 try {
-                    System.out.println("Please input action command:");
+                    System.out.println("Please input UU command:");
                     command = readCommand();
                     String commandType = command[0];
                     if (Objects.equals(commandType, "S") && command.length == 1) {
@@ -367,7 +367,7 @@ public class InputController {
             do {
                 error = false;
                 try {
-                    System.out.println("Please input action command:");
+                    System.out.println("Player " + playerIDMap.get(currentRoomID) + "Please input action command:");
                     command = readCommand();
                     String commandType = command[0];
                     if (Objects.equals(commandType, "S") && command.length == 1) {

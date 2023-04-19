@@ -1,6 +1,9 @@
 package edu.duke.ece651.risk_game.shared;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ActionStatus {
     private final boolean success;
     //private final Integer errorCode;

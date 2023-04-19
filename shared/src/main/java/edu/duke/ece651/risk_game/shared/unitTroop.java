@@ -2,12 +2,16 @@ package edu.duke.ece651.risk_game.shared;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class unitTroop implements Troop{
     private int owner;
     private List<Unit> units;
 
-    public unitTroop(int owner, List<Unit> units) {
+    @JsonCreator
+    public unitTroop(@JsonProperty("owner") int owner,
+                     @JsonProperty("units") List<Unit> units) {
         this.owner = owner;
         this.units = new ArrayList<>();
         for (Unit unit : units) {

@@ -20,9 +20,11 @@ public abstract class GameController extends UIController{
     @FXML
     Rectangle myColor;
     @FXML
-    TextFlow TechPointTextFlow;
+    TextFlow techLevelTextFlow;
     @FXML
-    TextFlow FoodPointTextFlow;
+    TextFlow techPointTextFlow;
+    @FXML
+    TextFlow foodPointTextFlow;
     @FXML
     TableView<Entry> territoryInfo;
     @FXML
@@ -75,10 +77,12 @@ public abstract class GameController extends UIController{
         }
         Text roomIDText = new Text(gameContext.currentRoomID.toString());
         roomIDTextFlow.getChildren().add(roomIDText);
+        Text techLevelText = new Text(gameContext.playerInfo.getTechLevel().toString());
+        techLevelTextFlow.getChildren().add(techLevelText);
         Text techPointText = new Text(gameContext.playerInfo.getResource().getTechPoint().toString());
-        roomIDTextFlow.getChildren().add(techPointText);
+        techPointTextFlow.getChildren().add(techPointText);
         Text foodPointText = new Text(gameContext.playerInfo.getResource().getFoodPoint().toString());
-        roomIDTextFlow.getChildren().add(foodPointText);
+        foodPointTextFlow.getChildren().add(foodPointText);
         territoryInfo.setStyle("-fx-table-header-visible: false;");
 
         Entry territoryNameEntry = new Entry("Territory Name", null);

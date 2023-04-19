@@ -28,7 +28,7 @@ public class GameMainController extends GameController{
         sceneManager.switchTo("Upgrade.fxml");
     }
     @FXML
-    public void handleSwitchButton(){
+    public void c(){
         sceneManager.switchTo("RoomSelect.fxml");
     }
     @FXML

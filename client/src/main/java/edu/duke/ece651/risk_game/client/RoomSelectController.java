@@ -37,7 +37,6 @@ public class RoomSelectController extends UIController{
             gameContext.errorAlert.setContentText("Error while getting room list: " + e.getMessage());
             gameContext.errorAlert.showAndWait();
         }
-        // TODO: print room ID list to GUI
     }
 
     @FXML

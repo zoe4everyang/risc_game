@@ -6,20 +6,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" fx:controller="edu.duke.ece651.risk_game.client.DefeatController" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.risk_game.client.DefeatController">
    <children>
       <ImageView fitHeight="400.0" fitWidth="600.0" layoutY="-1.0">
          <image>
             <Image url="@Lose.jpg" />
          </image>
       </ImageView>
-      <Button layoutX="238.0" layoutY="337.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="114.0" text="Quit">
+      <Button layoutX="238.0" layoutY="337.0" mnemonicParsing="false" onMouseClicked="#handleExitButton" prefHeight="23.0" prefWidth="114.0" text="Quit">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button layoutX="238.0" layoutY="296.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="114.0" text="Continue">
+      <Button layoutX="238.0" layoutY="296.0" mnemonicParsing="false" onMouseClicked="#handleContinueButton" prefHeight="23.0" prefWidth="114.0" text="Continue">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

@@ -9,7 +9,6 @@ import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 
 public class AttackController extends GameController{
     @FXML
@@ -31,14 +30,13 @@ public class AttackController extends GameController{
             }
         }
         for (int i = 1; i <= 6; i++) {
-            unitLevelComboBox.getItems().add("Level " + String.valueOf(i));
+            unitLevelComboBox.getItems().add("Level " + i);
         }
         unitNumTextField.setTextFormatter(integerFormatter);
     }
 
     @FXML
     public void handleAttackButton() {
-        HashMap<String, Integer> territoryIDMap = gameContext.territoryIDMaps.get(gameContext.currentRoomID);
         int from = Integer.parseInt(fromComboBox.getValue());
         int to = Integer.parseInt(toComboBox.getValue());
         int unitNum = Integer.parseInt(unitNumTextField.getText());

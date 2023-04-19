@@ -4,15 +4,17 @@ import edu.duke.ece651.risk_game.shared.PlacementRequest;
 import edu.duke.ece651.risk_game.shared.Response;
 import edu.duke.ece651.risk_game.shared.Territory;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class PlacementController extends UIController {
     private ArrayList<Integer> placement;
@@ -25,9 +27,30 @@ public class PlacementController extends UIController {
     @FXML
     TextField unitTextField;
     @FXML
-    Button place;
+    Polygon territory0;
     @FXML
-    Button finish;
+    Polygon territory1;
+    @FXML
+    Polygon territory2;
+    @FXML
+    Polygon territory3;
+    @FXML
+    Polygon territory4;
+    @FXML
+    Polygon territory5;
+    @FXML
+    Polygon territory6;
+    @FXML
+    Polygon territory7;
+    @FXML
+    Polygon territory8;
+    @FXML
+    Polygon territory9;
+    @FXML
+    Polygon territory10;
+    @FXML
+    Polygon territory11;
+    List<Polygon> territoryList;
 
     public PlacementController() {
         super();
@@ -54,6 +77,28 @@ public class PlacementController extends UIController {
             territoryComboBox.getItems().add(territoryName);
         }
         unitTextField.setTextFormatter(integerFormatter);
+
+        territoryList = new ArrayList<>();
+        territoryList.add(territory0);
+        territoryList.add(territory1);
+        territoryList.add(territory2);
+        territoryList.add(territory3);
+        territoryList.add(territory4);
+        territoryList.add(territory5);
+        territoryList.add(territory6);
+        territoryList.add(territory7);
+        territoryList.add(territory8);
+        territoryList.add(territory9);
+        territoryList.add(territory10);
+        territoryList.add(territory11);
+        for (int i = 0; i < territoryList.size(); i++) {
+            if (gameContext.territories.get(i).getOwner() == gameContext.playerInfo.getPlayerID()) {
+                territoryList.get(i).setFill(Color.web("#00FF80"));
+            } else {
+                territoryList.get(i).setFill(Color.web("#A0A0A0"));
+            }
+        }
+
         gameContext.showInfoAlert("Placement Phase", "You have " + gameContext.unitAvailable + " units to place.");
     }
 

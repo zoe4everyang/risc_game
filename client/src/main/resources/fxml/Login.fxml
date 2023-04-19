@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" fx:controller="edu.duke.ece651.risk_game.client.LoginController" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" fx:controller="edu.duke.ece651.risk_game.client.LoginController" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
       <SplitPane dividerPositions="0.3779264214046823" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -32,11 +32,11 @@
                         <Font name="Times New Roman Bold" size="18.0" />
                      </font>
                   </Text>
-                  <Button layoutX="128.0" layoutY="262.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="92.0" text="Login" textFill="#2f0202" />
-                  <TextArea layoutX="109.0" layoutY="133.0" prefHeight="37.0" prefWidth="231.0" />
+                  <Button layoutX="128.0" layoutY="262.0" mnemonicParsing="false" onMouseClicked="#handleLoginButton" prefHeight="42.0" prefWidth="92.0" text="Login" textFill="#2f0202" />
+                  <TextArea fx:id="usernameField" layoutX="109.0" layoutY="133.0" prefHeight="37.0" prefWidth="231.0" />
                   <Text layoutX="49.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Account" />
                   <Text layoutX="46.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
-                  <PasswordField layoutX="109.0" layoutY="199.0" prefHeight="37.0" prefWidth="231.0" />
+                  <PasswordField fx:id="passwordField" layoutX="109.0" layoutY="199.0" prefHeight="37.0" prefWidth="231.0" />
                </children>
             </AnchorPane>
         </items>

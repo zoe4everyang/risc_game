@@ -25,8 +25,8 @@ public class UpgradeUnitController extends GameController{
             }
         }
         for (int i = 1; i <= 6; i++) {
-            currentLevelComboBox.getItems().add("Level " + String.valueOf(i));
-            targetLevelComboBox.getItems().add("Level " + String.valueOf(i));
+            currentLevelComboBox.getItems().add("Level " + i);
+            targetLevelComboBox.getItems().add("Level " + i);
         }
     }
 

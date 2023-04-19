@@ -1,4 +1,6 @@
 package edu.duke.ece651.risk_game.shared;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Unit {
     private String name;
@@ -12,7 +14,10 @@ public class Unit {
         unitIdCounter++;
     }
 
-    public Unit(String name, int level, int unitId) {
+    @JsonCreator
+    public Unit(@JsonProperty("name") String name,
+                @JsonProperty("level") int level,
+                @JsonProperty("unitId") int unitId) {
         this.name = name;
         this.level = level;
         this.unitId = unitId;

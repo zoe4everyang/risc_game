@@ -93,6 +93,7 @@ public class RoomSelectionHandler {
                     threadsListForAll.get(roomId).notifyAll();
                     threadsListForAll.remove(roomId); // clear threads in this room
                 }
+
                 Message response = newGame(roomId, username);
                 allUserRoomList.get(username).put(roomId, response.getPlayerInfo().getPlayerID());
                 System.out.println("after new game" + requestHandlerList.size());
@@ -117,9 +118,25 @@ public class RoomSelectionHandler {
         if(!requestHandlerList.containsKey(roomId)){
             requestHandlerList.put(roomId, new RequestHandler(playerNum));
         }
+        playerID = count.get();
+        count.incrementAndGet();
+//        if(count.get() < playerNum) {
+//            while (count.get() < playerNum) {
+//                wait();
+//            }
+//        }else{
+        requestHandlerList.put(roomId, new RequestHandler(playerNum));
+            // only notify players in this room
+//            for(Thread thread : threadsListForAll.get(roomId)){
+//                thread.notify();
+//            }
+        //threadsListForAll.remove(roomId); // clear threads in this room
+//        }
+        System.out.println("Here1");
         Controller newController = requestHandlerList.get(roomId).getController();
         int unitAvailable = newController.getUnitAvailable();
         List<Territory> territories = newController.getTerritories();
+        System.out.println("Here2");
         PlayerInfo playerInfo = newController.getPlayerInfo(playerID);
         Message response = new Response(playerInfo, territories, false, false, playerList, unitAvailable);
         return response;

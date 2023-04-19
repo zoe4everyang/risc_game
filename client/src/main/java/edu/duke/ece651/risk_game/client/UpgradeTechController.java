@@ -22,7 +22,7 @@ public class UpgradeTechController extends GameController{
         if (!status.isSuccess()) {
             throw new IllegalArgumentException(status.getErrorMessage());
         } else {
-            sceneManager.switchTo("Game.fxml");
+            sceneManager.switchTo("GameMain.fxml");
         }
     }
 

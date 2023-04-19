@@ -236,7 +236,7 @@ public class RoomSelectionHandler {
     }
 
     private void checkRoomEnd(int roomID){
-        // TODO
+        //
         if(requestHandlerList.get(roomID).getController().checkEnd()){
             List<String> userList = getAllUsersInRoom(roomID);
             for(String username : userList){

@@ -75,10 +75,10 @@ public abstract class GameController extends UIController{
         territoryList.add(territory11);
         myColor.setFill(Color.web(gameContext.colorList.get(gameContext.playerIDMap.get(gameContext.currentRoomID))));
         for (int i = 0; i < territoryList.size(); i++) {
-            // TODO: DEBUG
             int ownerId = gameContext.territories.get(i).getOwner();
             String color = gameContext.colorList.get(ownerId);
-            territoryList.get(i).setFill(Color.web(color));
+            Polygon t = territoryList.get(i);
+            t.setFill(Color.web(color));
         }
         Text roomIDText = new Text(gameContext.currentRoomID.toString());
         roomIDTextFlow.getChildren().add(roomIDText);

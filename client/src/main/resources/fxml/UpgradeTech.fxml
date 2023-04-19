@@ -163,7 +163,7 @@
                   <Double fx:value="-25.98" />
                </points>
             </Polygon>
-            <Polygon fx:id="territory9" fill="DODGERBLUE" layoutX="231.0" layoutY="187.0" onMouseClicked="#handleTerritory8Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+            <Polygon fx:id="territory8" fill="DODGERBLUE" layoutX="231.0" layoutY="187.0" onMouseClicked="#handleTerritory8Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
                <points>
                   <Double fx:value="30.0" />
                   <Double fx:value="0.0" />

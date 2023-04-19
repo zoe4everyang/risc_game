@@ -84,6 +84,7 @@ public class RISCClient {
     }
 
     public Response joinRoom(String username, Integer roomID) throws IOException {
+        System.out.println("join room username" + username);
         //HttpPost request = new HttpPost(serverURL + "/join/{" + roomID + "}");
         HttpPost request = new HttpPost(serverURL + "/join/" + roomID);
         HashMap<String, Object> requestBody = new HashMap<>();

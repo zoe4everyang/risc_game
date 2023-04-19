@@ -41,21 +41,20 @@ public class Response extends Message {
         this.unitAvailable = unitAvailable;
     }
 
-    @JsonCreator
-    public Response(@JsonProperty("playerInfo") PlayerInfo playerInfo,
-                    @JsonProperty("territories") List<Territory> territories,
-                    @JsonProperty("lose") Boolean lose,
-                    @JsonProperty("end") Boolean end,
-                    @JsonProperty("playerList") List<String> playerList) {
+    public Response( PlayerInfo playerInfo,
+                     List<Territory> territories,
+                     Boolean lose,
+                     Boolean end,
+                     List<String> playerList) {
         this(playerInfo, territories, lose, end, playerList, -1);
     }
 
-    @JsonCreator
-    public Response(@JsonProperty("playerID") int playerID,
-                    @JsonProperty("territories") List<Territory> territories,
-                    @JsonProperty("lose") Boolean lose,
-                    @JsonProperty("end") Boolean end,
-                    @JsonProperty("playerList") List<String> playerList) {
+
+    public Response( int playerID,
+                     List<Territory> territories,
+                     Boolean lose,
+                     Boolean end,
+                     List<String> playerList) {
         super(playerID);
         this.territories = new ArrayList<>();
         this.territories.addAll(territories);
@@ -64,6 +63,29 @@ public class Response extends Message {
         this.playerList = playerList;
         this.unitAvailable = -1;
     }
+//    @JsonCreator
+//    public Response(@JsonProperty("playerInfo") PlayerInfo playerInfo,
+//                    @JsonProperty("territories") List<Territory> territories,
+//                    @JsonProperty("lose") Boolean lose,
+//                    @JsonProperty("end") Boolean end,
+//                    @JsonProperty("playerList") List<String> playerList) {
+//        this(playerInfo, territories, lose, end, playerList, -1);
+//    }
+//
+//    @JsonCreator
+//    public Response(@JsonProperty("playerID") int playerID,
+//                    @JsonProperty("territories") List<Territory> territories,
+//                    @JsonProperty("lose") Boolean lose,
+//                    @JsonProperty("end") Boolean end,
+//                    @JsonProperty("playerList") List<String> playerList) {
+//        super(playerID);
+//        this.territories = new ArrayList<>();
+//        this.territories.addAll(territories);
+//        this.lose = lose;
+//        this.end = end;
+//        this.playerList = playerList;
+//        this.unitAvailable = -1;
+//    }
 
 
     // This method is used to get the list of territories that the player owns.

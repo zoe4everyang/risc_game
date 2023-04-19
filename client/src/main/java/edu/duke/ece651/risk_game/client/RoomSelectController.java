@@ -70,6 +70,9 @@ public class RoomSelectController extends UIController{
         assert response != null;
         gameContext.currentRoomID = roomID;
         if (!gameContext.playerIDMap.containsKey(roomID)) {
+            if (response.getPlayerInfo() != null) {
+                System.out.println("The info is not null!!!!");
+            }
             gameContext.playerIDMap.put(roomID, response.getPlayerInfo().getPlayerID());
         }
         if (!gameContext.territoryNameMaps.containsKey(roomID)) {

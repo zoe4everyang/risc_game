@@ -22,9 +22,11 @@ public class PreGameListener extends RISCServer {
         return null;
     }
 
-    @GetMapping("/roomId")
-    public Iterable<Integer> getRoomListListen(@RequestBody HashMap<String,String> username) {
-        return roomSelectionHandler.getRoomList(username.get("username"));
+    @PostMapping("/roomId")
+    public Iterable<Integer> getRoomListListen(@RequestBody HashMap<String, String> username) {
+        String name = username.get("username");
+        System.out.println(name);
+        return roomSelectionHandler.getRoomList(name);
     }
     @PostMapping("/join/{roomId}")
     public Message joinRoomListen(@PathVariable("roomId") int roomId, @RequestBody String username) {

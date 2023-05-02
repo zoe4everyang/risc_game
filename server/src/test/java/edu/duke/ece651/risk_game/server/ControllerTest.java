@@ -8,6 +8,28 @@ import edu.duke.ece651.risk_game.shared.*;
 import org.junit.jupiter.api.Test;
 
 public class ControllerTest {
+    @Test 
+    public void test_cacheUpgradeSpy() {
+        Controller controller = new Controller(4);
+        controller.initGame(List.of(5, 5, 5, 5, 100, 10, 10, 10, 10, 10, 100, 10));
+        // assert troop size in 0 is 5
+        assertEquals(5, controller.getTerritories().get(0).getTroopSize());
+        // assert init tech point 100
+        assertEquals(100, controller.getPlayers().get(0).getTechPoint());
+        // assert init can spy false
+        assertFalse(controller.getPlayers().get(0).hasSpy());
+        controller.cacheUpgradeSpy(0, 0, 0);
+        // assert tech point 80
+        assertEquals(80, controller.getPlayers().get(0).getTechPoint());
+        // assert spy position at 0
+        assertEquals(0, controller.getPlayers().get(0).getSpyPos());
+        // assert has spy true
+        assertTrue(controller.getPlayers().get(0).hasSpy());
+        // assert troop size at 0 is 4
+        assertEquals(4, controller.getTerritories().get(0).getTroopSize());
+
+
+    }
     @Test
     public void test_upgradeCloak() {
         Controller controller = new Controller(4);

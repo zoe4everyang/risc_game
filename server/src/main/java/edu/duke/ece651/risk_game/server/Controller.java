@@ -385,6 +385,24 @@ public class Controller {
     }
 
 
+    public Boolean cacheUpgradeSpy(int playerId, int territoryId, int level) {
+        if (players.get(playerId).getTechLevel() >= 1 &&
+                players.get(playerId).getTechPoint() >= 20) {
+            // remove a unit with tge given level from the territory
+            List<Unit> units = getUnitsByLevel(territoryId, level, 1);
+            if (units.size() == 0) {
+                return false;
+            }
+            territories.get(territoryId).getTroop().removeTroop(new unitTroop(playerId,
+                    List.of(units.get(0))));
+            cSetSpyPos(playerId, territoryId);
+            players.get(playerId).reduceTechPoint(20);
+            return true;
+        }
+        return false;
+    }
+
+
 
 
 

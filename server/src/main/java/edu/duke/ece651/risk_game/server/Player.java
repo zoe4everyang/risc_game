@@ -14,6 +14,8 @@ public class Player {
     private int playerId;
     private String playerName;
     private int tech_level;
+
+    private Boolean canCloak;
     private Boolean pendingUpdate;
 
     private ArrayList<Boolean> visible;
@@ -30,6 +32,7 @@ public class Player {
         this.resource = resource;
         this.tech_level = 1;
         this.pendingUpdate = false;
+        this.canCloak = false;
         // array list with all false and length numTerritory
         this.visible = new ArrayList<>();
         this.visited = new ArrayList<>();
@@ -115,6 +118,14 @@ public class Player {
 
     public void setSpyPos(int pos) {
         spyPosition = pos;
+    }
+
+    public void setCanCloak(Boolean canCloak) {
+        this.canCloak = canCloak;
+    }
+
+    public Boolean getCanCloak() {
+        return canCloak;
     }
 
 

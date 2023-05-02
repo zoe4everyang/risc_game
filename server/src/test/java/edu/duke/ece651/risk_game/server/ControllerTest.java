@@ -8,7 +8,34 @@ import edu.duke.ece651.risk_game.shared.*;
 import org.junit.jupiter.api.Test;
 
 public class ControllerTest {
+    @Test
+    public void test_upgradeCloak() {
+        Controller controller = new Controller(4);
+        // assert init tech point 100
+        assertEquals(100, controller.getPlayers().get(0).getTechPoint());
+        // assert init can Cloak false
+        assertFalse(controller.getPlayers().get(0).getCanCloak());
+        controller.cacheUpgradeCloak(0);
+        // assert tech point 100 due to insufficient tech Level
+        assertEquals(100, controller.getPlayers().get(0).getTechPoint());
+        // assert can cloak false
+        assertFalse(controller.getPlayers().get(0).getCanCloak());
+        // wait to generate some resources
+        for (int i = 0; i < 50; ++i) {
+            controller.commit();
+        }
+        for (int i = 0; i < 5; ++i) {
+            controller.cacheUpgradeTechnology(0);
+            controller.commit();
+        }
+        assertEquals(725, controller.getPlayers().get(0).getTechPoint());
+        assertEquals(6, controller.getPlayers().get(0).getTechLevel());
+        assertFalse(controller.getPlayers().get(0).getCanCloak());
+        controller.cacheUpgradeCloak(0);
+        assertTrue(controller.getPlayers().get(0).getCanCloak());
+        assertEquals(625, controller.getPlayers().get(0).getTechPoint());
 
+    }
     @Test
     public void test_visibility() {
         // construct a controller

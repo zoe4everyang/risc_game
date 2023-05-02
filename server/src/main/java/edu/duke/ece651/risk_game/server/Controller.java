@@ -18,6 +18,7 @@ public class Controller {
     private List<Territory> territories;
     private final int cloakRounds = 3;
     private final int cloakCost = 20;
+    private final int upgradeCloakCost = 100;
     private ArrayList<Action> moveCache = new ArrayList<>();
     private ArrayList<Action> attackCache = new ArrayList<>();
 
@@ -342,7 +343,7 @@ public class Controller {
         // generate new units
         return true;
     }
-    
+
     public PlayerInfo getPlayerInfo(int playerId) {
         return new PlayerInfo(playerId,
                 new Resource(players.get(playerId).getTechPoint(),
@@ -369,6 +370,18 @@ public class Controller {
 
     public void cSetSpyPos(int playerId, int spyPos) {
         players.get(playerId).setSpyPos(spyPos);
+    }
+
+
+    public Boolean cacheUpgradeCloak(int playerId) {
+        if (players.get(playerId).getTechLevel() >= 3 &&
+                players.get(playerId).getTechPoint() >= 100) {
+            players.get(playerId).setCanCloak(true);
+            // reduce tech point by 100
+            players.get(playerId).reduceTechPoint(100);
+            return true;
+        }
+        return false;
     }
 
 

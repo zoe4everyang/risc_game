@@ -7,6 +7,41 @@
 POST /act/upspy/
 ```
 
+##### Request Format
+
+| Parameter name | type   | comments                                           |
+| -------------- | ------ | -------------------------------------------------- |
+| username       | String | username, unique for one player                    |
+| roomids        | []int  | roomid available to join for the player            |
+| TerritoryId    | int    | The territory where the unit to be upgraded locate |
+| UnitLevel      | int    | The level of unit to be upgraded                   |
+
+```json
+{
+    "Username": "qf37",
+    "roomId": 1,
+    "TerritoryId": 0,
+    "UnitLevel":2 
+}
+```
+
+##### Response Format 
+
+| Parameter name | type | comments                         |
+| -------------- | ---- | -------------------------------- |
+| Success        | bool | Indicate if the operation succed |
+| ErrorCode      | int  | Error code to classify the error |
+| Information    | int  | Information related              |
+
+
+```json
+{
+    "Success" : False,
+    "ErrorCode" : 5,
+    "Information" :  "Insufficient Resources",
+}
+```
+
 
 
 #### Move Spy
@@ -15,6 +50,41 @@ POST /act/upspy/
 
 ```http
 POST /act/movespy/
+```
+
+##### Request Format
+
+| Parameter name | type   | comments                                |
+| -------------- | ------ | --------------------------------------- |
+| username       | String | username, unique for one player         |
+| roomids        | []int  | roomid available to join for the player |
+| target         | int    | The target territory to move            |
+
+```json
+{
+    "Username": "qf37",
+    "roomId": 1,
+	"target": 1,
+}
+```
+
+##### 
+
+##### Response Format 
+
+| Parameter name | type | comments                         |
+| -------------- | ---- | -------------------------------- |
+| Success        | bool | Indicate if the operation succed |
+| ErrorCode      | int  | Error code to classify the error |
+| Information    | int  | Information related              |
+
+
+```json
+{
+    "Success" : False,
+    "ErrorCode" : 5,
+    "Information" :  "Target not adjacent to current position",
+}
 ```
 
 
@@ -27,6 +97,41 @@ POST /act/movespy/
 POST /act/upcloak/
 ```
 
+##### Request Format
+
+| Parameter name | type   | comments                                |
+| -------------- | ------ | --------------------------------------- |
+| username       | String | username, unique for one player         |
+| roomids        | []int  | roomid available to join for the player |
+
+```json
+{
+    "Username": "qf37",
+    "roomId": 1,
+}
+```
+
+##### 
+
+##### Response Format 
+
+| Parameter name | type | comments                         |
+| -------------- | ---- | -------------------------------- |
+| Success        | bool | Indicate if the operation succed |
+| ErrorCode      | int  | Error code to classify the error |
+| Information    | int  | Information related              |
+
+
+```json
+{
+    "Success" : False,
+    "ErrorCode" : 5,
+    "Information" :  "Insufficient Resources",
+}
+```
+
+
+
 
 
 #### Set Cloak
@@ -36,7 +141,40 @@ POST /act/upcloak/
 POST /act/setcloak/
 ```
 
+##### Request Format
 
+| Parameter name | type   | comments                                |
+| -------------- | ------ | --------------------------------------- |
+| username       | String | username, unique for one player         |
+| roomids        | []int  | roomid available to join for the player |
+| TerritoryId    | int    | The territory to be cloaked             |
+
+```json
+{
+    "Username": "qf37",
+    "roomId": 1,
+    "TerritoryId": 0,
+}
+```
+
+##### 
+
+##### Response Format 
+
+| Parameter name | type | comments                         |
+| -------------- | ---- | -------------------------------- |
+| Success        | bool | Indicate if the operation succed |
+| ErrorCode      | int  | Error code to classify the error |
+| Information    | int  | Information related              |
+
+
+```json
+{
+    "Success" : False,
+    "ErrorCode" : 5,
+    "Information" :  "Insufficient Resources",
+}
+```
 
 #### Move Commit
 

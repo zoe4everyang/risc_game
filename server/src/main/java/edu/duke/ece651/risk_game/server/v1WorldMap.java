@@ -217,6 +217,11 @@ public class v1WorldMap implements WorldMap{
         return false;
     }
 
+    @Override
+    public void setCloak(int id, int cloak) {
+        map.get(id).setCloak(cloak);
+    }
+
     // attack given territory by troop t
     @Override
     public Boolean makeAttack(int to, Troop t) {

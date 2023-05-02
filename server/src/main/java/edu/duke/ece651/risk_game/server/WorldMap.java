@@ -30,4 +30,6 @@ public interface WorldMap {
 
     public int getUnitAvailable();
     public Boolean checkOnMap(int id);
+
+    public void setCloak(int id, int cloak);
 }

@@ -16,7 +16,8 @@ public class Controller {
     private WorldMap world;
     private List<Player> players = new ArrayList<>();
     private List<Territory> territories;
-
+    private final int cloakRounds = 3;
+    private final int cloakCost = 20;
     private ArrayList<Action> moveCache = new ArrayList<>();
     private ArrayList<Action> attackCache = new ArrayList<>();
 
@@ -53,12 +54,52 @@ public class Controller {
         } else {
             throw new IllegalArgumentException("Invalid number of players");
         }
-        for (int i = 0; i < numPlayers; i++) {
-            players.add(new Player(i, "p" + i, new Resource(100, 100)));
-        }
         this.territories = world.getTerritories();
+        for (int i = 0; i < numPlayers; i++) {
+            players.add(new Player(i, "p" + i, new Resource(100, 100),
+                    this.world.getNumTerritories()));
+        }
+        for (int i = 0; i < numPlayers; i++) {
+            initPlayerVisibility(i);
+        }
+
+
+    }
+    protected void initPlayerVisibility(int playerId) {
+        // set the territory owned by player Id to visible
+        for (Territory t : territories) {
+            if (t.getOwner() == playerId) {
+                players.get(playerId).setVisible(t.getID());
+                players.get(playerId).setVisited(t.getID());
+            }
+        }
+        // set the territory neighbor to visible
+        for (Territory t : territories) {
+            if (t.getOwner() == playerId) {
+                for (int neighborId : t.getNeighbours()) {
+                    players.get(playerId).setVisible(neighborId);
+                    players.get(playerId).setVisited(neighborId);
+                }
+            }
+        }
     }
 
+
+    protected void resetVisibility(int playerId) {
+        initPlayerVisibility(playerId);
+        // set cloaked territory to invisible
+        for (Territory t : territories) {
+            if (t.getCloak() > 0) {
+                players.get(playerId).setInvisible(t.getID());
+            }
+        }
+        // set spy territory to visible
+        if (players.get(playerId).hasSpy()) {
+            players.get(playerId).setVisible(players.get(playerId).getSpyPos());
+            players.get(playerId).setVisited(players.get(playerId).getSpyPos());
+        }
+
+    }
     /**
      * Constructor
      * @param territories list of territories
@@ -298,6 +339,7 @@ public class Controller {
         return true;
     }
 
+    // TODO: update plyaerInfo so that it contains visibility and cloaking and spy information
     public PlayerInfo getPlayerInfo(int playerId) {
         return new PlayerInfo(playerId,
                 new Resource(players.get(playerId).getTechPoint(),
@@ -311,6 +353,14 @@ public class Controller {
             troopInfo.add(u.getLevel());
         }
         return troopInfo;
+    }
+
+    public void cSetCloak(int territoryId) {
+            world.setCloak(territoryId, cloakRounds);
+    }
+
+    public void cSetSpyPos(int playerId, int spyPos) {
+        players.get(playerId).setSpyPos(spyPos);
     }
 
 

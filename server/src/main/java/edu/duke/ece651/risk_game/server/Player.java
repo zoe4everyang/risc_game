@@ -3,6 +3,8 @@ package edu.duke.ece651.risk_game.server;
 import edu.duke.ece651.risk_game.shared.Resource;
 import edu.duke.ece651.risk_game.shared.Territory;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -14,15 +16,27 @@ public class Player {
     private int tech_level;
     private Boolean pendingUpdate;
 
+    private ArrayList<Boolean> visible;
+
+    private ArrayList<Boolean> visited;
+
+
     private int spyPosition;
 
-    public Player(int playerId, String playerName, Resource resource) {
+    public Player(int playerId, String playerName, Resource resource, int numTerritory) {
         this.playerId = playerId;
         this.playerName = playerName;
         this.spyPosition = -1;
         this.resource = resource;
         this.tech_level = 1;
         this.pendingUpdate = false;
+        // array list with all false and length numTerritory
+        this.visible = new ArrayList<>();
+        this.visited = new ArrayList<>();
+        for (int i = 0; i < numTerritory; i++) {
+            this.visible.add(false);
+            this.visited.add(false);
+        }
     }
 
     public Boolean upgradeTechLevel(Map<Integer, Integer> updateRequirement){
@@ -47,7 +61,13 @@ public class Player {
     public int getTechLevel() {
         return tech_level;
     }
+    public void setVisible(int terrId) {
+        visible.set(terrId, true);
+    }
 
+    public void setInvisible(int terrId) {
+        visible.set(terrId, false);
+    }
     public int getFoodPoint() {
         return resource.getFoodPoint();
     }
@@ -72,4 +92,30 @@ public class Player {
     public Boolean reduceTechPoint(int techPoint) {
         return resource.reduceTechPoint(techPoint);
     }
+
+    public Boolean hasSpy() {
+        return spyPosition != -1;
+    }
+
+    public int getSpyPos() {
+        return spyPosition;
+    }
+
+    public void setVisited(int terrId) {
+        visited.set(terrId, true);
+    }
+
+    public List<Boolean> getVisited() {
+        return visited;
+    }
+
+    public List<Boolean> getVisible() {
+        return visible;
+    }
+
+    public void setSpyPos(int pos) {
+        spyPosition = pos;
+    }
+
+
 }

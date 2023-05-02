@@ -8,6 +8,81 @@ import edu.duke.ece651.risk_game.shared.*;
 import org.junit.jupiter.api.Test;
 
 public class ControllerTest {
+    @Test
+    public void test_cacheMoveSpy() {
+        // construct a controller
+        Controller controller = new Controller(4);
+        // init game
+        controller.initGame(List.of(5, 5, 5, 5, 100, 10, 10, 10, 10, 10, 100, 10));
+
+        // upgrade spy for player 0
+        controller.cacheUpgradeSpy(0, 0, 0);
+        // only 4 troops left
+        assertEquals(4, controller.getTerritories().get(0).getTroopSize());
+        // assert spy position at 0
+        assertEquals(0, controller.getPlayers().get(0).getSpyPos());
+        // move spy to 2
+        assertTrue(controller.cacheMoveSpy(0, 2));
+        // assert spy position at 2
+        assertEquals(2, controller.getPlayers().get(0).getSpyPos());
+        // move spy to 11 and fail
+        assertFalse(controller.cacheMoveSpy(0, 11));
+        // assert spy position at 2
+        assertEquals(2, controller.getPlayers().get(0).getSpyPos());
+        // move spy to 6 
+        assertTrue(controller.cacheMoveSpy(0, 6));
+        // assert spy position at 6
+        assertEquals(6, controller.getPlayers().get(0).getSpyPos());
+        // move spy to 0 and fail
+        assertFalse(controller.cacheMoveSpy(0, 0));
+        // assert spy position at 6
+        assertEquals(6, controller.getPlayers().get(0).getSpyPos());
+        // move spy to 7
+        assertTrue(controller.cacheMoveSpy(0, 7));
+        // assert spy position at 7
+        assertEquals(7, controller.getPlayers().get(0).getSpyPos());
+
+    }
+    @Test
+    public void test_cacheSetCloak() {
+        // construct a controller
+        Controller controller = new Controller(4);
+        // wait to generate some resources
+        for (int i = 0; i < 50; ++i) {
+            controller.commit();
+        }
+        for (int i = 0; i < 5; ++i) {
+            controller.cacheUpgradeTechnology(1);
+            controller.commit();
+        }
+        // upgrade cloak
+        assertTrue(controller.cacheUpgradeCloak(1));
+        // assert visibility of player 0
+        assertTrue(controller.getPlayers().get(0).getVisible().get(0));
+        assertTrue(controller.getPlayers().get(0).getVisible().get(1));
+        assertTrue(controller.getPlayers().get(0).getVisible().get(2));
+        assertTrue(controller.getPlayers().get(0).getVisible().get(3));
+        assertTrue(controller.getPlayers().get(0).getVisible().get(4));
+        assertFalse(controller.getPlayers().get(0).getVisible().get(5));
+        assertTrue(controller.getPlayers().get(0).getVisible().get(6));
+        assertFalse(controller.getPlayers().get(0).getVisible().get(7));
+        assertFalse(controller.getPlayers().get(0).getVisible().get(8));
+        // assert tech point 625
+        assertEquals(3925, controller.getPlayers().get(1).getTechPoint());
+        assertTrue(controller.cacheSetCloak(1, 4));
+        controller.resetVisibility(0);
+        // assert visibility of player 0
+        assertTrue(controller.getPlayers().get(0).getVisible().get(0));
+        assertTrue(controller.getPlayers().get(0).getVisible().get(1));
+        assertTrue(controller.getPlayers().get(0).getVisible().get(2));
+        assertTrue(controller.getPlayers().get(0).getVisible().get(3));
+        assertFalse(controller.getPlayers().get(0).getVisible().get(4));
+        assertFalse(controller.getPlayers().get(0).getVisible().get(5));
+        assertTrue(controller.getPlayers().get(0).getVisible().get(6));
+        assertFalse(controller.getPlayers().get(0).getVisible().get(7));
+        assertFalse(controller.getPlayers().get(0).getVisible().get(8));
+
+    }
     @Test 
     public void test_cacheUpgradeSpy() {
         Controller controller = new Controller(4);

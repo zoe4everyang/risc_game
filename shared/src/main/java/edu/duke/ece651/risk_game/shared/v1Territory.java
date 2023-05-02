@@ -159,5 +159,12 @@ public class v1Territory implements Territory{
         return this.cloaked = cloak;
     }
 
+    @Override
+    public void reduceCloak() {
+        if (this.cloaked > 0) {
+            this.cloaked -= 1;
+        }
+    }
+
 
 }

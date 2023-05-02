@@ -335,12 +335,23 @@ public class Controller {
 
 
         // generate new resources
+        // generate new units
         for (Territory t : world.getTerritories()) {
             t.getTroop().addUnit(new Unit("alili", 0));
             players.get(t.getOwner()).addFoodPoint(t.getFoodProduction());
             players.get(t.getOwner()).addTechPoint(t.getTechProduction());
         }
-        // generate new units
+        // reduce cloak remains by 1
+        for (Territory t : world.getTerritories()) {
+            t.reduceCloak();
+        }
+
+        // reset visibility of all players
+        for (int i = 0; i < players.size(); ++i) {
+            resetVisibility(i);
+        }
+
+
         return true;
     }
 
@@ -399,6 +410,41 @@ public class Controller {
             players.get(playerId).reduceTechPoint(20);
             return true;
         }
+        return false;
+    }
+
+    // set the given territory to be invisible to other players
+    public Boolean cacheSetCloak(int playerId, int territoryId) {
+        if (this.territories.get(territoryId).getOwner() == playerId &&
+            this.players.get(playerId).getCanCloak() &&
+            this.players.get(playerId).getTechPoint() >= this.cloakCost) {
+                this.cSetCloak(territoryId);
+                this.players.get(playerId).reduceTechPoint(this.cloakCost);
+            return true;
+        }
+        return false;
+    }
+
+    // move spy to another territory
+    public Boolean cacheMoveSpy(int playerId, int to) {
+        // get current position of the spy
+        int from = players.get(playerId).getSpyPos();
+        try {
+            // if from and to both belongs to player and they are connected, move spy
+            if (world.getTerritories().get(to).getOwner() == playerId &&
+                    world.isConnected(from, to, playerId)) {
+                players.get(playerId).setSpyPos(to);
+                return true;
+            }
+        } catch (Exception e) {
+            ;
+        }
+        // if from and to adjacent , move spy
+        if (world.isNeighbour(from, to)) {
+            players.get(playerId).setSpyPos(to);
+            return true;
+        }
+
         return false;
     }
 

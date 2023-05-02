@@ -86,6 +86,10 @@ public class Controller {
 
 
     protected void resetVisibility(int playerId) {
+        // set visible to all false
+        for (Territory t : territories) {
+            players.get(playerId).setInvisible(t.getID());
+        }
         initPlayerVisibility(playerId);
         // set cloaked territory to invisible
         for (Territory t : territories) {
@@ -196,14 +200,14 @@ public class Controller {
         return world.getUnitAvailable();
     }
 
-    // TODO: Test this shit upgrade unit
+
     public void upgradeUnit(int playerId, int territoryId, int unitId, int amount) {
         if (territories.get(territoryId).getOwner() == playerId) {
             territories.get(territoryId).upgradeUnit(unitId, amount);
         }
     }
 
-    // TODO: Test this shit upgrade max technology
+
     public void upgradeMaxTechnology(int playerId) {
         players.get(playerId).upgradeTechLevel(updateRequirement);
         return;
@@ -338,13 +342,17 @@ public class Controller {
         // generate new units
         return true;
     }
-
-    // TODO: update plyaerInfo so that it contains visibility and cloaking and spy information
+    
     public PlayerInfo getPlayerInfo(int playerId) {
         return new PlayerInfo(playerId,
                 new Resource(players.get(playerId).getTechPoint(),
                         players.get(playerId).getFoodPoint()),
-                players.get(playerId).getTechLevel());
+                players.get(playerId).getTechLevel(),
+                players.get(playerId).getVisible(),
+                players.get(playerId).getVisited(),
+                players.get(playerId).getSpyPos(),
+                players.get(playerId).hasSpy());
+
     }
 
     public List<Integer> getTroopInfo(int territoryId) {

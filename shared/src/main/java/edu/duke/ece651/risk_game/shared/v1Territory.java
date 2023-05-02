@@ -149,5 +149,15 @@ public class v1Territory implements Territory{
         return this.troop;
     }
 
+    @Override
+    public int getCloak() {
+        return cloaked;
+    }
+
+    @Override
+    public int setCloak(int cloak) {
+        return this.cloaked = cloak;
+    }
+
 
 }

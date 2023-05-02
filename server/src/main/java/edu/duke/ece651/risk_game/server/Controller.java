@@ -16,7 +16,9 @@ public class Controller {
     private WorldMap world;
     private List<Player> players = new ArrayList<>();
     private List<Territory> territories;
-
+    private final int cloakRounds = 3;
+    private final int cloakCost = 20;
+    private final int upgradeCloakCost = 100;
     private ArrayList<Action> moveCache = new ArrayList<>();
     private ArrayList<Action> attackCache = new ArrayList<>();
 
@@ -53,12 +55,56 @@ public class Controller {
         } else {
             throw new IllegalArgumentException("Invalid number of players");
         }
-        for (int i = 0; i < numPlayers; i++) {
-            players.add(new Player(i, "p" + i, new Resource(100, 100)));
-        }
         this.territories = world.getTerritories();
+        for (int i = 0; i < numPlayers; i++) {
+            players.add(new Player(i, "p" + i, new Resource(100, 100),
+                    this.world.getNumTerritories()));
+        }
+        for (int i = 0; i < numPlayers; i++) {
+            initPlayerVisibility(i);
+        }
+
+
+    }
+    protected void initPlayerVisibility(int playerId) {
+        // set the territory owned by player Id to visible
+        for (Territory t : territories) {
+            if (t.getOwner() == playerId) {
+                players.get(playerId).setVisible(t.getID());
+                players.get(playerId).setVisited(t.getID());
+            }
+        }
+        // set the territory neighbor to visible
+        for (Territory t : territories) {
+            if (t.getOwner() == playerId) {
+                for (int neighborId : t.getNeighbours()) {
+                    players.get(playerId).setVisible(neighborId);
+                    players.get(playerId).setVisited(neighborId);
+                }
+            }
+        }
     }
 
+
+    protected void resetVisibility(int playerId) {
+        // set visible to all false
+        for (Territory t : territories) {
+            players.get(playerId).setInvisible(t.getID());
+        }
+        initPlayerVisibility(playerId);
+        // set cloaked territory to invisible
+        for (Territory t : territories) {
+            if (t.getCloak() > 0) {
+                players.get(playerId).setInvisible(t.getID());
+            }
+        }
+        // set spy territory to visible
+        if (players.get(playerId).hasSpy()) {
+            players.get(playerId).setVisible(players.get(playerId).getSpyPos());
+            players.get(playerId).setVisited(players.get(playerId).getSpyPos());
+        }
+
+    }
     /**
      * Constructor
      * @param territories list of territories
@@ -155,14 +201,14 @@ public class Controller {
         return world.getUnitAvailable();
     }
 
-    // TODO: Test this shit upgrade unit
+
     public void upgradeUnit(int playerId, int territoryId, int unitId, int amount) {
         if (territories.get(territoryId).getOwner() == playerId) {
             territories.get(territoryId).upgradeUnit(unitId, amount);
         }
     }
 
-    // TODO: Test this shit upgrade max technology
+
     public void upgradeMaxTechnology(int playerId) {
         players.get(playerId).upgradeTechLevel(updateRequirement);
         return;
@@ -302,7 +348,12 @@ public class Controller {
         return new PlayerInfo(playerId,
                 new Resource(players.get(playerId).getTechPoint(),
                         players.get(playerId).getFoodPoint()),
-                players.get(playerId).getTechLevel());
+                players.get(playerId).getTechLevel(),
+                players.get(playerId).getVisible(),
+                players.get(playerId).getVisited(),
+                players.get(playerId).getSpyPos(),
+                players.get(playerId).hasSpy());
+
     }
 
     public List<Integer> getTroopInfo(int territoryId) {
@@ -311,6 +362,44 @@ public class Controller {
             troopInfo.add(u.getLevel());
         }
         return troopInfo;
+    }
+
+    public void cSetCloak(int territoryId) {
+            world.setCloak(territoryId, cloakRounds);
+    }
+
+    public void cSetSpyPos(int playerId, int spyPos) {
+        players.get(playerId).setSpyPos(spyPos);
+    }
+
+
+    public Boolean cacheUpgradeCloak(int playerId) {
+        if (players.get(playerId).getTechLevel() >= 3 &&
+                players.get(playerId).getTechPoint() >= 100) {
+            players.get(playerId).setCanCloak(true);
+            // reduce tech point by 100
+            players.get(playerId).reduceTechPoint(100);
+            return true;
+        }
+        return false;
+    }
+
+
+    public Boolean cacheUpgradeSpy(int playerId, int territoryId, int level) {
+        if (players.get(playerId).getTechLevel() >= 1 &&
+                players.get(playerId).getTechPoint() >= 20) {
+            // remove a unit with tge given level from the territory
+            List<Unit> units = getUnitsByLevel(territoryId, level, 1);
+            if (units.size() == 0) {
+                return false;
+            }
+            territories.get(territoryId).getTroop().removeTroop(new unitTroop(playerId,
+                    List.of(units.get(0))));
+            cSetSpyPos(playerId, territoryId);
+            players.get(playerId).reduceTechPoint(20);
+            return true;
+        }
+        return false;
     }
 
 

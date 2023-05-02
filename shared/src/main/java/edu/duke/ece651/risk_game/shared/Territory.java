@@ -42,4 +42,7 @@ public interface Territory {
 
 
     public Troop getTroop();
+
+    public int getCloak();
+    public int setCloak(int cloak);
 }

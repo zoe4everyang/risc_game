@@ -45,4 +45,6 @@ public interface Territory {
 
     public int getCloak();
     public int setCloak(int cloak);
+
+    public void reduceCloak();
 }

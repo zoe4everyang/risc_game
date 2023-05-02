@@ -20,7 +20,8 @@ public abstract class Message {
      * @param playerID the ID of the player
      */
     public Message(int playerID) {
-        this.playerInfo = new PlayerInfo(playerID, null, 0);
+        this.playerInfo = new PlayerInfo(playerID, null, 0,
+                null, null, null, null, null);
     }
 
     // This method is used to get the information of the player.

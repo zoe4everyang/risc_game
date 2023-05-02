@@ -215,7 +215,8 @@ POST /act/commit/
                 "Visible":[true, false, true],
                 "Visited":[true, true, true],
                 "SpyPos": 0,
-                "HasSpy": true
+                "HasSpy": true,
+                "canCloak" : true
                },
  
     "Territories" : [

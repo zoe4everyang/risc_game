@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -132,11 +133,13 @@ public class PlacementController extends UIController {
         }
         PlacementRequest placementRequest = new PlacementRequest(gameContext.playerInfo.getPlayerID(), placement);
         Response response = null;
+        Stage loadingStage = sceneManager.createNewWindow("Loading.fxml");
         try {
             response = gameContext.httpClient.sendPlacement(gameContext.currentRoomID, placementRequest);
         } catch (IOException e) {
             gameContext.showErrorAlert("Failed to send placement request", "Error while sending placement request: " + e.getMessage());
         }
+        loadingStage.close();
         assert response != null;
         gameContext.update(response);
         sceneManager.switchTo("GameMain.fxml");

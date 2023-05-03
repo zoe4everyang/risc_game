@@ -4,8 +4,10 @@ import edu.duke.ece651.risk_game.shared.Territory;
 import edu.duke.ece651.risk_game.shared.Unit;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -27,6 +29,10 @@ public abstract class GameController extends UIController{
     TextFlow techPointTextFlow;
     @FXML
     TextFlow foodPointTextFlow;
+    @FXML
+    CheckBox spyCheckBox;
+    @FXML
+    CheckBox cloakTechCheckBox;
     @FXML
     TableView<Entry> territoryInfo;
     @FXML
@@ -57,29 +63,48 @@ public abstract class GameController extends UIController{
     Polygon territory10;
     @FXML
     Polygon territory11;
-    List<Polygon> territoryList;
+    Polygon[] territoryList;
+    protected Runnable[] clickList;
+    int clickOnTerritoryID;
+    @FXML
+    ImageView spy0;
+    @FXML
+    ImageView spy1;
+    @FXML
+    ImageView spy2;
+    @FXML
+    ImageView spy3;
+    @FXML
+    ImageView spy4;
+    @FXML
+    ImageView spy5;
+    @FXML
+    ImageView spy6;
+    @FXML
+    ImageView spy7;
+    @FXML
+    ImageView spy8;
+    @FXML
+    ImageView spy9;
+    @FXML
+    ImageView spy10;
+    @FXML
+    ImageView spy11;
+    ImageView[] spyImageList;
 
     public void initialize(){
-        territoryList = new ArrayList<>();
-        territoryList.add(territory0);
-        territoryList.add(territory1);
-        territoryList.add(territory2);
-        territoryList.add(territory3);
-        territoryList.add(territory4);
-        territoryList.add(territory5);
-        territoryList.add(territory6);
-        territoryList.add(territory7);
-        territoryList.add(territory8);
-        territoryList.add(territory9);
-        territoryList.add(territory10);
-        territoryList.add(territory11);
+        // map setup
+        territoryList = new Polygon[]{territory0, territory1, territory2, territory3, territory4, territory5,
+                territory6, territory7, territory8, territory9, territory10, territory11};
         myColor.setFill(Color.web(gameContext.colorList.get(gameContext.playerIDMap.get(gameContext.currentRoomID))));
-        for (int i = 0; i < territoryList.size(); i++) {
-            int ownerId = gameContext.territories.get(i).getOwner();
-            String color = gameContext.colorList.get(ownerId);
-            Polygon t = territoryList.get(i);
-            t.setFill(Color.web(color));
-        }
+        refreshColor();
+        clickOnTerritoryID = -1;
+        clickList = new Runnable[]{this::handleTerritory0Button, this::handleTerritory1Button, this::handleTerritory2Button,
+                this::handleTerritory3Button, this::handleTerritory4Button, this::handleTerritory5Button,
+                this::handleTerritory6Button, this::handleTerritory7Button, this::handleTerritory8Button,
+                this::handleTerritory9Button, this::handleTerritory10Button, this::handleTerritory11Button};
+
+        // player info setup
         Text roomIDText = new Text(gameContext.currentRoomID.toString());
         roomIDTextFlow.getChildren().add(roomIDText);
         Text techLevelText = new Text(gameContext.playerInfo.getTechLevel().toString());
@@ -88,8 +113,15 @@ public abstract class GameController extends UIController{
         techPointTextFlow.getChildren().add(techPointText);
         Text foodPointText = new Text(gameContext.playerInfo.getResource().getFoodPoint().toString());
         foodPointTextFlow.getChildren().add(foodPointText);
-        territoryInfo.setStyle("-fx-table-header-visible: false;");
+        cloakTechCheckBox.setSelected(gameContext.playerInfo.getHasCloak());
+        cloakTechCheckBox.setStyle("-fx-color: green;");
+        cloakTechCheckBox.setDisable(true);
+        spyCheckBox.setSelected(gameContext.playerInfo.getHasSpy());
+        spyCheckBox.setStyle("-fx-color: green;");
+        spyCheckBox.setDisable(true);
 
+        // territory info setup
+        territoryInfo.setStyle("-fx-table-header-visible: false;");
         Entry territoryNameEntry = new Entry("Name", null);
         Entry ownerEntry = new Entry("Owner", null);
         Entry levelZeroEntry = new Entry("Level0 Unit", null);
@@ -102,13 +134,21 @@ public abstract class GameController extends UIController{
         Entry techProductionEntry = new Entry("Tech Production", null);
         Entry foodProductionEntry = new Entry("Food Production", null);
         Entry territorySizeEntry = new Entry("Territory Size", null);
+        Entry cloakLeftTurnEntry = new Entry("Cloaked Turns Left", null);
         territoryInfo.getItems().addAll(territoryNameEntry, ownerEntry, levelZeroEntry, levelOneEntry, levelTwoEntry, levelThreeEntry,
                 levelFourEntry, levelFiveEntry, levelSixEntry, techProductionEntry, foodProductionEntry,
                 territorySizeEntry);
-
         nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         valueColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getValue()));
 
+        // spy icon setup
+        spyImageList = new ImageView[]{spy0, spy1, spy2, spy3, spy4, spy5, spy6, spy7, spy8, spy9, spy10, spy11};
+        for (int i = 0; i < spyImageList.length; i++) {
+            spyImageList[i].setVisible(false);
+        }
+        if (gameContext.playerInfo.getHasSpy()) {
+            spyImageList[gameContext.playerInfo.getSpyPosition()].setVisible(true);
+        }
     }
 
     public static class Entry {
@@ -129,102 +169,293 @@ public abstract class GameController extends UIController{
         }
     }
 
-    public void updateTableView(Territory territory) {
-        ArrayList<String> updateList = new ArrayList<>();
-        //Troop troop = territory.getTroop();
-        updateList.add(territory.getName());
-        updateList.add(gameContext.playerList.get(territory.getOwner()));
+    protected void updateTableView(Territory territory) {
         List<Integer> levelList = new ArrayList<>(Collections.nCopies(7, 0));
         for (Unit u : territory.getTroop().getUnits()) {
             levelList.set(u.getLevel(), levelList.get(u.getLevel()) + 1);
         }
-        updateList.add(Integer.toString(levelList.get(0)));
-        updateList.add(Integer.toString(levelList.get(1)));
-        updateList.add(Integer.toString(levelList.get(2)));
-        updateList.add(Integer.toString(levelList.get(3)));
-        updateList.add(Integer.toString(levelList.get(4)));
-        updateList.add(Integer.toString(levelList.get(5)));
-        updateList.add(Integer.toString(levelList.get(6)));
-        updateList.add(Integer.toString(territory.getFoodProduction()));
-        updateList.add(Integer.toString(territory.getTechProduction()));
-        updateList.add(Integer.toString(territory.getCost()));
+        String[] updateList = {territory.getName(), gameContext.playerList.get(territory.getOwner()),
+                Integer.toString(levelList.get(0)), Integer.toString(levelList.get(1)), Integer.toString(levelList.get(2)),
+                Integer.toString(levelList.get(3)), Integer.toString(levelList.get(4)), Integer.toString(levelList.get(5)),
+                Integer.toString(levelList.get(6)), Integer.toString(territory.getTechProduction()),
+                Integer.toString(territory.getFoodProduction()), Integer.toString(territory.getCost()),
+                territory.getCloak() == -1 ? "Not Cloaked" : Integer.toString(territory.getCloak())};
+        for (int i = 0; i < updateList.length; i++) {
+            territoryInfo.getItems().get(i).setValue(updateList[i]);
+        }
+        territoryInfo.refresh();
+    }
+
+    protected void updateUnknownTable() {
+        ArrayList<String> updateList = new ArrayList<>(Collections.nCopies(13, "???"));
         for (int i = 0; i < updateList.size(); i++) {
             territoryInfo.getItems().get(i).setValue(updateList.get(i));
         }
         territoryInfo.refresh();
     }
 
+    protected void refreshColor() {
+        for (int i = 0; i < territoryList.length; i++) {
+            String color;
+            if (gameContext.playerInfo.getVisible().get(i)) {
+                color = gameContext.colorList.get(gameContext.territories.get(i).getOwner());
+            } else {
+                color = gameContext.colorList.get(4);
+            }
+            territoryList[i].setFill(Color.web(color));
+        }
+    }
 
     @FXML
     public void handleTerritory0Button(){
         Territory territory = gameContext.territories.get(0);
-        updateTableView(territory);
+        clickOnTerritoryID = 0;
+
+        refreshColor();
+        String newColor;
+        if (gameContext.playerInfo.getVisible().get(0)) {
+            newColor = gameContext.colorList.get(gameContext.territories.get(0).getOwner() + 5);
+        } else {
+            newColor = gameContext.colorList.get(9);
+        }
+        territory0.setFill(Color.web(newColor));
+
+        if (gameContext.playerInfo.getVisited().get(0)) {
+            updateTableView(territory);
+        } else {
+            updateUnknownTable();
+        }
     }
 
     @FXML
     public void handleTerritory1Button(){
         Territory territory = gameContext.territories.get(1);
-        updateTableView(territory);
+        clickOnTerritoryID = 1;
+
+        refreshColor();
+        String newColor;
+        if (gameContext.playerInfo.getVisible().get(1)) {
+            newColor = gameContext.colorList.get(gameContext.territories.get(1).getOwner() + 5);
+        } else {
+            newColor = gameContext.colorList.get(9);
+        }
+        territory1.setFill(Color.web(newColor));
+
+        if (gameContext.playerInfo.getVisited().get(1)) {
+            updateTableView(territory);
+        } else {
+            updateUnknownTable();
+        }
     }
 
     @FXML
     public void handleTerritory2Button(){
         Territory territory = gameContext.territories.get(2);
-        updateTableView(territory);
+        clickOnTerritoryID = 2;
+
+        refreshColor();
+        String newColor;
+        if (gameContext.playerInfo.getVisible().get(2)) {
+            newColor = gameContext.colorList.get(gameContext.territories.get(2).getOwner() + 5);
+        } else {
+            newColor = gameContext.colorList.get(9);
+        }
+        territory2.setFill(Color.web(newColor));
+
+        if (gameContext.playerInfo.getVisited().get(2)) {
+            updateTableView(territory);
+        } else {
+            updateUnknownTable();
+        }
     }
 
     @FXML
     public void handleTerritory3Button(){
         Territory territory = gameContext.territories.get(3);
-        updateTableView(territory);
+        clickOnTerritoryID = 3;
+
+        refreshColor();
+        String newColor;
+        if (gameContext.playerInfo.getVisible().get(3)) {
+            newColor = gameContext.colorList.get(gameContext.territories.get(3).getOwner() + 5);
+        } else {
+            newColor = gameContext.colorList.get(9);
+        }
+        territory3.setFill(Color.web(newColor));
+
+        if (gameContext.playerInfo.getVisited().get(3)) {
+            updateTableView(territory);
+        } else {
+            updateUnknownTable();
+        }
     }
 
     @FXML
     public void handleTerritory4Button(){
         Territory territory = gameContext.territories.get(4);
-        updateTableView(territory);
+        clickOnTerritoryID = 4;
+
+        refreshColor();
+        String newColor;
+        if (gameContext.playerInfo.getVisible().get(4)) {
+            newColor = gameContext.colorList.get(gameContext.territories.get(4).getOwner() + 5);
+        } else {
+            newColor = gameContext.colorList.get(9);
+        }
+        territory4.setFill(Color.web(newColor));
+
+        if (gameContext.playerInfo.getVisited().get(4)) {
+            updateTableView(territory);
+        } else {
+            updateUnknownTable();
+        }
     }
 
     @FXML
     public void handleTerritory5Button(){
         Territory territory = gameContext.territories.get(5);
-        updateTableView(territory);
+        clickOnTerritoryID = 5;
+
+        refreshColor();
+        String newColor;
+        if (gameContext.playerInfo.getVisible().get(5)) {
+            newColor = gameContext.colorList.get(gameContext.territories.get(5).getOwner() + 5);
+        } else {
+            newColor = gameContext.colorList.get(9);
+        }
+        territory5.setFill(Color.web(newColor));
+
+        if (gameContext.playerInfo.getVisited().get(5)) {
+            updateTableView(territory);
+        } else {
+            updateUnknownTable();
+        }
     }
 
     @FXML
     public void handleTerritory6Button(){
         Territory territory = gameContext.territories.get(6);
-        updateTableView(territory);
+        clickOnTerritoryID = 6;
+
+        refreshColor();
+        String newColor;
+        if (gameContext.playerInfo.getVisible().get(6)) {
+            newColor = gameContext.colorList.get(gameContext.territories.get(6).getOwner() + 5);
+        } else {
+            newColor = gameContext.colorList.get(9);
+        }
+        territory6.setFill(Color.web(newColor));
+
+        if (gameContext.playerInfo.getVisited().get(6)) {
+            updateTableView(territory);
+        } else {
+            updateUnknownTable();
+        }
     }
 
     @FXML
     public void handleTerritory7Button(){
         Territory territory = gameContext.territories.get(7);
-        updateTableView(territory);
+        clickOnTerritoryID = 7;
+
+        refreshColor();
+        String newColor;
+        if (gameContext.playerInfo.getVisible().get(7)) {
+            newColor = gameContext.colorList.get(gameContext.territories.get(7).getOwner() + 5);
+        } else {
+            newColor = gameContext.colorList.get(9);
+        }
+        territory7.setFill(Color.web(newColor));
+
+        if (gameContext.playerInfo.getVisited().get(7)) {
+            updateTableView(territory);
+        } else {
+            updateUnknownTable();
+        }
     }
 
     @FXML
     public void handleTerritory8Button(){
         Territory territory = gameContext.territories.get(8);
-        updateTableView(territory);
+        clickOnTerritoryID = 8;
+
+        refreshColor();
+        String newColor;
+        if (gameContext.playerInfo.getVisible().get(8)) {
+            newColor = gameContext.colorList.get(gameContext.territories.get(8).getOwner() + 5);
+        } else {
+            newColor = gameContext.colorList.get(9);
+        }
+        territory8.setFill(Color.web(newColor));
+
+        if (gameContext.playerInfo.getVisited().get(8)) {
+            updateTableView(territory);
+        } else {
+            updateUnknownTable();
+        }
     }
 
     @FXML
     public void handleTerritory9Button(){
         Territory territory = gameContext.territories.get(9);
-        updateTableView(territory);
+        clickOnTerritoryID = 9;
+
+        refreshColor();
+        String newColor;
+        if (gameContext.playerInfo.getVisible().get(9)) {
+            newColor = gameContext.colorList.get(gameContext.territories.get(9).getOwner() + 5);
+        } else {
+            newColor = gameContext.colorList.get(9);
+        }
+        territory9.setFill(Color.web(newColor));
+
+        if (gameContext.playerInfo.getVisited().get(9)) {
+            updateTableView(territory);
+        } else {
+            updateUnknownTable();
+        }
     }
 
     @FXML
     public void handleTerritory10Button(){
         Territory territory = gameContext.territories.get(10);
-        updateTableView(territory);
+        clickOnTerritoryID = 10;
+
+        refreshColor();
+        String newColor;
+        if (gameContext.playerInfo.getVisible().get(10)) {
+            newColor = gameContext.colorList.get(gameContext.territories.get(10).getOwner() + 5);
+        } else {
+            newColor = gameContext.colorList.get(9);
+        }
+        territory10.setFill(Color.web(newColor));
+
+        if (gameContext.playerInfo.getVisited().get(10)) {
+            updateTableView(territory);
+        } else {
+            updateUnknownTable();
+        }
     }
 
     @FXML
     public void handleTerritory11Button() {
         Territory territory = gameContext.territories.get(11);
-        updateTableView(territory);
+        clickOnTerritoryID = 11;
+
+        refreshColor();
+        String newColor;
+        if (gameContext.playerInfo.getVisible().get(11)) {
+            newColor = gameContext.colorList.get(gameContext.territories.get(11).getOwner() + 5);
+        } else {
+            newColor = gameContext.colorList.get(9);
+        }
+        territory11.setFill(Color.web(newColor));
+
+        if (gameContext.playerInfo.getVisited().get(11)) {
+            updateTableView(territory);
+        } else {
+            updateUnknownTable();
+        }
     }
 
 }

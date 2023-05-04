@@ -5,7 +5,7 @@ import edu.duke.ece651.risk_game.shared.Territory;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 
-import javax.swing.*;
+import java.io.IOException;
 
 public class MoveSpyController extends GameController{
     @FXML
@@ -20,9 +20,10 @@ public class MoveSpyController extends GameController{
     }
 
     @FXML
-    public void handleMoveSpyButton() {
+    public void handleMoveSpyButton() throws IOException {
         int to = gameContext.territoryIDMaps.get(gameContext.currentRoomID).get(toComboBox.getValue());
-        ActionStatus status = gameContext.httpClient.sendMoveSpy(gameContext.currentRoomID, to);
+        ActionStatus status = gameContext.httpClient.sendMoveSpy(gameContext.currentRoomID,
+                                gameContext.playerIDMap.get(gameContext.currentRoomID), to);
         if (!status.isSuccess()) {
             gameContext.showErrorAlert("Error", "You could only move 1 territory at a time in enemy territory.");
         } else {

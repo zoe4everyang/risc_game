@@ -4,6 +4,8 @@ import edu.duke.ece651.risk_game.shared.ActionStatus;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 
+import java.io.IOException;
+
 public class UpgradeSpyController extends GameController{
 
     @FXML
@@ -19,8 +21,9 @@ public class UpgradeSpyController extends GameController{
     }
 
     @FXML
-    public void handleUpgradeButton() {
-        ActionStatus status = gameContext.httpClient.sendUpgradeSpy(gameContext.currentRoomID, Integer.parseInt(unitLevelComboBox.getValue().substring(6)));
+    public void handleUpgradeButton() throws IOException {
+        ActionStatus status = gameContext.httpClient.sendUpgradeSpy(gameContext.currentRoomID, gameContext.playerIDMap.get(gameContext.currentRoomID),
+                gameContext.finalClickedTerritoryID, Integer.parseInt(unitLevelComboBox.getValue().substring(6)));
         if (!status.isSuccess()) {
             gameContext.showErrorAlert("Error", "You don't have enough tech level or unit to upgrade spy.");
         } else {

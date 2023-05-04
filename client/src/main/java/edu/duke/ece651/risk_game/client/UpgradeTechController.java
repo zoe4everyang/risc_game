@@ -8,7 +8,7 @@ import java.io.IOException;
 public class UpgradeTechController extends GameController{
     public void initialize() {
         super.initialize();
-        clickList.get(gameContext.finalClickedTerritoryID).run();
+        clickList[gameContext.finalClickedTerritoryID].run();
     }
 
     @FXML

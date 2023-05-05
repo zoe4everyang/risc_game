@@ -363,7 +363,8 @@ public class Controller {
                 players.get(playerId).getVisible(),
                 players.get(playerId).getVisited(),
                 players.get(playerId).getSpyPos(),
-                players.get(playerId).hasSpy());
+                players.get(playerId).hasSpy(),
+                players.get(playerId).getCanCloak());
 
     }
 

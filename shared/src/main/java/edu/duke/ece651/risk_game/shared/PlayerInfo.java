@@ -18,6 +18,8 @@ public class PlayerInfo {
     private final Integer spyPosition;
     private final Boolean hasSpy;
 
+    private final Boolean canCloak;
+
     /**
      * This constructor is used to create a message that contains the information of the player.
      * @param playerID the ID of the player
@@ -30,7 +32,8 @@ public class PlayerInfo {
                       @JsonProperty("visible") List<Boolean> visible,
                       @JsonProperty("visited") List<Boolean> visited,
                       @JsonProperty("spyPosition") Integer spyPosition,
-                      @JsonProperty("hasSpy") Boolean hasSpy) {
+                      @JsonProperty("hasSpy") Boolean hasSpy,
+                      @JsonProperty("canCloak") Boolean canCloak) {
         this.playerID = playerID;
         this.resource = resource;
         this.techLevel = techLevel;
@@ -38,6 +41,7 @@ public class PlayerInfo {
         this.visited = visited;
         this.spyPosition = spyPosition;
         this.hasSpy = hasSpy;
+        this.canCloak = canCloak;
 
     }
 
@@ -71,5 +75,9 @@ public class PlayerInfo {
     // This method is used to get the hasSpy the player.
     public Boolean getHasSpy() {
         return hasSpy;
+    }
+    // This method is used to get the canCloak the player.
+    public Boolean getCanCloak() {
+        return canCloak;
     }
 }

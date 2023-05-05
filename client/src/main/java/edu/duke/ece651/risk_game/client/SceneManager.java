@@ -35,4 +35,21 @@ public class SceneManager {
             e.printStackTrace();
         }
     }
+
+    public Stage createNewWindow(String fxmlFile) {
+        Stage newStage = new Stage();;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + fxmlFile));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            newStage.setScene(scene);
+            newStage.show();
+            return newStage;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return newStage;
+    }
+
+
 }

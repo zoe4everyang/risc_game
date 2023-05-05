@@ -14,7 +14,6 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -129,7 +128,6 @@ public class RISCClient {
     }
 
     public ActionStatus sendAttack(Integer roomID, ActionRequest requestBody) {
-        //HttpPost request = new HttpPost(serverURL + "/act/attack/{" + roomID + "}");
         HttpPost request = new HttpPost(serverURL + "/act/attack/" + roomID);
         ActionStatus status = null;
         try {
@@ -141,11 +139,35 @@ public class RISCClient {
         return status;
     }
 
-    public ActionStatus sendClean(Integer roomID, Integer playerID) throws IOException {
-        //HttpPost request = new HttpPost(serverURL + "/act/clean/{" + roomID + "}");
-        HttpPost request = new HttpPost(serverURL + "/act/clean/" + roomID);
+    public ActionStatus sendUpgradeSpy(Integer roomID, Integer playerID, Integer territoryID, Integer unitLevel) throws IOException {
+        HttpPost request = new HttpPost(serverURL + "/act/upspy/" + roomID);
         HashMap<String, Object> requestBody = new HashMap<>();
         requestBody.put("playerID", playerID);
+        requestBody.put("territoryID", territoryID);
+        requestBody.put("unitLevel", unitLevel);
+        return jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), ActionStatus.class);
+    }
+
+    public ActionStatus sendMoveSpy(Integer roomID, Integer playerID, Integer territoryID) throws IOException {
+        HttpPost request = new HttpPost(serverURL + "/act/movespy/" + roomID);
+        HashMap<String, Object> requestBody = new HashMap<>();
+        requestBody.put("playerID", playerID);
+        requestBody.put("territoryID", territoryID);
+        return jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), ActionStatus.class);
+    }
+
+    public ActionStatus sendUpgradeCloak(Integer roomID, Integer playerID) throws IOException {
+        HttpPost request = new HttpPost(serverURL + "/act/upcloak/" + roomID);
+        HashMap<String, Object> requestBody = new HashMap<>();
+        requestBody.put("playerID", playerID);
+        return jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), ActionStatus.class);
+    }
+
+    public ActionStatus sendAddCloak(Integer roomID, Integer playerID, Integer territoryID) throws IOException {
+        HttpPost request = new HttpPost(serverURL + "/act/setcloak/" + roomID);
+        HashMap<String, Object> requestBody = new HashMap<>();
+        requestBody.put("playerID", playerID);
+        requestBody.put("territoryID", territoryID);
         return jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), ActionStatus.class);
     }
 
@@ -156,19 +178,6 @@ public class RISCClient {
         requestBody.put("playerID", playerID);
         return jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), Response.class);
     }
-
-//    public String sendEnd() throws IOException {
-//        RequestConfig config = RequestConfig.custom()
-//                    .setConnectTimeout(1)
-//                    .setSocketTimeout(1)
-//                    .build();
-//
-//        HttpGet request = new HttpGet(serverURL + "/gameover");
-//        request.setConfig(config);
-//        request.setHeader("Content-Type", "application/json");
-//        theClient.execute(request);
-//        return "success";
-//    }
 
 }
 

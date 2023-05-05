@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -57,11 +58,14 @@ public class RoomSelectController extends UIController{
 
         // join room
         Response response = null;
+        Stage loadingStage = sceneManager.createNewWindow("Loading.fxml");
         try {
             response = gameContext.httpClient.joinRoom(gameContext.username, roomID);
         } catch (IOException e) {
             System.out.println("Error while sending join room request: " + e.getMessage());
         }
+        loadingStage.close();
+
         if (response == null) {
             sceneManager.switchTo("RoomSelect.fxml");
         }

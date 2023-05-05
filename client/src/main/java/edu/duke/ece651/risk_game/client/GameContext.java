@@ -24,6 +24,8 @@ public class GameContext {
     public Alert errorAlert;
     public Alert infoAlert;
     public List<String> colorList;
+    public Integer finalClickedTerritoryID;
+
     /**
      * Constructor for GameContext
      */
@@ -41,7 +43,7 @@ public class GameContext {
         this.errorAlert = new Alert(Alert.AlertType.ERROR);
         errorAlert.setTitle("Error");
         this.infoAlert = new Alert(Alert.AlertType.INFORMATION);
-        this.colorList = List.of("#9966CC", "#6495ED", "#BC8F8F", "#00FF7F");
+        this.colorList = List.of("#9966CC", "#6495ED", "#BC8F8F", "#00FF7F", "#000000", "#C9B0E3", "#9EB9EA", "#D8CACA", "#AAE9C9", "#BEBEBE");
     }
 
     private void initActionFns() {

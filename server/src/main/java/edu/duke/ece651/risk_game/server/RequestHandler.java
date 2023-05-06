@@ -73,7 +73,7 @@ public class RequestHandler {
 
     public ActionStatus upgradeUnitHandler(UpgradeUnitRequest msg) throws InterruptedException{
         synchronized (this) {
-            Boolean status = controller.cacheUpgradeUnit(msg.getPlayerInfo().getPlayerID(), msg.getTerritoryID(), msg.getLevel(), msg.getLevelUpgraded());
+            Boolean status = controller.cacheUpgradeUnit(msg.getPlayerInfo().getPlayerID(), msg.getTerritoryID(), msg.getLevel(), msg.getLevelUpgraded(), msg.getAmount());
             if(status){
                 return new ActionStatus(true, null);
             }else{
@@ -98,6 +98,7 @@ public class RequestHandler {
             if(status){
                 return new ActionStatus(true, null);
             }else{
+                System.out.println("Now it's in handler!");
                 return new ActionStatus(false, "Upgrade Spy failed: Insufficient Resources");
             }
         }

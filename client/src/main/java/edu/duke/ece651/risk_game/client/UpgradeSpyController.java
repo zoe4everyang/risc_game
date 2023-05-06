@@ -17,17 +17,28 @@ public class UpgradeSpyController extends GameController{
         for (int i = 0; i <= 6; i++) {
             unitLevelComboBox.getItems().add("Level " + i);
         }
-        clickList[gameContext.finalClickedTerritoryID].run();
+        if (gameContext.finalClickedTerritoryID != -1) {
+            clickList[gameContext.finalClickedTerritoryID].run();
+        }
     }
 
     @FXML
     public void handleUpgradeButton() throws IOException {
-        ActionStatus status = gameContext.httpClient.sendUpgradeSpy(gameContext.currentRoomID, gameContext.playerIDMap.get(gameContext.currentRoomID),
-                gameContext.finalClickedTerritoryID, Integer.parseInt(unitLevelComboBox.getValue().substring(6)));
-        if (!status.isSuccess()) {
-            gameContext.showErrorAlert("Error", "You don't have enough tech level or unit to upgrade spy.");
+        if (gameContext.finalClickedTerritoryID == -1) {
+            gameContext.showErrorAlert("Error", "Please click on the map to choose the territory to operate on.");
+        } else if (gameContext.territories.get(gameContext.finalClickedTerritoryID).getOwner() != gameContext.playerIDMap.get(gameContext.currentRoomID)) {
+            gameContext.showErrorAlert("Error", "You could only upgrade spy on your own territory.");
         } else {
-            sceneManager.switchTo("GameMain.fxml");
+            int level = Integer.parseInt(unitLevelComboBox.getValue().substring(6));
+            System.out.println("level is :" + level);
+            ActionStatus status = gameContext.httpClient.sendUpgradeSpy(gameContext.currentRoomID, gameContext.playerIDMap.get(gameContext.currentRoomID),
+                    gameContext.finalClickedTerritoryID, Integer.parseInt(unitLevelComboBox.getValue().substring(6)));
+            if (!status.isSuccess()) {
+                gameContext.showErrorAlert("Error", status.getErrorMessage() + "You don't have enough tech level or unit to upgrade spy.");
+            } else {
+                gameContext.clickHistory.put("spy", true);
+                sceneManager.switchTo("GameMain.fxml");
+            }
         }
     }
 

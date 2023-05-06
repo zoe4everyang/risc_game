@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.stage.Stage;
+import javafx.scene.control.Label;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,35 +33,51 @@ public abstract class ActionController extends UIController{
     Slider level5NumSlider;
     @FXML
     Slider level6NumSlider;
-    List<Slider> numList = new ArrayList<>();
+    Slider[] numList;
+    @FXML
+    Label level0Label;
+    @FXML
+    Label level1Label;
+    @FXML
+    Label level2Label;
+    @FXML
+    Label level3Label;
+    @FXML
+    Label level4Label;
+    @FXML
+    Label level5Label;
+    @FXML
+    Label level6Label;
+    Label[] labelList;
     @FXML
     Button cancel;
+    Integer from;
 
     public void initialize() {
-        numList.add(level0NumSlider);
-        numList.add(level1NumSlider);
-        numList.add(level2NumSlider);
-        numList.add(level3NumSlider);
-        numList.add(level4NumSlider);
-        numList.add(level5NumSlider);
-        numList.add(level6NumSlider);
+        numList = new Slider[]{level0NumSlider, level1NumSlider, level2NumSlider, level3NumSlider, level4NumSlider, level5NumSlider, level6NumSlider};
+        labelList = new Label[]{level0Label, level1Label, level2Label, level3Label, level4Label, level5Label, level6Label};
         List<Integer> levelList = new ArrayList<>(Collections.nCopies(7, 0));
         Territory curTerritory = gameContext.territories.get(gameContext.finalClickedTerritoryID);
         for (Unit u : curTerritory.getTroop().getUnits()) {
             levelList.set(u.getLevel(), levelList.get(u.getLevel()) + 1);
         }
-        for (int i = 0; i < numList.size(); i++) {
-            Slider slider = numList.get(i);
+        for (int i = 0; i < numList.length; i++) {
+            Slider slider = numList[i];
+            Label label = labelList[i];
             slider.setMin(0);
-            slider.setMax(levelList.get(i));
+            slider.setMax(200);
+            //slider.setMax(levelList.get(i));
             slider.setValue(0);
             slider.setBlockIncrement(1);
             slider.setSnapToTicks(true);
+            slider.valueProperty().addListener((observable, oldValue, newValue) -> {
+                label.setText(String.valueOf(newValue.intValue()));
+            });
         }
+        from = gameContext.finalClickedTerritoryID;
     }
 
     public void handleActionButton(String action) {
-        int from = gameContext.finalClickedTerritoryID;
         int to = gameContext.territoryIDMaps.get(gameContext.currentRoomID).get(toComboBox.getValue());
         ArrayList<Integer> units = new ArrayList<>();
         for (Slider slider : numList) {

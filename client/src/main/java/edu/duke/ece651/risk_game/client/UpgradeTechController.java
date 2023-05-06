@@ -8,7 +8,9 @@ import java.io.IOException;
 public class UpgradeTechController extends GameController{
     public void initialize() {
         super.initialize();
-        clickList[gameContext.finalClickedTerritoryID].run();
+        if (gameContext.finalClickedTerritoryID != -1) {
+            clickList[gameContext.finalClickedTerritoryID].run();
+        }
     }
 
     @FXML
@@ -23,6 +25,7 @@ public class UpgradeTechController extends GameController{
         if (!status.isSuccess()) {
             throw new IllegalArgumentException(status.getErrorMessage());
         } else {
+            gameContext.clickHistory.put("upgradeTech", true);
             sceneManager.switchTo("GameMain.fxml");
         }
     }

@@ -140,7 +140,7 @@ public class RISCClient {
     }
 
     public ActionStatus sendUpgradeSpy(Integer roomID, Integer playerID, Integer territoryID, Integer unitLevel) throws IOException {
-        HttpPost request = new HttpPost(serverURL + "/act/upradeSpy/" + roomID);
+        HttpPost request = new HttpPost(serverURL + "/act/upgradeSpy/" + roomID);
         HashMap<String, Object> requestBody = new HashMap<>();
         requestBody.put("playerID", playerID);
         requestBody.put("territoryID", territoryID);

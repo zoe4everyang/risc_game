@@ -65,7 +65,7 @@ public abstract class GameController extends UIController{
     Polygon territory11;
     Polygon[] territoryList;
     protected Runnable[] clickList;
-    int clickOnTerritoryID;
+    //int clickOnTerritoryID;
     @FXML
     ImageView spy0;
     @FXML
@@ -98,7 +98,7 @@ public abstract class GameController extends UIController{
                 territory6, territory7, territory8, territory9, territory10, territory11};
         myColor.setFill(Color.web(gameContext.colorList.get(gameContext.playerIDMap.get(gameContext.currentRoomID))));
         refreshColor();
-        clickOnTerritoryID = -1;
+        //clickOnTerritoryID = -1;
         clickList = new Runnable[]{this::handleTerritory0Button, this::handleTerritory1Button, this::handleTerritory2Button,
                 this::handleTerritory3Button, this::handleTerritory4Button, this::handleTerritory5Button,
                 this::handleTerritory6Button, this::handleTerritory7Button, this::handleTerritory8Button,
@@ -114,10 +114,10 @@ public abstract class GameController extends UIController{
         Text foodPointText = new Text(gameContext.playerInfo.getResource().getFoodPoint().toString());
         foodPointTextFlow.getChildren().add(foodPointText);
         cloakTechCheckBox.setSelected(gameContext.playerInfo.getCanCloak());
-        cloakTechCheckBox.setStyle("-fx-color: green;");
+        //cloakTechCheckBox.setStyle("-fx-color: green;");
         cloakTechCheckBox.setDisable(true);
         spyCheckBox.setSelected(gameContext.playerInfo.getHasSpy());
-        spyCheckBox.setStyle("-fx-color: green;");
+        //spyCheckBox.setStyle("-fx-color: green;");
         spyCheckBox.setDisable(true);
 
         // territory info setup
@@ -137,7 +137,7 @@ public abstract class GameController extends UIController{
         Entry cloakLeftTurnEntry = new Entry("Cloaked Turns Left", null);
         territoryInfo.getItems().addAll(territoryNameEntry, ownerEntry, levelZeroEntry, levelOneEntry, levelTwoEntry, levelThreeEntry,
                 levelFourEntry, levelFiveEntry, levelSixEntry, techProductionEntry, foodProductionEntry,
-                territorySizeEntry);
+                territorySizeEntry, cloakLeftTurnEntry);
         nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         valueColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getValue()));
 
@@ -186,9 +186,10 @@ public abstract class GameController extends UIController{
         territoryInfo.refresh();
     }
 
-    protected void updateUnknownTable() {
+    protected void updateUnknownTable(String name) {
         ArrayList<String> updateList = new ArrayList<>(Collections.nCopies(13, "???"));
-        for (int i = 0; i < updateList.size(); i++) {
+        territoryInfo.getItems().get(0).setValue(name);
+        for (int i = 1; i < updateList.size(); i++) {
             territoryInfo.getItems().get(i).setValue(updateList.get(i));
         }
         territoryInfo.refresh();
@@ -197,6 +198,7 @@ public abstract class GameController extends UIController{
     protected void refreshColor() {
         for (int i = 0; i < territoryList.length; i++) {
             String color;
+            //if (gameContext.territories.get(i).getOwner() == gameContext.playerIDMap.get(gameContext.currentRoomID) ||gameContext.playerInfo.getVisible().get(i)) {
             if (gameContext.playerInfo.getVisible().get(i)) {
                 color = gameContext.colorList.get(gameContext.territories.get(i).getOwner());
             } else {
@@ -209,7 +211,7 @@ public abstract class GameController extends UIController{
     @FXML
     public void handleTerritory0Button(){
         Territory territory = gameContext.territories.get(0);
-        clickOnTerritoryID = 0;
+        gameContext.finalClickedTerritoryID = 0;
 
         refreshColor();
         String newColor;
@@ -223,14 +225,14 @@ public abstract class GameController extends UIController{
         if (gameContext.playerInfo.getVisited().get(0)) {
             updateTableView(territory);
         } else {
-            updateUnknownTable();
+            updateUnknownTable(territory.getName());
         }
     }
 
     @FXML
     public void handleTerritory1Button(){
         Territory territory = gameContext.territories.get(1);
-        clickOnTerritoryID = 1;
+        gameContext.finalClickedTerritoryID = 1;
 
         refreshColor();
         String newColor;
@@ -244,14 +246,14 @@ public abstract class GameController extends UIController{
         if (gameContext.playerInfo.getVisited().get(1)) {
             updateTableView(territory);
         } else {
-            updateUnknownTable();
+            updateUnknownTable(territory.getName());
         }
     }
 
     @FXML
     public void handleTerritory2Button(){
         Territory territory = gameContext.territories.get(2);
-        clickOnTerritoryID = 2;
+        gameContext.finalClickedTerritoryID = 2;
 
         refreshColor();
         String newColor;
@@ -265,14 +267,14 @@ public abstract class GameController extends UIController{
         if (gameContext.playerInfo.getVisited().get(2)) {
             updateTableView(territory);
         } else {
-            updateUnknownTable();
+            updateUnknownTable(territory.getName());
         }
     }
 
     @FXML
     public void handleTerritory3Button(){
         Territory territory = gameContext.territories.get(3);
-        clickOnTerritoryID = 3;
+        gameContext.finalClickedTerritoryID = 3;
 
         refreshColor();
         String newColor;
@@ -286,14 +288,14 @@ public abstract class GameController extends UIController{
         if (gameContext.playerInfo.getVisited().get(3)) {
             updateTableView(territory);
         } else {
-            updateUnknownTable();
+            updateUnknownTable(territory.getName());
         }
     }
 
     @FXML
     public void handleTerritory4Button(){
         Territory territory = gameContext.territories.get(4);
-        clickOnTerritoryID = 4;
+        gameContext.finalClickedTerritoryID = 4;
 
         refreshColor();
         String newColor;
@@ -307,14 +309,14 @@ public abstract class GameController extends UIController{
         if (gameContext.playerInfo.getVisited().get(4)) {
             updateTableView(territory);
         } else {
-            updateUnknownTable();
+            updateUnknownTable(territory.getName());
         }
     }
 
     @FXML
     public void handleTerritory5Button(){
         Territory territory = gameContext.territories.get(5);
-        clickOnTerritoryID = 5;
+        gameContext.finalClickedTerritoryID = 5;
 
         refreshColor();
         String newColor;
@@ -328,14 +330,14 @@ public abstract class GameController extends UIController{
         if (gameContext.playerInfo.getVisited().get(5)) {
             updateTableView(territory);
         } else {
-            updateUnknownTable();
+            updateUnknownTable(territory.getName());
         }
     }
 
     @FXML
     public void handleTerritory6Button(){
         Territory territory = gameContext.territories.get(6);
-        clickOnTerritoryID = 6;
+        gameContext.finalClickedTerritoryID = 6;
 
         refreshColor();
         String newColor;
@@ -349,14 +351,14 @@ public abstract class GameController extends UIController{
         if (gameContext.playerInfo.getVisited().get(6)) {
             updateTableView(territory);
         } else {
-            updateUnknownTable();
+            updateUnknownTable(territory.getName());
         }
     }
 
     @FXML
     public void handleTerritory7Button(){
         Territory territory = gameContext.territories.get(7);
-        clickOnTerritoryID = 7;
+        gameContext.finalClickedTerritoryID = 7;
 
         refreshColor();
         String newColor;
@@ -370,14 +372,14 @@ public abstract class GameController extends UIController{
         if (gameContext.playerInfo.getVisited().get(7)) {
             updateTableView(territory);
         } else {
-            updateUnknownTable();
+            updateUnknownTable(territory.getName());
         }
     }
 
     @FXML
     public void handleTerritory8Button(){
         Territory territory = gameContext.territories.get(8);
-        clickOnTerritoryID = 8;
+        gameContext.finalClickedTerritoryID = 8;
 
         refreshColor();
         String newColor;
@@ -391,14 +393,14 @@ public abstract class GameController extends UIController{
         if (gameContext.playerInfo.getVisited().get(8)) {
             updateTableView(territory);
         } else {
-            updateUnknownTable();
+            updateUnknownTable(territory.getName());
         }
     }
 
     @FXML
     public void handleTerritory9Button(){
         Territory territory = gameContext.territories.get(9);
-        clickOnTerritoryID = 9;
+        gameContext.finalClickedTerritoryID = 9;
 
         refreshColor();
         String newColor;
@@ -412,14 +414,14 @@ public abstract class GameController extends UIController{
         if (gameContext.playerInfo.getVisited().get(9)) {
             updateTableView(territory);
         } else {
-            updateUnknownTable();
+            updateUnknownTable(territory.getName());
         }
     }
 
     @FXML
     public void handleTerritory10Button(){
         Territory territory = gameContext.territories.get(10);
-        clickOnTerritoryID = 10;
+        gameContext.finalClickedTerritoryID = 10;
 
         refreshColor();
         String newColor;
@@ -433,14 +435,14 @@ public abstract class GameController extends UIController{
         if (gameContext.playerInfo.getVisited().get(10)) {
             updateTableView(territory);
         } else {
-            updateUnknownTable();
+            updateUnknownTable(territory.getName());
         }
     }
 
     @FXML
     public void handleTerritory11Button() {
         Territory territory = gameContext.territories.get(11);
-        clickOnTerritoryID = 11;
+        gameContext.finalClickedTerritoryID = 11;
 
         refreshColor();
         String newColor;
@@ -454,7 +456,7 @@ public abstract class GameController extends UIController{
         if (gameContext.playerInfo.getVisited().get(11)) {
             updateTableView(territory);
         } else {
-            updateUnknownTable();
+            updateUnknownTable(territory.getName());
         }
     }
 

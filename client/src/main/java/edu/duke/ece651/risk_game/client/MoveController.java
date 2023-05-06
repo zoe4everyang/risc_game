@@ -17,4 +17,5 @@ public class MoveController extends ActionController{
     public void handleMoveButton() {
         handleActionButton("M");
     }
+
 }

@@ -6,21 +6,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.risk_game.client.VictoryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.risk_game.client.VictoryController">
    <children>
-      <ImageView fitHeight="400.0" fitWidth="600.0">
+      <ImageView fitHeight="924.0" fitWidth="1438.0" layoutX="-85.0" layoutY="-5.0" preserveRatio="true">
          <image>
-            <Image url="@win.png" />
+            <Image url="@victory.jpg" />
          </image>
       </ImageView>
-      <Button layoutX="254.0" layoutY="281.0" mnemonicParsing="false" onMouseClicked="#handleContinueButton" prefHeight="33.0" prefWidth="104.0" text="Continue">
+      <Button layoutX="560.0" layoutY="559.0" mnemonicParsing="false" onMouseClicked="#handleContinueButton" prefHeight="55.0" prefWidth="160.0" style="-fx-background-color: white;" text="Continue" textFill="#011530">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="Palatino Linotype Bold" size="20.0" />
          </font>
       </Button>
-      <Button layoutX="254.0" layoutY="332.0" mnemonicParsing="false" onMouseClicked="#handleExitButton" prefHeight="33.0" prefWidth="104.0" text="Quit">
+      <Button layoutX="560.0" layoutY="647.0" mnemonicParsing="false" onMouseClicked="#handleExitButton" prefHeight="55.0" prefWidth="160.0" style="-fx-background-color: white;" text="Quit" textFill="#011530">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="Palatino Linotype Bold" size="20.0" />
          </font>
       </Button>
    </children>

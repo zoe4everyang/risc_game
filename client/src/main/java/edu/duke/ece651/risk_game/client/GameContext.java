@@ -67,9 +67,12 @@ public class GameContext {
     public static GameContext getInstance() {
         return GameContext.InstanceHolder.instance;
     }
+
     public void update(Response response) {
         this.playerInfo = response.getPlayerInfo();
-        this.playerList = response.getPlayerList();
+        if (playerList == null) {
+            this.playerList = response.getPlayerList();
+        }
         this.unitAvailable = response.getUnitAvailable();
         this.failTheGame = response.isLose();
         List<Territory> srcs = response.getTerritories();

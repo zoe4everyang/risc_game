@@ -176,7 +176,9 @@ public class RISCClient {
         HttpPost request = new HttpPost(serverURL + "/act/commit/" + roomID);
         HashMap<String, Object> requestBody = new HashMap<>();
         requestBody.put("playerID", playerID);
-        return jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), Response.class);
+        String responseStr = sendRequest(request, jsonMapper.writeValueAsString(requestBody));
+        System.out.println("responseStr: " + responseStr);
+        return jsonMapper.readValue(responseStr, Response.class);
     }
 
 }

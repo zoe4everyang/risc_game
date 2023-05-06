@@ -13,30 +13,56 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.risk_game.client.LoginController">
    <children>
-      <SplitPane dividerPositions="0.3779264214046823" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.6243742177722152" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="562.0" prefWidth="454.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="799.0" prefWidth="735.0">
                <children>
-                  <ImageView fitHeight="935.0" fitWidth="1608.0" layoutX="-1100.0" layoutY="-82.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="889.0" fitWidth="1249.0" layoutX="-152.0" layoutY="-58.0">
                      <image>
-                        <Image url="@login.png" />
+                        <Image url="@login2.jpg" />
                      </image>
                   </ImageView>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <TextFlow layoutX="36.0" layoutY="76.0" prefHeight="56.0" prefWidth="283.0" />
-                  <Text layoutX="146.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Risk: The Game of Global Domination" wrappingWidth="499.8955078125">
+                  <ImageView fitHeight="833.0" fitWidth="503.0" layoutY="-7.0">
+                     <image>
+                        <Image url="@blue-black-wallpaper.png" />
+                     </image>
+                  </ImageView>
+                  <TextFlow layoutX="24.0" layoutY="76.0" prefHeight="56.0" prefWidth="283.0">
+                     <children>
+                        <Text fill="#d4b91d" strokeType="OUTSIDE" strokeWidth="0.0" text="Risk:" wrappingWidth="499.8955078125">
+                           <font>
+                              <Font name="Old English Text MT" size="76.0" />
+                           </font>
+                        </Text>
+                     </children></TextFlow>
+                  <Button layoutX="282.0" layoutY="487.0" mnemonicParsing="false" onMouseClicked="#handleLoginButton" prefHeight="48.0" prefWidth="118.0" style="-fx-background-color: white;" text="Login" textFill="#011530">
                      <font>
-                        <Font name="Engravers MT" size="18.0" />
+                        <Font name="Palatino Linotype Bold" size="16.0" />
+                     </font></Button>
+                  <TextArea fx:id="usernameField" layoutX="166.0" layoutY="325.0" prefHeight="37.0" prefWidth="231.0" />
+                  <Text fill="#d4b91d" layoutX="54.0" layoutY="352.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+                     <font>
+                        <Font name="Palatino Linotype Bold" size="22.0" />
+                     </font></Text>
+                  <PasswordField fx:id="passwordField" layoutX="166.0" layoutY="391.0" prefHeight="37.0" prefWidth="231.0" />
+                  <Text fill="#d4b91d" layoutX="69.0" layoutY="201.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dominate The Runeterra" wrappingWidth="476.8094482421875">
+                     <font>
+                        <Font name="Old English Text MT" size="38.0" />
                      </font>
                   </Text>
-                  <Button layoutX="388.0" layoutY="473.0" mnemonicParsing="false" onMouseClicked="#handleLoginButton" prefHeight="42.0" prefWidth="92.0" text="Login" textFill="#2f0202" />
-                  <TextArea fx:id="usernameField" layoutX="249.0" layoutY="349.0" prefHeight="37.0" prefWidth="231.0" />
-                  <Text layoutX="189.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Account" />
-                  <Text layoutX="186.0" layoutY="438.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
-                  <PasswordField fx:id="passwordField" layoutX="249.0" layoutY="415.0" prefHeight="37.0" prefWidth="231.0" />
+                  <Text fill="#d4b91d" layoutX="56.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+                     <font>
+                        <Font name="Palatino Linotype Bold" size="22.0" />
+                     </font></Text>
+                  <Text fill="WHITE" layoutX="163.0" layoutY="603.0" strokeType="OUTSIDE" strokeWidth="0.0" text="* New account will be created automatically if you are new here." textAlignment="RIGHT" wrappingWidth="237.59521484375">
+                     <font>
+                        <Font name="Palatino Linotype" size="14.0" />
+                     </font>
+                  </Text>
                </children>
             </AnchorPane>
         </items>

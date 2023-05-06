@@ -11,6 +11,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
@@ -106,12 +108,20 @@ public abstract class GameController extends UIController{
 
         // player info setup
         Text roomIDText = new Text(gameContext.currentRoomID.toString());
+        roomIDText.setFont(Font.font("Palatino Linotype", FontWeight.NORMAL, 14));
+        roomIDText.setStyle("-fx-fill: d4b91d;");
         roomIDTextFlow.getChildren().add(roomIDText);
         Text techLevelText = new Text(gameContext.playerInfo.getTechLevel().toString());
+        techLevelText.setFont(Font.font("Palatino Linotype", FontWeight.NORMAL, 14));
+        techLevelText.setStyle("-fx-fill: d4b91d;");
         techLevelTextFlow.getChildren().add(techLevelText);
         Text techPointText = new Text(gameContext.playerInfo.getResource().getTechPoint().toString());
+        techPointText.setFont(Font.font("Palatino Linotype", FontWeight.NORMAL, 14));
+        techPointText.setStyle("-fx-fill: d4b91d;");
         techPointTextFlow.getChildren().add(techPointText);
         Text foodPointText = new Text(gameContext.playerInfo.getResource().getFoodPoint().toString());
+        foodPointText.setFont(Font.font("Palatino Linotype", FontWeight.NORMAL, 14));
+        foodPointText.setStyle("-fx-fill: d4b91d;");
         foodPointTextFlow.getChildren().add(foodPointText);
         cloakTechCheckBox.setSelected(gameContext.playerInfo.getCanCloak());
         //cloakTechCheckBox.setStyle("-fx-color: green;");

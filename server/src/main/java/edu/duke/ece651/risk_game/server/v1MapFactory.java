@@ -26,40 +26,40 @@ public class v1MapFactory implements MapFactory{
 //        Territory t6 = new v1Territory(5, "t6", 1, List.of(3, 2, 2, 1, 1, 0),
 //                20, 30, 10, new evo2CombatResolver());
 //        return new v1WorldMap(2, List.of(t1, t2, t3, t4, t5, t6), 300);
-        Territory t0 = new v1Territory(0, "t0", 0,
+        Territory t0 = new v1Territory(0, "Freljord", 0,
                 List.of(0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 5),
                 10, 15, 5, new evo2CombatResolver());
-        Territory t1 = new v1Territory(1, "t1", 0,
+        Territory t1 = new v1Territory(1, "Targon", 1,
                 List.of(1, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4),
                 5, 5, 15, new evo2CombatResolver());
-        Territory t2 = new v1Territory(2, "t2", 0,
+        Territory t2 = new v1Territory(2, "Demacia", 1,
                 List.of(1, 1, 0, 2, 1, 2, 1, 2, 2, 3, 3, 4),
                 20, 5, 5, new evo2CombatResolver());
-        Territory t3 = new v1Territory(3, "t3", 0,
+        Territory t3 = new v1Territory(3, "Shurima", 1,
                 List.of(2, 1, 2, 0, 1, 1, 3, 2, 3, 2, 3, 3),
                 20, 15, 15, new evo2CombatResolver());
-        Territory t4 = new v1Territory(4, "t4", 0,
+        Territory t4 = new v1Territory(4, "Noxus", 1,
                 List.of(2, 1, 1, 1, 0, 1, 1, 1, 2, 2, 2, 3),
                 5, 50, 50, new evo2CombatResolver());
-        Territory t5 = new v1Territory(5, "t5", 1,
+        Territory t5 = new v1Territory(5, "The Void", 1,
                 List.of(3, 2, 2, 1, 1, 0, 2, 1, 2, 1, 2, 2),
                 30, 20, 5, new evo2CombatResolver());
-        Territory t6 = new v1Territory(6, "t6", 0,
+        Territory t6 = new v1Territory(6, "Piltover", 1,
                 List.of(2, 2, 1, 2, 1, 2, 0, 1, 1, 2, 2, 3),
                 30, 20, 5, new evo2CombatResolver());
-        Territory t7 = new v1Territory(7, "t7", 1,
+        Territory t7 = new v1Territory(7, "Zaun", 1,
                 List.of(3, 2, 2, 2, 1, 1, 1, 0, 1, 1, 1, 2),
                 30, 20, 5, new evo2CombatResolver());
-        Territory t8 = new v1Territory(8, "t8", 1,
+        Territory t8 = new v1Territory(8, "Bilgewater", 1,
                 List.of(3, 3, 2, 3, 2, 2, 1, 1, 0, 2, 1, 2),
                 30, 20, 5, new evo2CombatResolver());
-        Territory t9 = new v1Territory(9, "t9", 1,
+        Territory t9 = new v1Territory(9, "Ixtal", 1,
                 List.of(4, 3, 3, 2, 2, 1, 2, 1, 2, 0, 1, 1),
                 30, 20, 5, new evo2CombatResolver());
-        Territory t10 = new v1Territory(10, "t10", 1,
+        Territory t10 = new v1Territory(10, "Ionia", 1,
                 List.of(4, 3, 3, 3, 2, 2, 2, 1, 1, 1, 0, 1),
                 30, 20, 5, new evo2CombatResolver());
-        Territory t11 = new v1Territory(11, "t11", 1,
+        Territory t11 = new v1Territory(11, "Shadow Isles", 1,
                 List.of(5, 4, 4, 3, 3, 3, 2, 2, 2, 1, 1, 0),
                 30, 20, 5, new evo2CombatResolver());
         return new v1WorldMap(4,
@@ -95,40 +95,40 @@ public class v1MapFactory implements MapFactory{
      */
     @Override
     public WorldMap make4PlayerMap() {
-        Territory t0 = new v1Territory(0, "t0", 0,
+        Territory t0 = new v1Territory(0, "Freljord", 0,
                 List.of(0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 5),
                 10, 15, 5, new evo2CombatResolver());
-        Territory t1 = new v1Territory(1, "t1", 0,
+        Territory t1 = new v1Territory(1, "Targon", 0,
                 List.of(1, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4),
                 5, 5, 15, new evo2CombatResolver());
-        Territory t2 = new v1Territory(2, "t2", 0,
+        Territory t2 = new v1Territory(2, "Demacia", 0,
                 List.of(1, 1, 0, 2, 1, 2, 1, 2, 2, 3, 3, 4),
                 20, 5, 5, new evo2CombatResolver());
-        Territory t3 = new v1Territory(3, "t3", 1,
+        Territory t3 = new v1Territory(3, "Shurima", 1,
                 List.of(2, 1, 2, 0, 1, 1, 3, 2, 3, 2, 3, 3),
                 20, 15, 15, new evo2CombatResolver());
-        Territory t4 = new v1Territory(4, "t4", 1,
+        Territory t4 = new v1Territory(4, "Noxus", 1,
                 List.of(2, 1, 1, 1, 0, 1, 1, 1, 2, 2, 2, 3),
                 5, 50, 50, new evo2CombatResolver());
-        Territory t5 = new v1Territory(5, "t5", 1,
+        Territory t5 = new v1Territory(5, "The Void", 1,
                 List.of(3, 2, 2, 1, 1, 0, 2, 1, 2, 1, 2, 2),
                 30, 20, 5, new evo2CombatResolver());
-        Territory t6 = new v1Territory(6, "t6", 2,
+        Territory t6 = new v1Territory(6, "Piltover", 2,
                 List.of(2, 2, 1, 2, 1, 2, 0, 1, 1, 2, 2, 3),
                 30, 20, 5, new evo2CombatResolver());
-        Territory t7 = new v1Territory(7, "t7", 2,
+        Territory t7 = new v1Territory(7, "Zaun", 2,
                 List.of(3, 2, 2, 2, 1, 1, 1, 0, 1, 1, 1, 2),
                 30, 20, 5, new evo2CombatResolver());
-        Territory t8 = new v1Territory(8, "t8", 2,
+        Territory t8 = new v1Territory(8, "Bilgewater", 2,
                 List.of(3, 3, 2, 3, 2, 2, 1, 1, 0, 2, 1, 2),
                 30, 20, 5, new evo2CombatResolver());
-        Territory t9 = new v1Territory(9, "t9", 3,
+        Territory t9 = new v1Territory(9, "Ixtal", 3,
                 List.of(4, 3, 3, 2, 2, 1, 2, 1, 2, 0, 1, 1),
                 30, 20, 5, new evo2CombatResolver());
-        Territory t10 = new v1Territory(10, "t10", 3,
+        Territory t10 = new v1Territory(10, "Ionia", 3,
                 List.of(4, 3, 3, 3, 2, 2, 2, 1, 1, 1, 0, 1),
                 30, 20, 5, new evo2CombatResolver());
-        Territory t11 = new v1Territory(11, "t11", 3,
+        Territory t11 = new v1Territory(11, "Shadow Isles", 3,
                 List.of(5, 4, 4, 3, 3, 3, 2, 2, 2, 1, 1, 0),
                 30, 20, 5, new evo2CombatResolver());
         return new v1WorldMap(4,

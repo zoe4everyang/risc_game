@@ -159,9 +159,8 @@ public class RequestHandler {
         // lost player will automatically leave room, so play number -1
         if(isPlayerLose){
             this.playerNum--;
-            System.out.println("Player " + playerID + " you lose!");
         }
-        return new Response(playerInfo, territories, isPlayerLose, isGameEnd, usernameList);
+        return new Response(playerInfo, territories, isPlayerLose, isGameEnd, usernameList, -1);
     }
 
     public Controller getController(){

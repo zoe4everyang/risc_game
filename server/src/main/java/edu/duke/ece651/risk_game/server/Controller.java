@@ -304,7 +304,7 @@ public class Controller {
     }
 
     public Boolean cacheUpgradeUnit(int playerId, int territoryId, int level, int amount) {
-        List<Unit> units = getUnitsByLevel(territoryId, level, 1);
+        List<Unit> units = getUnitsByLevel(territoryId, level, amount);
         return cUpgradeUnit(playerId, territoryId, units.get(0).getUnitId(), amount);
     }
 

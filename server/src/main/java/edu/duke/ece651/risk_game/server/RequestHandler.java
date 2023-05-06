@@ -92,9 +92,51 @@ public class RequestHandler {
             }
         }
     }
+    public ActionStatus upgradeSpyHandler(HashMap<String, Object> msg) throws InterruptedException{
+        synchronized (this) {
+            Boolean status = controller.cacheUpgradeSpy((int)msg.get("playerID"), (int)msg.get("territoryID"), (int)msg.get("unitLevel"));
+            if(status){
+                return new ActionStatus(true, null);
+            }else{
+                return new ActionStatus(false, "Upgrade Spy failed: Insufficient Resources");
+            }
+        }
+    }
+
+    public ActionStatus moveSpyHandler(HashMap<String, Object> msg) throws InterruptedException{
+        synchronized (this) {
+            Boolean status = controller.cacheMoveSpy((int)msg.get("playerID"), (int)msg.get("territoryID"));
+            if(status){
+                return new ActionStatus(true, null);
+            }else{
+                return new ActionStatus(false, "Move Spy failed: Target not adjacent to current position");
+            }
+        }
+    }
+
+    public ActionStatus upgradeCloakHandler(HashMap<String, Object> msg) throws InterruptedException{
+        synchronized (this) {
+            Boolean status = controller.cacheUpgradeCloak((int)msg.get("playerID"));
+            if(status){
+                return new ActionStatus(true, null);
+            }else{
+                return new ActionStatus(false, "Upgrade Cloak failed: Insufficient Resources");
+            }
+        }
+    }
+
+    public ActionStatus setCloakHandler(HashMap<String, Object> msg) throws InterruptedException{
+        synchronized (this) {
+            Boolean status = controller.cacheSetCloak((int)msg.get("playerID"), (int)msg.get("territoryID"));
+            if(status){
+                return new ActionStatus(true, null);
+            }else{
+                return new ActionStatus(false, "Set Cloak failed: Insufficient Resources");
+            }
+        }
+    }
 
     public Response commitHandler(int playerID, List<String> usernameList) throws InterruptedException{
-        //int playerID = msg.getPlayerInfo().getPlayerID();
         synchronized (this){
             if(count.get() >= playerNum) {
                 count.set(0);
@@ -113,6 +155,7 @@ public class RequestHandler {
         List<Territory> territories = controller.getTerritories();
         Boolean isPlayerLose = controller.checkLose(playerID);
         Boolean isGameEnd = controller.checkEnd();
+        // lost player will automatically leave room, so play number -1
         if(isPlayerLose){
             this.playerNum--;
             System.out.println("Player " + playerID + " you lose!");
@@ -126,61 +169,3 @@ public class RequestHandler {
 
 }
 
-
-
-//    // move & attack
-//    public Message operationHandler(ActionRequest msg) throws InterruptedException{
-//        //Boolean isGameEnd;
-//
-//        int playerID = msg.getPlayerID();
-//        synchronized (this) {
-//            if(count.get() == playerNum) {
-//                count.set(0);
-//            }
-//            count.incrementAndGet();
-//            attackPlayers.addAll(Collections.nCopies(msg.getAttackFrom().size(), playerID));
-//            attackFrom.addAll(msg.getAttackFrom());
-//            attackTo.addAll(msg.getAttackTo());
-//            attackNum.addAll(msg.getAttackNums());
-//
-//            movePlayers.addAll(Collections.nCopies(msg.getMoveFrom().size(), playerID));
-//            moveFrom.addAll(msg.getMoveFrom());
-//            moveTo.addAll(msg.getMoveTo());
-//            moveNum.addAll(msg.getMoveNums());
-////            for(int i = 0; i < msg.getAttackFrom().size(); i++){
-////                attackPlayers.add(playerID);
-////                attackFrom.add(msg.getAttackFrom().get(i));
-////                attackTo.add(msg.getAttackTo().get(i));
-////                attackNum.add(msg.getAttackNums().get(i));
-////            }
-////            for(int i = 0; i < msg.getMoveFrom().size(); i++){
-////                movePlayers.add(playerID);
-////                moveFrom.add(msg.getMoveFrom().get(i));
-////                moveTo.add(msg.getMoveTo().get(i));
-////                moveNum.add(msg.getMoveNums().get(i));
-////            }
-//            if (count.get() < playerNum) {
-//                while(count.get() < playerNum) {
-//                    wait();
-//                }
-//            } else {
-//                controller.step(attackPlayers, attackFrom, attackTo, attackNum,
-//                        movePlayers, moveFrom, moveTo, moveNum);
-//                attackPlayers.clear();
-//                attackFrom.clear();
-//                attackTo.clear();
-//                attackNum.clear();
-//                movePlayers.clear();
-//                moveFrom.clear();
-//                moveTo.clear();
-//                moveNum.clear();
-//                notifyAll();
-//            }
-//        }
-//
-//        List<Territory> territories = controller.getTerritories();
-//        Boolean isPlayerLose = controller.checkLose(playerID);
-//        Message response = new Response(playerID, territories, isPlayerLose, controller.checkEnd());
-//        return response;
-//    }
-//}

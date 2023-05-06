@@ -76,5 +76,5 @@ jar {
         attributes 'Main-Class': 'edu.duke.ece651.risk_game.client.RISCFront'
     }
     archivesBaseName = 'RISC_client'
-    project.version = '1.0.1'
+    project.version = '2.0.0'
 }

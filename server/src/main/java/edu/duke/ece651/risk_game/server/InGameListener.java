@@ -32,16 +32,6 @@ public class InGameListener extends RISCServer {
 
     }
 
-    @PostMapping("/commit/{roomId}")
-    public Response commitActionListen(@PathVariable("roomId") int roomId, @RequestBody HashMap<String, Integer> playerID) {
-        try{
-            return roomSelectionHandler.inGameCommit(roomId, playerID.get("playerID"));
-        }catch(InterruptedException e) {
-            System.out.println(e);
-        }
-        return null;
-
-    }
 
     @PostMapping("/upgradeUnit/{roomId}")
     public ActionStatus upgradeUnitListen(@PathVariable("roomId") int roomId, @RequestBody UpgradeUnitRequest requestBody) {
@@ -63,13 +53,55 @@ public class InGameListener extends RISCServer {
         }
         return null;
     }
-//    @PostMapping("/act")
-//    public Message OperationListen(@RequestBody ActionRequest requestBody) {
-//        try{
-//            return requestHandler.operationHandler(requestBody);
-//        }catch(InterruptedException e) {
-//            System.out.println("Interrupted Exception in Operation Listening");
-//        }
-//        return null;
-//    }
+
+    @PostMapping("/upgradeSpy/{roomId}")
+    public ActionStatus upgradeSpyListen(@PathVariable("roomId") int roomId, @RequestBody HashMap<String, Object> requestBody) {
+        try{
+            return roomSelectionHandler.inGameUpgradeSpy(roomId, requestBody);
+        }catch(InterruptedException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    @PostMapping("/moveSpy/{roomId}")
+    public ActionStatus moveSpyListen(@PathVariable("roomId") int roomId, @RequestBody HashMap<String, Object> requestBody) {
+        try{
+            return roomSelectionHandler.inGameMoveSpy(roomId, requestBody);
+        }catch(InterruptedException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    @PostMapping("/upgradeCloak/{roomId}")
+    public ActionStatus upgCloakListen(@PathVariable("roomId") int roomId, @RequestBody HashMap<String, Object> requestBody) {
+        try{
+            return roomSelectionHandler.inGameUpgradeCloak(roomId, requestBody);
+        }catch(InterruptedException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    @PostMapping("/setCloak/{roomId}")
+    public ActionStatus setCloakListen(@PathVariable("roomId") int roomId, @RequestBody HashMap<String, Object> requestBody) {
+        try{
+            return roomSelectionHandler.inGameSetCloak(roomId, requestBody);
+        }catch(InterruptedException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    @PostMapping("/commit/{roomId}")
+    public Response commitActionListen(@PathVariable("roomId") int roomId, @RequestBody HashMap<String, Integer> playerID) {
+        try{
+            return roomSelectionHandler.inGameCommit(roomId, playerID.get("playerID"));
+        }catch(InterruptedException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
 }

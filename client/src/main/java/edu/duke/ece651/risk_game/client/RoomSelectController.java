@@ -7,7 +7,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -34,9 +33,7 @@ public class RoomSelectController extends UIController{
             roomListData = FXCollections.observableArrayList(stream.collect(Collectors.toList()));
             roomList.setItems(roomListData);
         } catch (IOException e) {
-            gameContext.errorAlert.setHeaderText("Failed to get room list");
-            gameContext.errorAlert.setContentText("Error while getting room list: " + e.getMessage());
-            gameContext.errorAlert.showAndWait();
+            gameContext.showErrorAlert("Failed to get room list", "Error while getting room list: " + e.getMessage());
         }
     }
 
@@ -47,24 +44,28 @@ public class RoomSelectController extends UIController{
     @FXML
     public void handleJoinButton() throws IOException {
         // room ID input
-        Integer roomID;
-        roomID = Integer.parseInt(roomList.getSelectionModel().getSelectedItem());
+
+        String roomIDString = roomList.getSelectionModel().getSelectedItem();
+        if (roomIDString == null) {
+            gameContext.showErrorAlert("Error", "Please choose a room ID to join.");
+            return;
+        }
+
+        Integer roomID = Integer.parseInt(roomIDString);
         if (!roomIDs.contains(roomID)) {
-            gameContext.errorAlert.setHeaderText("Failed to get room list");
-            gameContext.errorAlert.setContentText("Please choose a valid room ID");
-            gameContext.errorAlert.showAndWait();
+            gameContext.showErrorAlert("Error", "Please choose a valid room ID.");
             sceneManager.switchTo("RoomSelect.fxml");
         }
 
         // join room
         Response response = null;
-        Stage loadingStage = sceneManager.createNewWindow("Loading.fxml");
+        //Stage loadingStage = sceneManager.createNewWindow("Loading.fxml");
         try {
             response = gameContext.httpClient.joinRoom(gameContext.username, roomID);
         } catch (IOException e) {
             System.out.println("Error while sending join room request: " + e.getMessage());
         }
-        loadingStage.close();
+        //loadingStage.close();
 
         if (response == null) {
             sceneManager.switchTo("RoomSelect.fxml");

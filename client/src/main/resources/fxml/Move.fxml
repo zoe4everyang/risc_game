@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
@@ -16,7 +17,7 @@
             <Font name="Times New Roman Bold" size="14.0" />
          </font>
       </Button>
-      <Button layoutX="346.0" layoutY="325.0" mnemonicParsing="false" onMouseClicked="#handleCancelButton" prefHeight="52.0" prefWidth="111.0" text="Cancel">
+      <Button fx:id="cancel" layoutX="346.0" layoutY="325.0" mnemonicParsing="false" onMouseClicked="#handleCancelButton" prefHeight="52.0" prefWidth="111.0" text="Cancel">
          <font>
             <Font name="Times New Roman Bold" size="14.0" />
          </font>
@@ -26,7 +27,7 @@
       <Text layoutX="152.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Target Territory" />
       <Text layoutX="164.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level 0" />
       <Slider fx:id="level1NumSlider" layoutX="276.0" layoutY="105.0" />
-      <Text layoutX="164.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level 1" />
+      <Text layoutX="164.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level 1" />
       <Slider fx:id="level2NumSlider" layoutX="276.0" layoutY="138.0" />
       <Text layoutX="164.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level 2" />
       <Slider fx:id="level3NumSlider" layoutX="276.0" layoutY="172.0" />
@@ -37,5 +38,12 @@
       <Text layoutX="164.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level 5" />
       <Slider fx:id="level6NumSlider" layoutX="276.0" layoutY="282.0" />
       <Text layoutX="164.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level 6" />
+      <Label fx:id="level0Label" layoutX="426.0" layoutY="76.0" text="0" />
+      <Label fx:id="level6Label" layoutX="432.0" layoutY="281.0" text="0" />
+      <Label fx:id="level5Label" layoutX="432.0" layoutY="242.0" text="0" />
+      <Label fx:id="level4Label" layoutX="432.0" layoutY="207.0" text="0" />
+      <Label fx:id="level3Label" layoutX="432.0" layoutY="171.0" text="0" />
+      <Label fx:id="level2Label" layoutX="429.0" layoutY="137.0" text="0" />
+      <Label fx:id="level1Label" layoutX="429.0" layoutY="104.0" text="0" />
    </children>
 </AnchorPane>

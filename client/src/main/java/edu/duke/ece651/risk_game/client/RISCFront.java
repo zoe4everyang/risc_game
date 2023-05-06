@@ -2,7 +2,6 @@ package edu.duke.ece651.risk_game.client;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -14,7 +13,7 @@ public class RISCFront extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setResizable(false);
-        primaryStage.initStyle(StageStyle.UNDECORATED);
+       // primaryStage.initStyle(StageStyle.UNDECORATED);
         SceneManager.getInstance().setStage(primaryStage);
         SceneManager.getInstance().switchTo("Login.fxml");
     }

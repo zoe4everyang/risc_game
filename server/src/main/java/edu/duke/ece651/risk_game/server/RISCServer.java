@@ -19,7 +19,7 @@ public class RISCServer {
      * Constructor
      */
     public RISCServer() {
-        this.playerNum = 4;
+        this.playerNum = 2;
         roomSelectionHandler = new RoomSelectionHandler(playerNum);
     }
 

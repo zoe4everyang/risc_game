@@ -303,9 +303,35 @@ public class Controller {
         return false;
     }
 
-    public Boolean cacheUpgradeUnit(int playerId, int territoryId, int level, int amount) {
-        List<Unit> units = getUnitsByLevel(territoryId, level, amount);
-        return cUpgradeUnit(playerId, territoryId, units.get(0).getUnitId(), amount);
+    public Boolean cacheUpgradeUnit(int playerId, int territoryId, int level, int amount, int numUnits) {
+        int totalCost = 0;
+        for (int i = 0; i < amount; i++) {
+            totalCost += unitRequirement.get(level + i);
+        }
+        totalCost *= numUnits;
+        List<Unit> units = getUnitsByLevel(territoryId, level, numUnits);
+        if (units.size() < numUnits) {
+            return false;
+        }
+
+
+        if (players.get(playerId).getFoodPoint() >= totalCost &&
+                players.get(playerId).getTechLevel() >= level + amount &&
+                territories.get(territoryId).getOwner() == playerId) {
+            // upgrade unit
+            for (Unit u : units) {
+                int unitId = u.getUnitId();
+                upgradeUnit(playerId, territoryId, unitId, amount);
+                // reduce resources
+                players.get(playerId).reduceTechPoint(totalCost);
+            }
+
+        } else {
+            return false;
+        }
+
+
+        return true;
     }
 
     public Boolean cacheUpgradeTechnology(int playerId) {

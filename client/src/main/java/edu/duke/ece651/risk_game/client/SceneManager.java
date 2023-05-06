@@ -4,7 +4,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -40,7 +39,7 @@ public class SceneManager {
     public Stage createNewWindow(String fxmlFile) {
         Stage newStage = new Stage();
         newStage.setResizable(false);
-        newStage.initStyle(StageStyle.UNDECORATED);
+        //newStage.initStyle(StageStyle.UNDECORATED);
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + fxmlFile));
             Parent root = loader.load();

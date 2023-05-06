@@ -5,12 +5,13 @@ public class UpgradeUnitRequest extends Message{
     Integer territoryID;
     Integer level;
     Integer levelUpgraded;
-
-    public UpgradeUnitRequest(int playerID, int territoryID, int level, int levelUpgraded) {
+    Integer amount;
+    public UpgradeUnitRequest(int playerID, int territoryID, int level, int levelUpgraded, int amount) {
         super(playerID);
         this.territoryID = territoryID;
         this.level = level;
         this.levelUpgraded = levelUpgraded;
+        this.amount = amount;
     }
 
     public Integer getTerritoryID() {
@@ -23,5 +24,9 @@ public class UpgradeUnitRequest extends Message{
 
     public Integer getLevelUpgraded() {
         return levelUpgraded;
+    }
+
+    public Integer getAmount() {
+        return amount;
     }
 }

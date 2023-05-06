@@ -16,7 +16,9 @@ public class MoveSpyController extends GameController{
         for (Territory territory : gameContext.territories) {
             toComboBox.getItems().add(territory.getName());
         }
-        clickList[gameContext.finalClickedTerritoryID].run();
+        if (gameContext.finalClickedTerritoryID != -1) {
+            clickList[gameContext.finalClickedTerritoryID].run();
+        }
     }
 
     @FXML
@@ -27,6 +29,7 @@ public class MoveSpyController extends GameController{
         if (!status.isSuccess()) {
             gameContext.showErrorAlert("Error", "You could only move 1 territory at a time in enemy territory.");
         } else {
+            gameContext.clickHistory.put("spy", true);
             sceneManager.switchTo("GameMain.fxml");
         }
     }

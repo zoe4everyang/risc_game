@@ -10,7 +10,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -107,6 +106,10 @@ public class PlacementController extends UIController {
     @FXML
     public void handlePlaceButton() throws IOException {
         String territoryName = territoryComboBox.getValue();
+        if (territoryName == null) {
+            gameContext.showErrorAlert("Invalid Input", "Please select a territory.");
+            return;
+        }
         int num = Integer.parseInt(unitTextField.getText());
         if (num > unitLeft) {
             gameContext.showErrorAlert("Invalid Input", "You do not have enough units to place.");
@@ -133,13 +136,13 @@ public class PlacementController extends UIController {
         }
         PlacementRequest placementRequest = new PlacementRequest(gameContext.playerInfo.getPlayerID(), placement);
         Response response = null;
-        Stage loadingStage = sceneManager.createNewWindow("Loading.fxml");
+        //Stage loadingStage = sceneManager.createNewWindow("Loading.fxml");
         try {
             response = gameContext.httpClient.sendPlacement(gameContext.currentRoomID, placementRequest);
         } catch (IOException e) {
             gameContext.showErrorAlert("Failed to send placement request", "Error while sending placement request: " + e.getMessage());
         }
-        loadingStage.close();
+        //loadingStage.close();
         assert response != null;
         gameContext.update(response);
         sceneManager.switchTo("GameMain.fxml");

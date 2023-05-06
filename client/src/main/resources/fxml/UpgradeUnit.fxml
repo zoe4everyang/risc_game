@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.Double?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
@@ -285,7 +288,10 @@
                   <Image url="@spy.png" />
                </image>
             </ImageView>
-            <CheckBox fx:id="spyCheckBox" layoutX="154.0" layoutY="723.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="118.0" text="Spy" />
+            <CheckBox fx:id="spyCheckBox" layoutX="154.0" layoutY="723.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="118.0" text="Spy">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets></CheckBox>
             <CheckBox fx:id="cloakTechCheckBox" layoutX="291.0" layoutY="741.0" mnemonicParsing="false" text="CloakTech" />
          </children>
       </AnchorPane>
@@ -307,7 +313,7 @@
       </Text>
       <Line endX="184.0" endY="-61.33333206176758" layoutX="702.0" layoutY="61.0" startX="184.0" startY="738.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fafbfc" height="592.0" layoutX="911.0" layoutY="15.0" stroke="BLACK" strokeType="INSIDE" width="354.0" />
-      <Button layoutX="1032.0" layoutY="671.0" mnemonicParsing="false" onMouseClicked="#handleUpgradeButton" prefHeight="52.0" prefWidth="111.0" text="Submit">
+      <Button layoutX="950.0" layoutY="668.0" mnemonicParsing="false" onMouseClicked="#handleUpgradeButton" prefHeight="52.0" prefWidth="111.0" text="Upgrade">
          <font>
             <Font name="Times New Roman Bold" size="14.0" />
          </font>
@@ -329,5 +335,17 @@
             <Font size="13.0" />
          </font>
       </Text>
+      <Button layoutX="1117.0" layoutY="668.0" mnemonicParsing="false" onMouseClicked="#handleCancelButton" prefHeight="52.0" prefWidth="111.0" text="Cancel">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Button>
+      <Text layoutX="1045.0" layoutY="475.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unit Number">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Text>
+      <Slider fx:id="unitSlider" layoutX="1025.0" layoutY="509.0" />
+      <Label fx:id="unitLabel" layoutX="1180.0" layoutY="509.0" text="0" />
    </children>
 </AnchorPane>

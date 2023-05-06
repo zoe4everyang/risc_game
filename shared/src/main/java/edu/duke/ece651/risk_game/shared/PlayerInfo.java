@@ -26,6 +26,7 @@ public class PlayerInfo {
      * @param resource the resource of the player
      * @param techLevel the tech level of the player
      */
+    @JsonCreator
     public PlayerInfo(@JsonProperty("playerID") Integer playerID,
                       @JsonProperty("resource") Resource resource,
                       @JsonProperty("techLevel") Integer techLevel,

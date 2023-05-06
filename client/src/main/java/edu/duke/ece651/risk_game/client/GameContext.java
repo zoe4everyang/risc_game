@@ -25,6 +25,7 @@ public class GameContext {
     public Alert infoAlert;
     public List<String> colorList;
     public Integer finalClickedTerritoryID;
+    public HashMap<String, Boolean> clickHistory;
 
     /**
      * Constructor for GameContext
@@ -44,6 +45,9 @@ public class GameContext {
         errorAlert.setTitle("Error");
         this.infoAlert = new Alert(Alert.AlertType.INFORMATION);
         this.colorList = List.of("#9966CC", "#6495ED", "#BC8F8F", "#00FF7F", "#000000", "#C9B0E3", "#9EB9EA", "#D8CACA", "#AAE9C9", "#BEBEBE");
+        this.finalClickedTerritoryID = -1;
+        this.clickHistory = new HashMap<>();
+        initClickedHistory();
     }
 
     private void initActionFns() {
@@ -51,6 +55,11 @@ public class GameContext {
         actionFns.put("M", httpClient::sendMove);
     }
 
+    private void initClickedHistory() {
+        this.clickHistory.put("upgradeTech", false);
+        this.clickHistory.put("spy", false);
+        this.clickHistory.put("cloak", false);
+    }
     private static final class InstanceHolder {
         private static final GameContext instance = new GameContext();
     }
@@ -61,9 +70,19 @@ public class GameContext {
     public void update(Response response) {
         this.playerInfo = response.getPlayerInfo();
         this.playerList = response.getPlayerList();
-        this.territories = response.getTerritories();
         this.unitAvailable = response.getUnitAvailable();
         this.failTheGame = response.isLose();
+        List<Territory> srcs = response.getTerritories();
+        if (this.territories == null) {
+            this.territories = srcs;
+        } else {
+            PlayerInfo curPlayerInfo = this.playerInfo;
+            for (int i = 0; i < srcs.size(); i++){
+                if (curPlayerInfo.getVisible().get(i)) {
+                    this.territories.set(i, srcs.get(i));
+                }
+            }
+        }
     }
 
     public void showErrorAlert(String header, String content) {

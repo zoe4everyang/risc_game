@@ -3,6 +3,7 @@
 <?import java.lang.Double?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -16,7 +17,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-border-image-width: 2px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.risk_game.client.UpgradeTechController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-border-image-width: 2px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.risk_game.client.UpgradeSpyController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="800.0" stroke="BLACK" strokeType="INSIDE" width="1280.0" />
       <AnchorPane layoutX="-58.0" layoutY="-44.0" prefHeight="850.0" prefWidth="522.0">
@@ -305,28 +306,24 @@
          </font>
       </Text>
       <Line endX="184.0" endY="-61.33333206176758" layoutX="702.0" layoutY="61.0" startX="184.0" startY="738.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fafbfc" height="763.0" layoutX="911.0" layoutY="15.0" stroke="BLACK" strokeType="INSIDE" width="354.0" />
-      <Button layoutX="1039.0" layoutY="344.0" mnemonicParsing="false" onMouseClicked="#handleYesButton" prefHeight="52.0" prefWidth="111.0" text="Yes">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fafbfc" height="592.0" layoutX="911.0" layoutY="15.0" stroke="BLACK" strokeType="INSIDE" width="354.0" />
+      <Button layoutX="936.0" layoutY="672.0" mnemonicParsing="false" onMouseClicked="#handleUpgradeButton" prefHeight="52.0" prefWidth="111.0" text="Upgrade">
          <font>
             <Font name="Times New Roman Bold" size="14.0" />
          </font>
       </Button>
-      <Text layoutX="1039.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Upgrade Tech">
+      <Text layoutX="1036.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Upgrade Spy">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Text>
-      <Text layoutX="1040.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Do you want to">
+      <ComboBox fx:id="unitLevelComboBox" layoutX="1032.0" layoutY="249.0" prefHeight="36.0" prefWidth="126.0" promptText="Unit Level" />
+      <Text layoutX="978.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please choose the unit level to upgrade">
          <font>
             <Font size="13.0" />
          </font>
       </Text>
-      <Text layoutX="1024.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" upgrade your Tech?">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Text>
-      <Button layoutX="1040.0" layoutY="461.0" mnemonicParsing="false" onMouseClicked="#handleNoButton" prefHeight="52.0" prefWidth="111.0" text="No">
+      <Button layoutX="1095.0" layoutY="672.0" mnemonicParsing="false" onMouseClicked="#handleCancelButton" prefHeight="52.0" prefWidth="111.0" text="Cancel">
          <font>
             <Font name="Times New Roman Bold" size="14.0" />
          </font>

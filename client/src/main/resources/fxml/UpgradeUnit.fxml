@@ -2,10 +2,13 @@
 
 <?import java.lang.Double?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Polygon?>
@@ -14,293 +17,281 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-border-image-width: 2px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.risk_game.client.UpgradeUnitController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-border-image-width: 2px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.risk_game.client.UpgradeUnitController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="401.0" stroke="BLACK" strokeType="INSIDE" width="603.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fafbfc" height="319.0" layoutX="436.0" layoutY="7.0" stroke="BLACK" strokeType="INSIDE" width="160.0" />
-      <AnchorPane layoutX="-40.0" layoutY="-39.0" prefHeight="440.0" prefWidth="267.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="800.0" stroke="BLACK" strokeType="INSIDE" width="1280.0" />
+      <AnchorPane layoutX="-58.0" layoutY="-44.0" prefHeight="850.0" prefWidth="522.0">
          <children>
-            <Polygon fx:id="territory0" fill="DODGERBLUE" layoutX="97.0" layoutY="109.0" onMouseClicked="#handleTerritory0Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-              <points>
-                <Double fx:value="30.0" />
-                <Double fx:value="0.0" />
-                <Double fx:value="15.0" />
-                <Double fx:value="25.98" />
-                <Double fx:value="-15" />
-                <Double fx:value="25.98" />
-	<Double fx:value="-30.0" />
-                <Double fx:value="0.0" />
-                <Double fx:value="-15.0" />
-                <Double fx:value="-25.98" />
-                <Double fx:value="15" />
-                <Double fx:value="-25.98" />
-              </points>
-            </Polygon>
-            <Polygon fx:id="territory2" fill="DODGERBLUE" layoutX="141.0" layoutY="135.0" onMouseClicked="#handleTerritory2Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="15.0" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-15" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-15.0" />
-                  <Double fx:value="-25.98" />
-                  <Double fx:value="15" />
-                  <Double fx:value="-25.98" />
-               </points>
-            </Polygon>
-            <Polygon fx:id="territory1" fill="DODGERBLUE" layoutX="97.0" layoutY="161.0" onMouseClicked="#handleTerritory1Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="15.0" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-15" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-15.0" />
-                  <Double fx:value="-25.98" />
-                  <Double fx:value="15" />
-                  <Double fx:value="-25.98" />
-               </points>
-            </Polygon>
-            <Polygon fx:id="territory4" fill="DODGERBLUE" layoutX="141.0" layoutY="187.0" onMouseClicked="#handleTerritory4Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="15.0" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-15" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-15.0" />
-                  <Double fx:value="-25.98" />
-                  <Double fx:value="15" />
-                  <Double fx:value="-25.98" />
-               </points>
-            </Polygon>
-            <Polygon fx:id="territory6" fill="DODGERBLUE" layoutX="186.0" layoutY="161.0" onMouseClicked="#handleTerritory6Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="15.0" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-15" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-15.0" />
-                  <Double fx:value="-25.98" />
-                  <Double fx:value="15" />
-                  <Double fx:value="-25.98" />
-               </points>
-            </Polygon>
-            <Polygon fx:id="territory7" fill="DODGERBLUE" layoutX="186.0" layoutY="213.0" onMouseClicked="#handleTerritory7Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="15.0" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-15" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-15.0" />
-                  <Double fx:value="-25.98" />
-                  <Double fx:value="15" />
-                  <Double fx:value="-25.98" />
-               </points>
-            </Polygon>
-            <Polygon fx:id="territory3" fill="DODGERBLUE" layoutX="96.0" layoutY="213.0" onMouseClicked="#handleTerritory3Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="15.0" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-15" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-15.0" />
-                  <Double fx:value="-25.98" />
-                  <Double fx:value="15" />
-                  <Double fx:value="-25.98" />
-               </points>
-            </Polygon>
-            <Polygon fx:id="territory5" fill="DODGERBLUE" layoutX="141.0" layoutY="239.0" onMouseClicked="#handleTerritory5Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="15.0" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-15" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-15.0" />
-                  <Double fx:value="-25.98" />
-                  <Double fx:value="15" />
-                  <Double fx:value="-25.98" />
-               </points>
-            </Polygon>
-            <Polygon fx:id="territory9" fill="DODGERBLUE" layoutX="186.0" layoutY="265.0" onMouseClicked="#handleTerritory9Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="15.0" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-15" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-15.0" />
-                  <Double fx:value="-25.98" />
-                  <Double fx:value="15" />
-                  <Double fx:value="-25.98" />
-               </points>
-            </Polygon>
-            <Polygon fx:id="territory8" fill="DODGERBLUE" layoutX="231.0" layoutY="187.0" onMouseClicked="#handleTerritory8Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="15.0" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-15" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-15.0" />
-                  <Double fx:value="-25.98" />
-                  <Double fx:value="15" />
-                  <Double fx:value="-25.98" />
-               </points>
-            </Polygon>
-            <Polygon fx:id="territory10" fill="DODGERBLUE" layoutX="231.0" layoutY="239.0" onMouseClicked="#handleTerritory10Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="15.0" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-15" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-15.0" />
-                  <Double fx:value="-25.98" />
-                  <Double fx:value="15" />
-                  <Double fx:value="-25.98" />
-               </points>
-            </Polygon>
-            <Text layoutX="92.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T0">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <Text layoutX="135.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T2">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <Text layoutX="91.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T1">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <Text layoutX="135.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T4">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <Text layoutX="180.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T6">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <Text layoutX="92.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T3">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <Text layoutX="135.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T5">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <Text layoutX="180.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T9">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <Text layoutX="180.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T7">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <Text layoutX="225.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T8">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <Text layoutX="225.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T10">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <Polygon fx:id="territory11" fill="DODGERBLUE" layoutX="231.0" layoutY="291.0" onMouseClicked="#handleTerritory11Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="15.0" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-15" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-15.0" />
-                  <Double fx:value="-25.98" />
-                  <Double fx:value="15" />
-                  <Double fx:value="-25.98" />
-               </points>
-            </Polygon>
-            <Text layoutX="226.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T11">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="51.0" layoutY="366.0" stroke="BLACK" strokeType="INSIDE" width="118.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="51.0" layoutY="395.0" stroke="BLACK" strokeType="INSIDE" width="118.0" />
-            <Text layoutX="167.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room id： " />
-            <TextFlow fx:id="roomIDTextFlow" layoutX="226.0" layoutY="45.0" prefHeight="23.0" prefWidth="72.0" style="-fx-background-color: white; -fx-border-color: black;" />
-            <Text layoutX="159.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your color:" />
-            <Text layoutX="76.0" layoutY="384.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tech  Point" wrappingWidth="96.4599609375">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="154.0" layoutY="664.0" stroke="BLACK" strokeType="INSIDE" width="118.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="154.0" layoutY="693.0" stroke="BLACK" strokeType="INSIDE" width="118.0" />
+            <Text layoutX="358.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room id： " />
+            <TextFlow fx:id="roomIDTextFlow" layoutX="430.0" layoutY="52.0" prefHeight="23.0" prefWidth="72.0" style="-fx-background-color: white; -fx-border-color: black;" />
+            <Text layoutX="359.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your color:" />
+            <Text layoutX="178.0" layoutY="684.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tech  Point" wrappingWidth="96.4599609375">
                <font>
                   <Font size="11.0" />
                </font>
             </Text>
-            <Text layoutX="75.0" layoutY="415.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Food  Point" wrappingWidth="96.4599609375">
+            <Text layoutX="178.0" layoutY="714.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Food  Point" wrappingWidth="96.4599609375">
                <font>
                   <Font size="11.0" />
                </font>
             </Text>
-            <TextFlow fx:id="techPointTextFlow" layoutX="168.0" layoutY="366.0" prefHeight="30.0" prefWidth="118.0" style="-fx-background-color: white; -fx-border-color: black;" />
-            <TextFlow fx:id="foodPointTextFlow" layoutX="168.0" layoutY="395.0" prefHeight="30.0" prefWidth="118.0" style="-fx-background-color: white; -fx-border-color: black;" />
-            <Rectangle fx:id="myColor" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="23.0" layoutX="226.0" layoutY="77.0" stroke="BLACK" strokeType="INSIDE" width="72.0" />
+            <TextFlow fx:id="techPointTextFlow" layoutX="271.0" layoutY="664.0" prefHeight="30.0" prefWidth="118.0" style="-fx-background-color: white; -fx-border-color: black;" />
+            <TextFlow fx:id="foodPointTextFlow" layoutX="271.0" layoutY="693.0" prefHeight="30.0" prefWidth="118.0" style="-fx-background-color: white; -fx-border-color: black;" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="154.0" layoutY="635.0" stroke="BLACK" strokeType="INSIDE" width="118.0" />
+            <Text layoutX="178.0" layoutY="655.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tech  Level" wrappingWidth="96.4599609375">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Text>
+            <TextFlow fx:id="techLevelTextFlow" layoutX="271.0" layoutY="635.0" prefHeight="30.0" prefWidth="118.0" style="-fx-background-color: white; -fx-border-color: black;" />
+            <Rectangle fx:id="myColor" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="23.0" layoutX="430.0" layoutY="88.0" stroke="BLACK" strokeType="INSIDE" width="72.0" />
+            <Polygon fx:id="territory0" fill="DODGERBLUE" layoutX="157.0" layoutY="267.0" onMouseClicked="#handleTerritory0Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
+               </points>
+            </Polygon>
+            <Polygon fx:id="territory2" fill="DODGERBLUE" layoutX="232.0" layoutY="311.0" onMouseClicked="#handleTerritory2Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
+               </points>
+            </Polygon>
+            <Polygon fx:id="territory1" fill="DODGERBLUE" layoutX="157.0" layoutY="354.0" onMouseClicked="#handleTerritory1Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
+               </points>
+            </Polygon>
+            <Polygon fx:id="territory4" fill="DODGERBLUE" layoutX="232.0" layoutY="395.0" onMouseClicked="#handleTerritory4Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
+               </points>
+            </Polygon>
+            <Polygon fx:id="territory6" fill="DODGERBLUE" layoutX="307.0" layoutY="352.0" onMouseClicked="#handleTerritory6Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
+               </points>
+            </Polygon>
+            <Polygon fx:id="territory7" fill="DODGERBLUE" layoutX="307.0" layoutY="438.0" onMouseClicked="#handleTerritory7Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
+               </points>
+            </Polygon>
+            <Polygon fx:id="territory3" fill="DODGERBLUE" layoutX="157.0" layoutY="439.0" onMouseClicked="#handleTerritory3Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
+               </points>
+            </Polygon>
+            <Polygon fx:id="territory5" fill="DODGERBLUE" layoutX="232.0" layoutY="482.0" onMouseClicked="#handleTerritory5Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
+               </points>
+            </Polygon>
+            <Polygon fx:id="territory9" fill="DODGERBLUE" layoutX="307.0" layoutY="524.0" onMouseClicked="#handleTerritory9Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
+               </points>
+            </Polygon>
+            <Polygon fx:id="territory8" fill="DODGERBLUE" layoutX="381.0" layoutY="393.0" onMouseClicked="#handleTerritory8Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
+               </points>
+            </Polygon>
+            <Polygon fx:id="territory10" fill="DODGERBLUE" layoutX="381.0" layoutY="480.0" onMouseClicked="#handleTerritory10Button" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
+               </points>
+            </Polygon>
+            <Polygon fx:id="territory11" fill="DODGERBLUE" layoutX="381.0" layoutY="567.0" onMouseClicked="#handleTerritory11Button" opacity="0.86" points="50.0, 0.0, 25, 43.3, -25, 43.3, -50, 0.0, -25, -43.3, 25, -43.3" stroke="BLACK" strokeType="INSIDE" />
+            <ImageView fx:id="spy0" fitHeight="80.0" fitWidth="80.0" layoutX="117.0" layoutY="224.0" onMouseClicked="#handleTerritory0Button">
+               <image>
+                  <Image url="@spy.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="spy1" fitHeight="80.0" fitWidth="80.0" layoutX="117.0" layoutY="312.0" onMouseClicked="#handleTerritory1Button">
+               <image>
+                  <Image url="@spy.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="spy3" fitHeight="80.0" fitWidth="80.0" layoutX="117.0" layoutY="399.0" onMouseClicked="#handleTerritory3Button">
+               <image>
+                  <Image url="@spy.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="spy4" fitHeight="80.0" fitWidth="80.0" layoutX="192.0" layoutY="352.0" onMouseClicked="#handleTerritory4Button">
+               <image>
+                  <Image url="@spy.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="spy5" fitHeight="80.0" fitWidth="80.0" layoutX="192.0" layoutY="439.0" onMouseClicked="#handleTerritory5Button">
+               <image>
+                  <Image url="@spy.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="spy6" fitHeight="80.0" fitWidth="80.0" layoutX="272.0" layoutY="312.0" onMouseClicked="#handleTerritory6Button">
+               <image>
+                  <Image url="@spy.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="spy8" fitHeight="80.0" fitWidth="80.0" layoutX="344.0" layoutY="352.0" onMouseClicked="#handleTerritory8Button">
+               <image>
+                  <Image url="@spy.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="spy7" fitHeight="80.0" fitWidth="80.0" layoutX="272.0" layoutY="396.0" onMouseClicked="#handleTerritory7Button">
+               <image>
+                  <Image url="@spy.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="spy10" fitHeight="80.0" fitWidth="80.0" layoutX="344.0" layoutY="439.0" onMouseClicked="#handleTerritory10Button">
+               <image>
+                  <Image url="@spy.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="spy9" fitHeight="80.0" fitWidth="80.0" layoutX="272.0" layoutY="479.0" onMouseClicked="#handleTerritory9Button">
+               <image>
+                  <Image url="@spy.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="spy2" fitHeight="80.0" fitWidth="80.0" layoutX="192.0" layoutY="269.0" onMouseClicked="#handleTerritory2Button">
+               <image>
+                  <Image url="@spy.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="spy11" fitHeight="80.0" fitWidth="80.0" layoutX="343.0" layoutY="527.0" onMouseClicked="#handleTerritory11Button">
+               <image>
+                  <Image url="@spy.png" />
+               </image>
+            </ImageView>
+            <CheckBox fx:id="spyCheckBox" layoutX="154.0" layoutY="723.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="118.0" text="Spy" />
+            <CheckBox fx:id="cloakTechCheckBox" layoutX="291.0" layoutY="741.0" mnemonicParsing="false" text="CloakTech" />
          </children>
       </AnchorPane>
-      <Button layoutX="461.0" layoutY="332.0" mnemonicParsing="false" onMouseClicked="#handleUpgradeButton" prefHeight="52.0" prefWidth="111.0" text="Submit">
-         <font>
-            <Font name="Times New Roman Bold" size="14.0" />
-         </font>
-      </Button>
-      <Line endX="184.0" endY="-61.33333206176758" layoutX="79.0" layoutY="61.0" startX="184.0" startY="339.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fcfcfc" height="381.0" layoutX="270.0" layoutY="7.0" stroke="BLACK" strokeType="INSIDE" width="160.0" />
-      <TableView fx:id="territoryInfo" layoutX="273.0" layoutY="37.0" prefHeight="351.0" prefWidth="154.0">
+      <Line endX="184.0" endY="-61.33333206176758" layoutX="279.0" layoutY="62.0" startX="184.0" startY="738.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fcfcfc" height="771.0" layoutX="497.0" layoutY="15.0" stroke="BLACK" strokeType="INSIDE" width="354.0" />
+      <TableView fx:id="territoryInfo" layoutX="500.0" layoutY="72.0" prefHeight="707.0" prefWidth="348.0">
         <columns>
           <TableColumn fx:id="nameColumn" prefWidth="156.0" />
           <TableColumn fx:id="valueColumn" prefWidth="133.0" />
@@ -309,37 +300,34 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Text layoutX="274.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Territory Information">
+      <Text layoutX="560.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Territory Information" wrappingWidth="241.43011474609375">
+         <font>
+            <Font name="Times New Roman Bold" size="24.0" />
+         </font>
+      </Text>
+      <Line endX="184.0" endY="-61.33333206176758" layoutX="702.0" layoutY="61.0" startX="184.0" startY="738.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fafbfc" height="592.0" layoutX="911.0" layoutY="15.0" stroke="BLACK" strokeType="INSIDE" width="354.0" />
+      <Button layoutX="1032.0" layoutY="671.0" mnemonicParsing="false" onMouseClicked="#handleUpgradeButton" prefHeight="52.0" prefWidth="111.0" text="Submit">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Button>
+      <Text layoutX="1036.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Upgrade Unit ">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Text>
-      <ComboBox fx:id="territoryComboBox" layoutX="453.0" layoutY="71.0" prefHeight="36.0" prefWidth="126.0" promptText="Territory Name" />
-      <Text layoutX="465.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Upgrade Unit ">
+      <ComboBox fx:id="currentLevelComboBox" layoutX="1025.0" layoutY="308.0" prefHeight="36.0" prefWidth="126.0" promptText="Current Level" />
+      <ComboBox fx:id="targetLevelComboBox" layoutX="1025.0" layoutY="399.0" prefHeight="36.0" prefWidth="126.0" promptText="Target Level" />
+      <Text layoutX="1046.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Level">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font size="13.0" />
          </font>
       </Text>
-      <ComboBox fx:id="currentLevelComboBox" layoutX="454.0" layoutY="166.0" prefHeight="36.0" prefWidth="126.0" promptText="Current Level" />
-      <ComboBox fx:id="targetLevelComboBox" layoutX="454.0" layoutY="257.0" prefHeight="36.0" prefWidth="126.0" promptText="Target Level" />
-      <Text layoutX="487.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Territory ">
+      <Text layoutX="1048.0" layoutY="387.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Target Level">
          <font>
             <Font size="13.0" />
-         </font></Text>
-      <Text layoutX="475.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Level">
-         <font>
-            <Font size="13.0" />
-         </font></Text>
-      <Text layoutX="477.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Target Level">
-         <font>
-            <Font size="13.0" />
-         </font></Text>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="11.0" layoutY="298.0" stroke="BLACK" strokeType="INSIDE" width="118.0" />
-      <Text layoutX="36.0" layoutY="316.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tech  Level" wrappingWidth="96.4599609375">
-         <font>
-            <Font size="11.0" />
          </font>
       </Text>
-      <TextFlow fx:id="techLevelTextFlow" layoutX="128.0" layoutY="298.0" prefHeight="30.0" prefWidth="118.0" style="-fx-background-color: white; -fx-border-color: black;" />
    </children>
 </AnchorPane>

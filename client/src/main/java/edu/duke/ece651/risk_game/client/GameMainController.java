@@ -71,7 +71,7 @@ public class GameMainController extends GameController{
 
     @FXML
     public void handleCloakButton() {
-        if (!gameContext.playerInfo.getHasCloak()) {
+        if (!gameContext.playerInfo.getCanCloak()) {
             sceneManager.switchTo("UpgradeCloak.fxml");
         } else {
             gameContext.finalClickedTerritoryID = clickOnTerritoryID;

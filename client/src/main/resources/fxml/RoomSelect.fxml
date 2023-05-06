@@ -9,15 +9,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.risk_game.client.RoomSelectController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.risk_game.client.RoomSelectController">
    <children>
       <SplitPane dividerPositions="0.12311557788944724" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <Text layoutX="213.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a game to play">
+                  <Text layoutX="471.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a game to play">
                      <font>
-                        <Font name="Times New Roman Bold" size="18.0" />
+                        <Font name="Times New Roman Bold" size="34.0" />
                      </font>
                   </Text>
                </children>
@@ -28,29 +28,29 @@
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="186.0" prefWidth="596.0">
                            <children>
-                              <ImageView fitHeight="222.0" fitWidth="632.0" layoutX="-26.0" opacity="0.77">
+                              <ImageView fitHeight="460.0" fitWidth="1324.0" layoutX="-46.0" opacity="0.77">
                                  <image>
                                     <Image url="@choose_back1.jpg" />
                                  </image>
                               </ImageView>
-                              <ListView fx:id="roomList" layoutX="200.0" layoutY="21.0" prefHeight="183.0" prefWidth="197.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="199.0" AnchorPane.topAnchor="21.0" />
-                              <Text layoutX="229.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="choose a room to enter!">
+                              <ListView fx:id="roomList" layoutX="200.0" layoutY="53.0" prefHeight="369.0" prefWidth="879.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="199.0" AnchorPane.topAnchor="53.0" />
+                              <Text fill="WHITE" layoutX="516.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="choose a room to enter!">
                                  <font>
-                                    <Font name="Times New Roman" size="14.0" />
+                                    <Font name="Times New Roman" size="26.0" />
                                  </font>
                               </Text>
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="122.0" prefWidth="596.0">
                            <children>
-                              <Button layoutX="255.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#handleJoinButton" prefHeight="46.0" prefWidth="87.0" text="Start!">
+                              <Button layoutX="557.0" layoutY="84.0" mnemonicParsing="false" onMouseClicked="#handleJoinButton" prefHeight="60.0" prefWidth="162.0" text="Start!">
                                  <font>
-                                    <Font name="Times New Roman Bold" size="12.0" />
+                                    <Font name="Times New Roman Bold" size="22.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="255.0" layoutY="68.0" mnemonicParsing="false" onMouseClicked="#handleExitButton" prefHeight="46.0" prefWidth="87.0" text="Quit!">
+                              <Button layoutX="557.0" layoutY="173.0" mnemonicParsing="false" onMouseClicked="#handleExitButton" prefHeight="60.0" prefWidth="162.0" text="Quit!">
                                  <font>
-                                    <Font name="Times New Roman Bold" size="12.0" />
+                                    <Font name="Times New Roman Bold" size="22.0" />
                                  </font>
                               </Button>
                            </children>

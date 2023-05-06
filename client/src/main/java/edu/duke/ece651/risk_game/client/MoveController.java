@@ -14,7 +14,7 @@ public class MoveController extends ActionController{
     }
 
     @FXML
-    public void handleAttackButton() {
+    public void handleMoveButton() {
         handleActionButton("M");
     }
 }

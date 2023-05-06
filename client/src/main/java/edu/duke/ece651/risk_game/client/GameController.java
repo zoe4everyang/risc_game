@@ -113,7 +113,7 @@ public abstract class GameController extends UIController{
         techPointTextFlow.getChildren().add(techPointText);
         Text foodPointText = new Text(gameContext.playerInfo.getResource().getFoodPoint().toString());
         foodPointTextFlow.getChildren().add(foodPointText);
-        cloakTechCheckBox.setSelected(gameContext.playerInfo.getHasCloak());
+        cloakTechCheckBox.setSelected(gameContext.playerInfo.getCanCloak());
         cloakTechCheckBox.setStyle("-fx-color: green;");
         cloakTechCheckBox.setDisable(true);
         spyCheckBox.setSelected(gameContext.playerInfo.getHasSpy());

@@ -94,7 +94,7 @@ public class Controller {
         initPlayerVisibility(playerId);
         // set cloaked territory to invisible
         for (Territory t : territories) {
-            if (t.getCloak() > 0) {
+            if (t.getCloak() > 0 && t.getOwner() != playerId) {
                 players.get(playerId).setInvisible(t.getID());
             }
         }

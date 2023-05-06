@@ -94,7 +94,7 @@ public class Controller {
         initPlayerVisibility(playerId);
         // set cloaked territory to invisible
         for (Territory t : territories) {
-            if (t.getCloak() > 0) {
+            if (t.getCloak() > 0 && t.getOwner() != playerId) {
                 players.get(playerId).setInvisible(t.getID());
             }
         }
@@ -304,7 +304,7 @@ public class Controller {
     }
 
     public Boolean cacheUpgradeUnit(int playerId, int territoryId, int level, int amount) {
-        List<Unit> units = getUnitsByLevel(territoryId, level, 1);
+        List<Unit> units = getUnitsByLevel(territoryId, level, amount);
         return cUpgradeUnit(playerId, territoryId, units.get(0).getUnitId(), amount);
     }
 

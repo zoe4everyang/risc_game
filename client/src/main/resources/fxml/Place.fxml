@@ -10,307 +10,292 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.risk_game.client.PlacementController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.risk_game.client.PlacementController">
    <children>
-      <AnchorPane layoutX="-8.0" prefHeight="400.0" prefWidth="333.0">
+      <AnchorPane prefHeight="478.0" prefWidth="1280.0">
          <children>
-            <Polygon fx:id="territory0" fill="DODGERBLUE" layoutX="97.0" layoutY="109.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+            <Polygon fx:id="territory0" fill="DODGERBLUE" layoutX="528.0" layoutY="74.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
               <points>
-                <Double fx:value="30.0" />
-                <Double fx:value="0.0" />
-                <Double fx:value="15.0" />
-                <Double fx:value="25.98" />
-                <Double fx:value="-15" />
-                <Double fx:value="25.98" />
-	<Double fx:value="-30.0" />
-                <Double fx:value="0.0" />
-                <Double fx:value="-15.0" />
-                <Double fx:value="-25.98" />
-                <Double fx:value="15" />
-                <Double fx:value="-25.98" />
+                <Double fx:value="50" />
+                <Double fx:value="0" />
+                <Double fx:value="25" />
+                <Double fx:value="43.3" />
+                <Double fx:value="-25" />
+                <Double fx:value="43.3" />
+	            <Double fx:value="-50" />
+                <Double fx:value="0" />
+                <Double fx:value="-25" />
+                <Double fx:value="-43.3" />
+                <Double fx:value="25" />
+                <Double fx:value="-43.3" />
               </points>
             </Polygon>
-            <Polygon fx:id="territory2" fill="DODGERBLUE" layoutX="141.0" layoutY="135.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+            <Polygon fx:id="territory2" fill="DODGERBLUE" layoutX="603.0" layoutY="118.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
                <points>
-                  <Double fx:value="30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="15.0" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-15" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-15.0" />
-                  <Double fx:value="-25.98" />
-                  <Double fx:value="15" />
-                  <Double fx:value="-25.98" />
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
                </points>
             </Polygon>
-            <Polygon fx:id="territory1" fill="DODGERBLUE" layoutX="97.0" layoutY="161.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+            <Polygon fx:id="territory1" fill="DODGERBLUE" layoutX="528.0" layoutY="161.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
                <points>
-                  <Double fx:value="30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="15.0" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-15" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-15.0" />
-                  <Double fx:value="-25.98" />
-                  <Double fx:value="15" />
-                  <Double fx:value="-25.98" />
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
                </points>
             </Polygon>
-            <Polygon fx:id="territory4" fill="DODGERBLUE" layoutX="141.0" layoutY="187.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+            <Polygon fx:id="territory4" fill="DODGERBLUE" layoutX="603.0" layoutY="202.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
                <points>
-                  <Double fx:value="30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="15.0" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-15" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-15.0" />
-                  <Double fx:value="-25.98" />
-                  <Double fx:value="15" />
-                  <Double fx:value="-25.98" />
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
                </points>
             </Polygon>
-            <Polygon fx:id="territory6" fill="DODGERBLUE" layoutX="186.0" layoutY="161.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+            <Polygon fx:id="territory6" fill="DODGERBLUE" layoutX="678.0" layoutY="159.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
                <points>
-                  <Double fx:value="30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="15.0" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-15" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-15.0" />
-                  <Double fx:value="-25.98" />
-                  <Double fx:value="15" />
-                  <Double fx:value="-25.98" />
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
                </points>
             </Polygon>
-            <Polygon fx:id="territory7" fill="DODGERBLUE" layoutX="186.0" layoutY="213.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+            <Polygon fx:id="territory7" fill="DODGERBLUE" layoutX="678.0" layoutY="245.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
                <points>
-                  <Double fx:value="30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="15.0" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-15" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-15.0" />
-                  <Double fx:value="-25.98" />
-                  <Double fx:value="15" />
-                  <Double fx:value="-25.98" />
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
                </points>
             </Polygon>
-            <Polygon fx:id="territory3" fill="DODGERBLUE" layoutX="96.0" layoutY="213.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+            <Polygon fx:id="territory3" fill="DODGERBLUE" layoutX="528.0" layoutY="246.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
                <points>
-                  <Double fx:value="30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="15.0" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-15" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-15.0" />
-                  <Double fx:value="-25.98" />
-                  <Double fx:value="15" />
-                  <Double fx:value="-25.98" />
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
                </points>
             </Polygon>
-            <Polygon fx:id="territory5" fill="DODGERBLUE" layoutX="141.0" layoutY="239.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+            <Polygon fx:id="territory5" fill="DODGERBLUE" layoutX="603.0" layoutY="289.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
                <points>
-                  <Double fx:value="30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="15.0" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-15" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-15.0" />
-                  <Double fx:value="-25.98" />
-                  <Double fx:value="15" />
-                  <Double fx:value="-25.98" />
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
                </points>
             </Polygon>
-            <Polygon fx:id="territory9" fill="DODGERBLUE" layoutX="186.0" layoutY="265.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+            <Polygon fx:id="territory9" fill="DODGERBLUE" layoutX="678.0" layoutY="331.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
                <points>
-                  <Double fx:value="30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="15.0" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-15" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-15.0" />
-                  <Double fx:value="-25.98" />
-                  <Double fx:value="15" />
-                  <Double fx:value="-25.98" />
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
                </points>
             </Polygon>
-            <Polygon fx:id="territory8" fill="DODGERBLUE" layoutX="231.0" layoutY="187.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+            <Polygon fx:id="territory8" fill="DODGERBLUE" layoutX="752.0" layoutY="200.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
                <points>
-                  <Double fx:value="30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="15.0" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-15" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-15.0" />
-                  <Double fx:value="-25.98" />
-                  <Double fx:value="15" />
-                  <Double fx:value="-25.98" />
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
                </points>
             </Polygon>
-            <Polygon fx:id="territory10" fill="DODGERBLUE" layoutX="231.0" layoutY="239.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+            <Polygon fx:id="territory10" fill="DODGERBLUE" layoutX="752.0" layoutY="287.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
                <points>
-                  <Double fx:value="30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="15.0" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-15" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-15.0" />
-                  <Double fx:value="-25.98" />
-                  <Double fx:value="15" />
-                  <Double fx:value="-25.98" />
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
                </points>
             </Polygon>
-            <Text layoutX="92.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T0">
+            <Text layoutX="522.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T0">
                <font>
                   <Font size="10.0" />
                </font>
             </Text>
-            <Text layoutX="135.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T2">
+            <Text layoutX="597.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T2">
                <font>
                   <Font size="10.0" />
                </font>
             </Text>
-            <Text layoutX="91.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T1">
+            <Text layoutX="522.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T1">
                <font>
                   <Font size="10.0" />
                </font>
             </Text>
-            <Text layoutX="135.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T4">
+            <Text layoutX="597.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T4">
                <font>
                   <Font size="10.0" />
                </font>
             </Text>
-            <Text layoutX="180.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T6">
+            <Text layoutX="674.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T6">
                <font>
                   <Font size="10.0" />
                </font>
             </Text>
-            <Text layoutX="92.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T3">
+            <Text layoutX="522.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T3" wrappingWidth="11.5966796875">
                <font>
                   <Font size="10.0" />
                </font>
             </Text>
-            <Text layoutX="135.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T5">
+            <Text layoutX="599.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T5">
                <font>
                   <Font size="10.0" />
                </font>
             </Text>
-            <Text layoutX="180.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T9">
+            <Text layoutX="672.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T9">
                <font>
                   <Font size="10.0" />
                </font>
             </Text>
-            <Text layoutX="180.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T7">
+            <Text layoutX="672.0" layoutY="248.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T7">
                <font>
                   <Font size="10.0" />
                </font>
             </Text>
-            <Text layoutX="225.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T8">
+            <Text layoutX="746.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T8">
                <font>
                   <Font size="10.0" />
                </font>
             </Text>
-            <Text layoutX="225.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T10">
+            <Text layoutX="746.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T10">
                <font>
                   <Font size="10.0" />
                </font>
             </Text>
-            <Polygon fx:id="territory11" fill="DODGERBLUE" layoutX="231.0" layoutY="291.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="15.0" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-15" />
-                  <Double fx:value="25.98" />
-                  <Double fx:value="-30.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-15.0" />
-                  <Double fx:value="-25.98" />
-                  <Double fx:value="15" />
-                  <Double fx:value="-25.98" />
-               </points>
-            </Polygon>
-            <Text layoutX="226.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T11">
+            <Polygon fx:id="territory11" fill="DODGERBLUE" layoutX="752.0" layoutY="373.0" opacity="0.86" points="50.0, 0.0, 25, 43.3, -25, 43.3, -50, 0.0, -25, -43.3, 25, -43.3" stroke="BLACK" strokeType="INSIDE" />
+            <Text layoutX="747.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T11">
                <font>
                   <Font size="10.0" />
                </font>
             </Text>
          </children>
       </AnchorPane>
-      <Text layoutX="352.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remaining units to place:" wrappingWidth="227.3359375">
+      <Text layoutX="873.0" layoutY="586.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remaining units to place:" wrappingWidth="227.3359375">
          <font>
             <Font name="Times New Roman Bold" size="18.0" />
          </font>
       </Text>
-      <TextFlow fx:id="unitLeftText" layoutX="347.0" layoutY="69.0" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2px;" />
-      <Text layoutX="376.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Territory to place:">
+      <TextFlow fx:id="unitLeftText" layoutX="873.0" layoutY="626.0" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2px;" />
+      <Text layoutX="221.0" layoutY="577.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Territory to place:">
          <font>
             <Font name="Times New Roman Bold" size="18.0" />
          </font>
       </Text>
-      <Text layoutX="380.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number to place:">
+      <Text layoutX="224.0" layoutY="662.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number to place:">
          <font>
             <Font name="Times New Roman Bold" size="18.0" />
          </font>
       </Text>
-      <Button layoutX="409.0" layoutY="270.0" mnemonicParsing="false" onMouseClicked="#handlePlaceButton" prefHeight="38.0" prefWidth="78.0" text="Place">
+      <Button layoutX="251.0" layoutY="734.0" mnemonicParsing="false" onMouseClicked="#handlePlaceButton" prefHeight="38.0" prefWidth="78.0" text="Place">
          <font>
             <Font name="Times New Roman Bold" size="14.0" />
          </font>
       </Button>
-      <Button layoutX="409.0" layoutY="328.0" mnemonicParsing="false" onMouseClicked="#handleFinishButton" prefHeight="38.0" prefWidth="78.0" text="Finish">
+      <Button layoutX="934.0" layoutY="734.0" mnemonicParsing="false" onMouseClicked="#handleFinishButton" prefHeight="38.0" prefWidth="78.0" text="Finish">
          <font>
             <Font name="Times New Roman Bold" size="14.0" />
          </font>
       </Button>
       <Polygon fill="DODGERBLUE" layoutX="215.0" layoutY="-74.0" stroke="BLACK" strokeType="INSIDE">
          <points>
-            <Double fx:value="30.0" />
-            <Double fx:value="0.0" />
-            <Double fx:value="15.0" />
-            <Double fx:value="25.98" />
-            <Double fx:value="-15" />
-            <Double fx:value="25.98" />
-            <Double fx:value="-30.0" />
-            <Double fx:value="0.0" />
-            <Double fx:value="-15.0" />
-            <Double fx:value="-25.98" />
-            <Double fx:value="15" />
-            <Double fx:value="-25.98" />
+            <Double fx:value="50" />
+            <Double fx:value="0" />
+            <Double fx:value="25" />
+            <Double fx:value="43.3" />
+            <Double fx:value="-25" />
+            <Double fx:value="43.3" />
+            <Double fx:value="-50" />
+            <Double fx:value="0" />
+            <Double fx:value="-25" />
+            <Double fx:value="-43.3" />
+            <Double fx:value="25" />
+            <Double fx:value="-43.3" />
          </points>
       </Polygon>
-      <ComboBox fx:id="territoryComboBox" layoutX="372.0" layoutY="156.0" prefWidth="150.0" promptText="Territory List" />
-      <TextField fx:id="unitTextField" layoutX="367.0" layoutY="229.0" />
+      <ComboBox fx:id="territoryComboBox" layoutX="216.0" layoutY="592.0" prefWidth="150.0" promptText="Territory List" />
+      <TextField fx:id="unitTextField" layoutX="211.0" layoutY="684.0" />
    </children>
 </AnchorPane>

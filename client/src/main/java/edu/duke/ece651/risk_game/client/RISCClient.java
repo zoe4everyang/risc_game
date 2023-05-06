@@ -140,7 +140,7 @@ public class RISCClient {
     }
 
     public ActionStatus sendUpgradeSpy(Integer roomID, Integer playerID, Integer territoryID, Integer unitLevel) throws IOException {
-        HttpPost request = new HttpPost(serverURL + "/act/upspy/" + roomID);
+        HttpPost request = new HttpPost(serverURL + "/act/upradeSpy/" + roomID);
         HashMap<String, Object> requestBody = new HashMap<>();
         requestBody.put("playerID", playerID);
         requestBody.put("territoryID", territoryID);
@@ -149,7 +149,7 @@ public class RISCClient {
     }
 
     public ActionStatus sendMoveSpy(Integer roomID, Integer playerID, Integer territoryID) throws IOException {
-        HttpPost request = new HttpPost(serverURL + "/act/movespy/" + roomID);
+        HttpPost request = new HttpPost(serverURL + "/act/moveSpy/" + roomID);
         HashMap<String, Object> requestBody = new HashMap<>();
         requestBody.put("playerID", playerID);
         requestBody.put("territoryID", territoryID);
@@ -157,14 +157,14 @@ public class RISCClient {
     }
 
     public ActionStatus sendUpgradeCloak(Integer roomID, Integer playerID) throws IOException {
-        HttpPost request = new HttpPost(serverURL + "/act/upcloak/" + roomID);
+        HttpPost request = new HttpPost(serverURL + "/act/upgradeCloak/" + roomID);
         HashMap<String, Object> requestBody = new HashMap<>();
         requestBody.put("playerID", playerID);
         return jsonMapper.readValue(sendRequest(request, jsonMapper.writeValueAsString(requestBody)), ActionStatus.class);
     }
 
     public ActionStatus sendAddCloak(Integer roomID, Integer playerID, Integer territoryID) throws IOException {
-        HttpPost request = new HttpPost(serverURL + "/act/setcloak/" + roomID);
+        HttpPost request = new HttpPost(serverURL + "/act/setCloak/" + roomID);
         HashMap<String, Object> requestBody = new HashMap<>();
         requestBody.put("playerID", playerID);
         requestBody.put("territoryID", territoryID);

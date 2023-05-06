@@ -96,7 +96,6 @@ public class RoomSelectionHandler {
 
                 Message response = newGame(roomId, username);
                 allUserRoomList.get(username).put(roomId, response.getPlayerInfo().getPlayerID());
-                System.out.println("after new game" + requestHandlerList.size());
                 return response;
             }
         }
@@ -118,71 +117,22 @@ public class RoomSelectionHandler {
         if(!requestHandlerList.containsKey(roomId)){
             requestHandlerList.put(roomId, new RequestHandler(playerNum));
         }
-//        playerID = count.get();
-//        count.incrementAndGet();
-//        if(count.get() < playerNum) {
-//            while (count.get() < playerNum) {
-//                wait();
-//            }
-//        }else{
-//        requestHandlerList.put(roomId, new RequestHandler(playerNum));
-            // only notify players in this room
-//            for(Thread thread : threadsListForAll.get(roomId)){
-//                thread.notify();
-//            }
-        //threadsListForAll.remove(roomId); // clear threads in this room
-//        }
-        System.out.println("Here1");
+
         Controller newController = requestHandlerList.get(roomId).getController();
         int unitAvailable = newController.getUnitAvailable();
         List<Territory> territories = newController.getTerritories();
-        System.out.println("Here2");
         PlayerInfo playerInfo = newController.getPlayerInfo(playerID);
         Message response = new Response(playerInfo, territories, false, false, playerList, unitAvailable);
         return response;
-//        int playerID;
-//        synchronized (this) {
-//            playerList.add(username);
-//            if(count.get() == playerNum){
-//                count.set(0);
-//                playerList.clear();
-//            }
-//            playerID = count.get();
-//            count.incrementAndGet();
-//            if(count.get() < playerNum) {
-//                while (count.get() < playerNum) {
-//                    wait();
-//                }
-//            }else{
-//                requestHandlerList.put(roomId, new RequestHandler(playerNum));
-//                // only notify players in this room
-//                for(Thread thread : threadsListForAll.get(roomId)){
-//                    thread.notify();
-//                }
-//                threadsListForAll.remove(roomId); // clear threads in this room
-//            }
-//        }
-//        Controller newController = requestHandlerList.get(roomId).getController();
-//        int unitAvailable = newController.getUnitAvailable();
-//        List<Territory> territories = newController.getTerritories();
-//        System.out.print("Here");
-//        PlayerInfo playerInfo = newController.getPlayerInfo(playerID);
-//        Message response = new Response(playerInfo, territories, false, false, playerList, unitAvailable);
-//        return response;
+
     }
 
 
     public Message inGamePlace(int roomID, PlacementRequest request) throws InterruptedException{
-        //int playerID = request.getPlayerInfo().getPlayerID();
-        System.out.println("in game place before:" + requestHandlerList.size());
-        Message msg =  requestHandlerList.get(roomID).placeUnitHandler(request, getAllUsersInRoom(roomID));
-        System.out.println("in game place after:" + requestHandlerList.size());
-        return msg;
+        return requestHandlerList.get(roomID).placeUnitHandler(request, getAllUsersInRoom(roomID));
     }
 
     public ActionStatus inGameMoveAttack(int roomID, ActionRequest request, String actionType) throws InterruptedException{
-        //int playerID = request.getPlayerInfo().getPlayerID();
-
         RequestHandler requestHandler = requestHandlerList.get(roomID);
         switch (actionType){
             case "move":
@@ -199,18 +149,34 @@ public class RoomSelectionHandler {
     }
 
     public ActionStatus inGameUpgradeTech(int roomID, HashMap<String, Object> request) throws InterruptedException {
-        System.out.println(requestHandlerList.size());
-        for(int i : requestHandlerList.keySet()){
-            System.out.println(i + " " + requestHandlerList.get(i).equals(null));
-        }
         RequestHandler requestHandler = requestHandlerList.get(roomID);
         return requestHandler.upgradeTechHandler(request);
     }
 
+    public ActionStatus inGameUpgradeSpy(int roomID, HashMap<String, Object> request) throws InterruptedException {
+        RequestHandler requestHandler = requestHandlerList.get(roomID);
+        return requestHandler.upgradeSpyHandler(request);
+    }
+
+    public ActionStatus inGameMoveSpy(int roomID, HashMap<String, Object> request) throws InterruptedException {
+        RequestHandler requestHandler = requestHandlerList.get(roomID);
+        return requestHandler.moveSpyHandler(request);
+    }
+    public ActionStatus inGameUpgradeCloak(int roomID, HashMap<String, Object> request) throws InterruptedException {
+        RequestHandler requestHandler = requestHandlerList.get(roomID);
+        return requestHandler.upgradeCloakHandler(request);
+    }
+
+    public ActionStatus inGameSetCloak(int roomID, HashMap<String, Object> request) throws InterruptedException {
+        RequestHandler requestHandler = requestHandlerList.get(roomID);
+        return requestHandler.setCloakHandler(request);
+    }
+
+
     public Response inGameCommit(int roomID, int playerID) throws InterruptedException{
         RequestHandler requestHandler = requestHandlerList.get(roomID);
-        Response response = requestHandler.commitHandler(playerID, getAllUsersInRoom(roomID));
         List<String> usernameList = getAllUsersInRoom(roomID);
+        Response response = requestHandler.commitHandler(playerID, usernameList);
         for(String username : usernameList){
             int PID = allUserRoomList.get(username).get(roomID);
             if(requestHandlerList.get(roomID).getController().checkLose(PID)){
@@ -236,7 +202,6 @@ public class RoomSelectionHandler {
     }
 
     private void checkRoomEnd(int roomID){
-        //
         if(requestHandlerList.get(roomID).getController().checkEnd()){
             List<String> userList = getAllUsersInRoom(roomID);
             for(String username : userList){

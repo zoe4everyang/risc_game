@@ -253,11 +253,25 @@ public class Controller {
 
     public Boolean cacheAttack(int playerId, int from, int to, List<Integer> levels) {
         List<Unit> units = selectUnitsByLevel(from, levels);
+        int total = 0;
+        for (int l : levels) {
+            total += l;
+        }
+        if (units.size() < total) {
+            return false;
+        }
         return cAttack(playerId, from, to, units);
     }
 
     public Boolean cacheMove(int playerId, int from, int to, List<Integer> levels) {
         List<Unit> units = selectUnitsByLevel(from, levels);
+        int total = 0;
+        for (int l : levels) {
+            total += l;
+        }
+        if (units.size() < total) {
+            return false;
+        }
         return cMove(playerId, from, to, units);
     }
 

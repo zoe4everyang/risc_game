@@ -4,6 +4,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.GaussianBlur?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
@@ -14,271 +17,16 @@
    <children>
       <AnchorPane prefHeight="478.0" prefWidth="1280.0">
          <children>
-            <Polygon fx:id="territory0" fill="DODGERBLUE" layoutX="528.0" layoutY="74.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-              <points>
-                <Double fx:value="50" />
-                <Double fx:value="0" />
-                <Double fx:value="25" />
-                <Double fx:value="43.3" />
-                <Double fx:value="-25" />
-                <Double fx:value="43.3" />
-	            <Double fx:value="-50" />
-                <Double fx:value="0" />
-                <Double fx:value="-25" />
-                <Double fx:value="-43.3" />
-                <Double fx:value="25" />
-                <Double fx:value="-43.3" />
-              </points>
-            </Polygon>
-            <Polygon fx:id="territory2" fill="DODGERBLUE" layoutX="603.0" layoutY="118.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="50" />
-                  <Double fx:value="0" />
-                  <Double fx:value="25" />
-                  <Double fx:value="43.3" />
-                  <Double fx:value="-25" />
-                  <Double fx:value="43.3" />
-                  <Double fx:value="-50" />
-                  <Double fx:value="0" />
-                  <Double fx:value="-25" />
-                  <Double fx:value="-43.3" />
-                  <Double fx:value="25" />
-                  <Double fx:value="-43.3" />
-               </points>
-            </Polygon>
-            <Polygon fx:id="territory1" fill="DODGERBLUE" layoutX="528.0" layoutY="161.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="50" />
-                  <Double fx:value="0" />
-                  <Double fx:value="25" />
-                  <Double fx:value="43.3" />
-                  <Double fx:value="-25" />
-                  <Double fx:value="43.3" />
-                  <Double fx:value="-50" />
-                  <Double fx:value="0" />
-                  <Double fx:value="-25" />
-                  <Double fx:value="-43.3" />
-                  <Double fx:value="25" />
-                  <Double fx:value="-43.3" />
-               </points>
-            </Polygon>
-            <Polygon fx:id="territory4" fill="DODGERBLUE" layoutX="603.0" layoutY="202.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="50" />
-                  <Double fx:value="0" />
-                  <Double fx:value="25" />
-                  <Double fx:value="43.3" />
-                  <Double fx:value="-25" />
-                  <Double fx:value="43.3" />
-                  <Double fx:value="-50" />
-                  <Double fx:value="0" />
-                  <Double fx:value="-25" />
-                  <Double fx:value="-43.3" />
-                  <Double fx:value="25" />
-                  <Double fx:value="-43.3" />
-               </points>
-            </Polygon>
-            <Polygon fx:id="territory6" fill="DODGERBLUE" layoutX="678.0" layoutY="159.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="50" />
-                  <Double fx:value="0" />
-                  <Double fx:value="25" />
-                  <Double fx:value="43.3" />
-                  <Double fx:value="-25" />
-                  <Double fx:value="43.3" />
-                  <Double fx:value="-50" />
-                  <Double fx:value="0" />
-                  <Double fx:value="-25" />
-                  <Double fx:value="-43.3" />
-                  <Double fx:value="25" />
-                  <Double fx:value="-43.3" />
-               </points>
-            </Polygon>
-            <Polygon fx:id="territory7" fill="DODGERBLUE" layoutX="678.0" layoutY="245.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="50" />
-                  <Double fx:value="0" />
-                  <Double fx:value="25" />
-                  <Double fx:value="43.3" />
-                  <Double fx:value="-25" />
-                  <Double fx:value="43.3" />
-                  <Double fx:value="-50" />
-                  <Double fx:value="0" />
-                  <Double fx:value="-25" />
-                  <Double fx:value="-43.3" />
-                  <Double fx:value="25" />
-                  <Double fx:value="-43.3" />
-               </points>
-            </Polygon>
-            <Polygon fx:id="territory3" fill="DODGERBLUE" layoutX="528.0" layoutY="246.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="50" />
-                  <Double fx:value="0" />
-                  <Double fx:value="25" />
-                  <Double fx:value="43.3" />
-                  <Double fx:value="-25" />
-                  <Double fx:value="43.3" />
-                  <Double fx:value="-50" />
-                  <Double fx:value="0" />
-                  <Double fx:value="-25" />
-                  <Double fx:value="-43.3" />
-                  <Double fx:value="25" />
-                  <Double fx:value="-43.3" />
-               </points>
-            </Polygon>
-            <Polygon fx:id="territory5" fill="DODGERBLUE" layoutX="603.0" layoutY="289.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="50" />
-                  <Double fx:value="0" />
-                  <Double fx:value="25" />
-                  <Double fx:value="43.3" />
-                  <Double fx:value="-25" />
-                  <Double fx:value="43.3" />
-                  <Double fx:value="-50" />
-                  <Double fx:value="0" />
-                  <Double fx:value="-25" />
-                  <Double fx:value="-43.3" />
-                  <Double fx:value="25" />
-                  <Double fx:value="-43.3" />
-               </points>
-            </Polygon>
-            <Polygon fx:id="territory9" fill="DODGERBLUE" layoutX="678.0" layoutY="331.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="50" />
-                  <Double fx:value="0" />
-                  <Double fx:value="25" />
-                  <Double fx:value="43.3" />
-                  <Double fx:value="-25" />
-                  <Double fx:value="43.3" />
-                  <Double fx:value="-50" />
-                  <Double fx:value="0" />
-                  <Double fx:value="-25" />
-                  <Double fx:value="-43.3" />
-                  <Double fx:value="25" />
-                  <Double fx:value="-43.3" />
-               </points>
-            </Polygon>
-            <Polygon fx:id="territory8" fill="DODGERBLUE" layoutX="752.0" layoutY="200.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="50" />
-                  <Double fx:value="0" />
-                  <Double fx:value="25" />
-                  <Double fx:value="43.3" />
-                  <Double fx:value="-25" />
-                  <Double fx:value="43.3" />
-                  <Double fx:value="-50" />
-                  <Double fx:value="0" />
-                  <Double fx:value="-25" />
-                  <Double fx:value="-43.3" />
-                  <Double fx:value="25" />
-                  <Double fx:value="-43.3" />
-               </points>
-            </Polygon>
-            <Polygon fx:id="territory10" fill="DODGERBLUE" layoutX="752.0" layoutY="287.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="50" />
-                  <Double fx:value="0" />
-                  <Double fx:value="25" />
-                  <Double fx:value="43.3" />
-                  <Double fx:value="-25" />
-                  <Double fx:value="43.3" />
-                  <Double fx:value="-50" />
-                  <Double fx:value="0" />
-                  <Double fx:value="-25" />
-                  <Double fx:value="-43.3" />
-                  <Double fx:value="25" />
-                  <Double fx:value="-43.3" />
-               </points>
-            </Polygon>
-            <Text layoutX="522.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T0">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <Text layoutX="597.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T2">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <Text layoutX="522.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T1">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <Text layoutX="597.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T4">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <Text layoutX="674.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T6">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <Text layoutX="522.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T3" wrappingWidth="11.5966796875">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <Text layoutX="599.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T5">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <Text layoutX="672.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T9">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <Text layoutX="672.0" layoutY="248.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T7">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <Text layoutX="746.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T8">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <Text layoutX="746.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T10">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <Polygon fx:id="territory11" fill="DODGERBLUE" layoutX="752.0" layoutY="373.0" opacity="0.86" points="50.0, 0.0, 25, 43.3, -25, 43.3, -50, 0.0, -25, -43.3, 25, -43.3" stroke="BLACK" strokeType="INSIDE" />
-            <Text layoutX="747.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T11">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
+            <ImageView fitHeight="878.0" fitWidth="1589.0" layoutX="-258.0" layoutY="-4.0" preserveRatio="true">
+               <image>
+                  <Image url="@runeterra-map.png" />
+               </image>
+               <effect>
+                  <GaussianBlur radius="15.3" />
+               </effect>
+            </ImageView>
          </children>
       </AnchorPane>
-      <Text layoutX="873.0" layoutY="586.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remaining units to place:" wrappingWidth="227.3359375">
-         <font>
-            <Font name="Times New Roman Bold" size="18.0" />
-         </font>
-      </Text>
-      <TextFlow fx:id="unitLeftText" layoutX="873.0" layoutY="626.0" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2px;" />
-      <Text layoutX="221.0" layoutY="577.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Territory to place:">
-         <font>
-            <Font name="Times New Roman Bold" size="18.0" />
-         </font>
-      </Text>
-      <Text layoutX="224.0" layoutY="662.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number to place:">
-         <font>
-            <Font name="Times New Roman Bold" size="18.0" />
-         </font>
-      </Text>
-      <Button layoutX="251.0" layoutY="734.0" mnemonicParsing="false" onMouseClicked="#handlePlaceButton" prefHeight="38.0" prefWidth="78.0" text="Place">
-         <font>
-            <Font name="Times New Roman Bold" size="14.0" />
-         </font>
-      </Button>
-      <Button layoutX="934.0" layoutY="734.0" mnemonicParsing="false" onMouseClicked="#handleFinishButton" prefHeight="38.0" prefWidth="78.0" text="Finish">
-         <font>
-            <Font name="Times New Roman Bold" size="14.0" />
-         </font>
-      </Button>
       <Polygon fill="DODGERBLUE" layoutX="215.0" layoutY="-74.0" stroke="BLACK" strokeType="INSIDE">
          <points>
             <Double fx:value="50" />
@@ -295,7 +43,279 @@
             <Double fx:value="-43.3" />
          </points>
       </Polygon>
-      <ComboBox fx:id="territoryComboBox" layoutX="216.0" layoutY="592.0" prefWidth="150.0" promptText="Territory List" />
-      <TextField fx:id="unitTextField" layoutX="211.0" layoutY="684.0" />
+    <AnchorPane layoutX="677.0" layoutY="456.0" minHeight="0.0" minWidth="0.0" prefHeight="343.0" prefWidth="603.0">
+         <children>
+            <ImageView fitHeight="811.0" fitWidth="622.0" layoutX="-21.0" layoutY="-468.0">
+               <image>
+                  <Image url="@blue-black-wallpaper.png" />
+               </image>
+            </ImageView>
+            <Text fill="#d4b91d" layoutX="99.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Territory">
+               <font>
+                  <Font name="Palatino Linotype" size="18.0" />
+               </font>
+            </Text>
+            <Text fill="#d4b91d" layoutX="60.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Minions">
+               <font>
+                  <Font name="Palatino Linotype" size="18.0" />
+               </font>
+            </Text>
+            <ComboBox fx:id="territoryComboBox" layoutX="64.0" layoutY="83.0" prefWidth="150.0" promptText="Territory List" style="-fx-background-color: white;" />
+            <TextField fx:id="unitTextField" layoutX="58.0" layoutY="174.0" style="-fx-background-color: white;" />
+            <Button layoutX="100.0" layoutY="230.0" mnemonicParsing="false" onMouseClicked="#handlePlaceButton" prefHeight="38.0" prefWidth="78.0" text="Place" textFill="#011530">
+               <font>
+                  <Font name="Palatino Linotype" size="14.0" />
+               </font>
+            </Button>
+            <Text fill="#d4b91d" layoutX="370.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remaining Units" wrappingWidth="140.135986328125">
+               <font>
+                  <Font name="Palatino Linotype" size="18.0" />
+               </font>
+            </Text>
+            <TextFlow fx:id="unitLeftText" layoutX="340.0" layoutY="178.0" prefHeight="23.0" prefWidth="200.0" style="-fx-background-color: white;" textAlignment="CENTER" />
+            <Button layoutX="401.0" layoutY="230.0" mnemonicParsing="false" onMouseClicked="#handleFinishButton" prefHeight="38.0" prefWidth="78.0" text="Finish" textFill="#011530">
+               <font>
+                  <Font name="Palatino Linotype" size="14.0" />
+               </font>
+            </Button>
+            <Polygon fx:id="territory0" fill="DODGERBLUE" layoutX="165.0" layoutY="-377.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+              <points>
+                <Double fx:value="50" />
+                <Double fx:value="0" />
+                <Double fx:value="25" />
+                <Double fx:value="43.3" />
+                <Double fx:value="-25" />
+                <Double fx:value="43.3" />
+	            <Double fx:value="-50" />
+                <Double fx:value="0" />
+                <Double fx:value="-25" />
+                <Double fx:value="-43.3" />
+                <Double fx:value="25" />
+                <Double fx:value="-43.3" />
+              </points>
+            </Polygon>
+            <Polygon fx:id="territory2" fill="DODGERBLUE" layoutX="240.0" layoutY="-333.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
+               </points>
+            </Polygon>
+            <Polygon fx:id="territory1" fill="DODGERBLUE" layoutX="165.0" layoutY="-290.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
+               </points>
+            </Polygon>
+            <Polygon fx:id="territory4" fill="DODGERBLUE" layoutX="240.0" layoutY="-249.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
+               </points>
+            </Polygon>
+            <Polygon fx:id="territory6" fill="DODGERBLUE" layoutX="315.0" layoutY="-292.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
+               </points>
+            </Polygon>
+            <Polygon fx:id="territory7" fill="DODGERBLUE" layoutX="315.0" layoutY="-206.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
+               </points>
+            </Polygon>
+            <Polygon fx:id="territory3" fill="DODGERBLUE" layoutX="165.0" layoutY="-205.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
+               </points>
+            </Polygon>
+            <Polygon fx:id="territory5" fill="DODGERBLUE" layoutX="240.0" layoutY="-162.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
+               </points>
+            </Polygon>
+            <Polygon fx:id="territory9" fill="DODGERBLUE" layoutX="315.0" layoutY="-120.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
+               </points>
+            </Polygon>
+            <Polygon fx:id="territory8" fill="DODGERBLUE" layoutX="389.0" layoutY="-251.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
+               </points>
+            </Polygon>
+            <Polygon fx:id="territory10" fill="DODGERBLUE" layoutX="389.0" layoutY="-164.0" opacity="0.86" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="43.3" />
+                  <Double fx:value="-50" />
+                  <Double fx:value="0" />
+                  <Double fx:value="-25" />
+                  <Double fx:value="-43.3" />
+                  <Double fx:value="25" />
+                  <Double fx:value="-43.3" />
+               </points>
+            </Polygon>
+            <Text layoutX="142.0" layoutY="-374.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Freljord">
+               <font>
+                  <Font name="Palatino Linotype" size="14.0" />
+               </font>
+            </Text>
+            <Text layoutX="213.0" layoutY="-331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Demacia">
+               <font>
+                  <Font name="Palatino Linotype" size="14.0" />
+               </font>
+            </Text>
+            <Text layoutX="148.0" layoutY="-285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Targon">
+               <font>
+                  <Font name="Palatino Linotype" size="14.0" />
+               </font>
+            </Text>
+            <Text layoutX="220.0" layoutY="-246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Noxus">
+               <font>
+                  <Font name="Palatino Linotype" size="14.0" />
+               </font>
+            </Text>
+            <Text layoutX="291.0" layoutY="-285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Piltover">
+               <font>
+                  <Font name="Palatino Linotype" size="14.0" />
+               </font>
+            </Text>
+            <Text layoutX="136.0" layoutY="-196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Shurima" wrappingWidth="57.3125">
+               <font>
+                  <Font name="Palatino Linotype" size="14.0" />
+               </font>
+            </Text>
+            <Text layoutX="211.0" layoutY="-159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The Void">
+               <font>
+                  <Font name="Palatino Linotype" size="14.0" />
+               </font>
+            </Text>
+            <Text layoutX="301.0" layoutY="-116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ixtal">
+               <font>
+                  <Font name="Palatino Linotype" size="14.0" />
+               </font>
+            </Text>
+            <Text layoutX="299.0" layoutY="-203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zaun">
+               <font>
+                  <Font name="Palatino Linotype" size="14.0" />
+               </font>
+            </Text>
+            <Text layoutX="356.0" layoutY="-246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bilgewater">
+               <font>
+                  <Font name="Palatino Linotype" size="14.0" />
+               </font>
+            </Text>
+            <Text layoutX="373.0" layoutY="-161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ionia">
+               <font>
+                  <Font name="Palatino Linotype" size="14.0" />
+               </font>
+            </Text>
+            <Polygon fx:id="territory11" fill="DODGERBLUE" layoutX="389.0" layoutY="-78.0" opacity="0.86" points="50.0, 0.0, 25, 43.3, -25, 43.3, -50, 0.0, -25, -43.3, 25, -43.3" stroke="BLACK" strokeType="INSIDE" />
+            <Text layoutX="348.0" layoutY="-74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Shadow Isles">
+               <font>
+                  <Font name="Palatino Linotype" size="14.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

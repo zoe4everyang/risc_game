@@ -97,7 +97,22 @@ public class InGameListener extends RISCServer {
     @PostMapping("/commit/{roomId}")
     public Response commitActionListen(@PathVariable("roomId") int roomId, @RequestBody HashMap<String, Integer> playerID) {
         try{
-            return roomSelectionHandler.inGameCommit(roomId, playerID.get("playerID"));
+            Response response = roomSelectionHandler.inGameCommit(roomId, playerID.get("playerID"));
+            if (response.isEnd()) {
+                if (response.isLose()) {
+                    System.out.println("Player " + playerID + " you lose!");
+                } else {
+                    System.out.println("Player " + playerID + " you win!");
+                }
+                System.out.println(response.getPlayerInfo().getPlayerID());
+                for (Territory t : response.getTerritories()) {
+                    System.out.println("Owner: " +t.getOwner());
+                }
+                for (String s : response.getPlayerList()) {
+                    System.out.println("Username: " + s);
+                }
+            }
+            return response;
         }catch(InterruptedException e) {
             System.out.println(e);
         }

@@ -18,10 +18,6 @@ public class LoginController extends UIController {
         super();
     }
 
-    public void initialize() {
-        gameContext.showInfoAlert("Welcome to RISC!", "Please enter your username and password to login.\n" +
-                "It will automatically create a new account if you haven't registered before.");
-    }
     @FXML
     public void handleLoginButton() throws IOException {
         String username = usernameField.getText();

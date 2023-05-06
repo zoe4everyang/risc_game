@@ -71,7 +71,8 @@ public class PlacementController extends UIController {
 
         unitLeft = gameContext.unitAvailable;
         Text text = new Text(unitLeft.toString());
-        //text.setStyle("-fx-font-weight: bold;");
+//        text.setFont(Font.font("Palatino Linotype", FontWeight.NORMAL, 14));
+//        text.setStyle("-fx-fill: d4b91d;");
         unitLeftText.getChildren().add(text);
 
         for (String territoryName : territoryNames) {
@@ -94,7 +95,7 @@ public class PlacementController extends UIController {
         territoryList.add(territory11);
         for (int i = 0; i < territoryList.size(); i++) {
             if (gameContext.territories.get(i).getOwner() == gameContext.playerInfo.getPlayerID()) {
-                territoryList.get(i).setFill(Color.web("#00FF80"));
+                territoryList.get(i).setFill(Color.web("#D4B91D"));
             } else {
                 territoryList.get(i).setFill(Color.web("#A0A0A0"));
             }
@@ -114,16 +115,18 @@ public class PlacementController extends UIController {
         if (num > unitLeft) {
             gameContext.showErrorAlert("Invalid Input", "You do not have enough units to place.");
         } else {
-            Text testText3 = new Text(Integer.toString(gameContext.currentRoomID));
-            unitLeftText.getChildren().add(testText3);
+//            Text testText3 = new Text(Integer.toString(gameContext.currentRoomID));
+//            unitLeftText.getChildren().add(testText3);
+            unitLeftText.getChildren().clear();
             HashMap<String, Integer> index1 = gameContext.territoryIDMaps.get(gameContext.currentRoomID);
             int index2 = index1.get(territoryName);
             int cur = placement.get(index2);
             placement.set(index2, cur + num);
             unitLeft -= num;
             Text text = new Text(unitLeft.toString());
-            //text.setStyle("-fx-font-weight: bold;");
-            unitLeftText.getChildren().clear();
+//            text.setFont(Font.font("Palatino Linotype", FontWeight.NORMAL, 14));
+//            text.setStyle("-fx-fill: d4b91d;");
+
             unitLeftText.getChildren().add(text);
         }
     }
@@ -132,7 +135,8 @@ public class PlacementController extends UIController {
     public void handleFinishButton() {
         if (unitLeft != 0) {
             gameContext.showErrorAlert("Invalid Input", "You have not placed all your units.");
-            sceneManager.switchTo("Place.fxml");
+            //sceneManager.switchTo("Place.fxml");
+            return;
         }
         PlacementRequest placementRequest = new PlacementRequest(gameContext.playerInfo.getPlayerID(), placement);
         Response response = null;

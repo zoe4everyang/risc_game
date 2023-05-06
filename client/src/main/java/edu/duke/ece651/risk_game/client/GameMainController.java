@@ -93,14 +93,14 @@ public class GameMainController extends GameController{
             return;
         }
         //loadingStage.close();
-        gameContext.update(response);
-        gameContext.clickHistory.replaceAll((k, v) -> false);
         if (response.isLose()) {
             submit.setDisable(true);
             sceneManager.switchTo("Defeat.fxml");
         } else if (response.isEnd()) {
             sceneManager.switchTo("Victory.fxml");
         } else {
+            gameContext.update(response);
+            gameContext.clickHistory.replaceAll((k, v) -> false);
             sceneManager.switchTo("GameMain.fxml");
         }
     }

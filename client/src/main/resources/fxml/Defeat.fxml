@@ -6,21 +6,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.risk_game.client.DefeatController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.risk_game.client.DefeatController">
    <children>
-      <ImageView fitHeight="400.0" fitWidth="600.0" layoutY="-1.0">
+      <ImageView fitHeight="821.0" fitWidth="1455.0" layoutX="-87.0" preserveRatio="true">
          <image>
-            <Image url="@Lose.jpg" />
+            <Image url="@defeat.jpg" />
          </image>
       </ImageView>
-      <Button layoutX="238.0" layoutY="337.0" mnemonicParsing="false" onMouseClicked="#handleExitButton" prefHeight="23.0" prefWidth="114.0" text="Quit">
+      <Button layoutX="561.0" layoutY="570.0" mnemonicParsing="false" onMouseClicked="#handleExitButton" prefHeight="55.0" prefWidth="160.0" style="-fx-background-color: white;" text="Quit">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="Palatino Linotype Bold" size="20.0" />
          </font>
       </Button>
-      <Button layoutX="238.0" layoutY="296.0" mnemonicParsing="false" onMouseClicked="#handleContinueButton" prefHeight="23.0" prefWidth="114.0" text="Continue">
+      <Button layoutX="560.0" layoutY="469.0" mnemonicParsing="false" onMouseClicked="#handleContinueButton" prefHeight="55.0" prefWidth="160.0" style="-fx-background-color: white;" text="Continue">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="Palatino Linotype Bold" size="20.0" />
          </font>
       </Button>
    </children>

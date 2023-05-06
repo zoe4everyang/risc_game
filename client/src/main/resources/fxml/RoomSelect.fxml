@@ -15,42 +15,47 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <Text layoutX="471.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a game to play">
+                  <ImageView fitHeight="135.0" fitWidth="1371.0" layoutX="-81.0" layoutY="-32.0">
+                     <image>
+                        <Image url="@blue-black-wallpaper.png" />
+                     </image>
+                  </ImageView>
+                  <Text fill="#d4b91d" layoutX="452.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a Game to Join">
                      <font>
-                        <Font name="Times New Roman Bold" size="34.0" />
+                        <Font name="Palatino Linotype" size="36.0" />
                      </font>
                   </Text>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <SplitPane dividerPositions="0.6191860465116279" orientation="VERTICAL" prefHeight="346.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <SplitPane dividerPositions="0.7100574712643677" orientation="VERTICAL" prefHeight="346.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="186.0" prefWidth="596.0">
                            <children>
-                              <ImageView fitHeight="460.0" fitWidth="1324.0" layoutX="-46.0" opacity="0.77">
+                              <ImageView fitHeight="744.0" fitWidth="1345.0" layoutX="-46.0" layoutY="-27.0">
                                  <image>
-                                    <Image url="@choose_back1.jpg" />
+                                    <Image url="@runeterra-map.png" />
                                  </image>
                               </ImageView>
                               <ListView fx:id="roomList" layoutX="200.0" layoutY="53.0" prefHeight="369.0" prefWidth="879.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="199.0" AnchorPane.topAnchor="53.0" />
-                              <Text fill="WHITE" layoutX="516.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="choose a room to enter!">
-                                 <font>
-                                    <Font name="Times New Roman" size="26.0" />
-                                 </font>
-                              </Text>
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="122.0" prefWidth="596.0">
                            <children>
-                              <Button layoutX="557.0" layoutY="84.0" mnemonicParsing="false" onMouseClicked="#handleJoinButton" prefHeight="60.0" prefWidth="162.0" text="Start!">
+                              <ImageView fitHeight="317.0" fitWidth="1595.0" layoutX="-251.0" layoutY="-5.0">
+                                 <image>
+                                    <Image url="@blue-black-wallpaper.png" />
+                                 </image>
+                              </ImageView>
+                              <Button layoutX="557.0" layoutY="29.0" mnemonicParsing="false" onMouseClicked="#handleJoinButton" prefHeight="60.0" prefWidth="162.0" style="-fx-background-color: white;" text="Start" textAlignment="CENTER" textFill="#011530">
                                  <font>
-                                    <Font name="Times New Roman Bold" size="22.0" />
+                                    <Font name="Palatino Linotype" size="24.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="557.0" layoutY="173.0" mnemonicParsing="false" onMouseClicked="#handleExitButton" prefHeight="60.0" prefWidth="162.0" text="Quit!">
+                              <Button layoutX="557.0" layoutY="114.0" mnemonicParsing="false" onMouseClicked="#handleExitButton" prefHeight="60.0" prefWidth="162.0" style="-fx-background-color: white;" text="Quit" textAlignment="CENTER" textFill="#011530">
                                  <font>
-                                    <Font name="Times New Roman Bold" size="22.0" />
+                                    <Font name="Palatino Linotype" size="24.0" />
                                  </font>
                               </Button>
                            </children>
